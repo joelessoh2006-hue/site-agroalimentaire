@@ -28,19 +28,6 @@ export async function processRfqSubmission(
     reference?: string;
     message: string;
     errors?: Array<{ field: string; message: string }>;
-    leadSummary?: {
-      reference: string;
-      companyName: string;
-      contactName: string;
-      contactEmail: string;
-      itemsCount: number;
-      createdAt: string;
-      status: string;
-      emailsDispatched?: {
-        customerReceipt: boolean;
-        internalAlert: boolean;
-      };
-    };
   };
 }> {
   // 1. Validation de la structure du payload avec Zod & Sanitization
@@ -145,16 +132,6 @@ export async function processRfqSubmission(
       success: true,
       reference,
       message: 'Votre demande de cotation et d’échantillons a été enregistrée avec succès par notre usine.',
-      leadSummary: {
-        reference,
-        companyName: leadRecord.company_name,
-        contactName: leadRecord.contact_name,
-        contactEmail: leadRecord.email,
-        itemsCount: validatedData.selectedProductIds.length,
-        createdAt,
-        status: leadRecord.status,
-        emailsDispatched,
-      },
     },
   };
 }

@@ -25,6 +25,14 @@ export const RATE_LIMIT_RULES = {
     maxRequests: 30,
     message: 'Fréquence de téléchargement de documents techniques anormalement élevée. Veuillez patienter 60 secondes.',
   } satisfies RateLimitRule,
+
+  // Tentatives d'accès d'administration /api/leads (10 requêtes / 15 minutes)
+  ADMIN_ACCESS: {
+    windowMs: 15 * 60 * 1000, // 15 minutes
+    maxRequests: 10,
+    message:
+      "Nombre excessif de requêtes d'administration pour cette adresse IP (maximum 10 par tranche de 15 minutes). Accès temporairement suspendu.",
+  } satisfies RateLimitRule,
 };
 
 // Stockage en mémoire des compteurs d'IPs par scope
@@ -113,7 +121,9 @@ class MemoryRateLimiter {
   public cleanup(): void {
     const now = Date.now();
     for (const [scope, store] of this.stores.entries()) {
-      const rule = scope === 'rfq' ? RATE_LIMIT_RULES.RFQ_SUBMISSION : RATE_LIMIT_RULES.DOCS_DOWNLOAD;
+      let rule = RATE_LIMIT_RULES.RFQ_SUBMISSION;
+      if (scope === 'docs') rule = RATE_LIMIT_RULES.DOCS_DOWNLOAD;
+      if (scope === 'admin') rule = RATE_LIMIT_RULES.ADMIN_ACCESS;
       const windowStart = now - rule.windowMs;
 
       for (const [ip, client] of store.entries()) {

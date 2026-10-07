@@ -90,6 +90,12 @@
   - **Étanchéité Git Maximale ([`.gitignore`](file:///d:/Bureau/Site%20Agroalimentaire/agro-industrial-cocoa-processing/.gitignore)) :** Renforcement avec exclusion stricte de `.env`, `.env.local`, `.env.*.local`, des bases de données SQLite locales (`server/leads.db*`, `*.db*`), des exports JSON de leads (`leads.json`) et des e-mails archivés en dev (`sent-emails/`).
   - **Audit d'Historique Git Réalisé :** Aucun secret ni base de données n'a jamais été commité dans l'historique du dépôt Git.
 
+- **Durcissement de Sécurité Backend & API (Application des 4 Priorités d'Audit) :**
+  - **Authentification Sécurisée (`server/auth.ts`) :** Refus strict du démarrage en production si `ADMIN_API_KEY` est absente (suppression du fallback hardcodé). Remplacement de la comparaison d'égalité par `crypto.timingSafeEqual` sur hachages SHA-256 (neutralisation des attaques temporelles).
+  - **Limitation de Débit Administrative (`server/rateLimiter.ts`, `apiPlugin.ts`, `server/index.ts`) :** Extension du rate limiter à `/api/leads*` (10 requêtes par 15 minutes par IP) pour bloquer les attaques par force brute sur la clé d'administration.
+  - **Échappement Anti-Injection HTML (`server/emailService.ts`) :** Implémentation de la fonction `escapeHtml` et assainissement systématique de toutes les données interpolées dans les e-mails client et interne.
+  - **Protection des Métadonnées Internes (`server/rfqHandler.ts`) :** Épuration de la réponse `POST /api/rfq` pour ne renvoyer que la référence de dossier et le message de confirmation sans divulguer de métadonnées d'architecture ni d'adresses IP.
+
 ### G. Gestion & Distribution des Fichiers Techniques (TDS & COA en PDF)
 - **Génération Haute Fidélité Vectorielle :** Module de génération dédié [`server/generatePdfs.ts`](file:///d:/Bureau/Site%20Agroalimentaire/agro-industrial-cocoa-processing/server/generatePdfs.ts) s'appuyant sur `pdf-lib` sans dépendance C native.
   - **9 Fiches Techniques TDS Officielles (`public/docs/tds/`) :** Strictement conformes aux 7 sections réglementaires (Codex Alimentarius Stan 87-1981, règlements UE 488/2014 & 1169/2011, critères physico-chimiques ISO, microbiologie PCR Salmonella 2x375g, traçabilité EUDR 2023/1115, emballages FCL et visas de conformité).

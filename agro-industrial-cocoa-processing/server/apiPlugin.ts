@@ -73,9 +73,31 @@ export function rfqApiPlugin(): Plugin {
           return;
         }
 
-        // 2. Sécurisation obligatoire de toutes les routes administratives (/api/leads*)
-        // Bloque immédiatement avec 401 Unauthorized ou 403 Forbidden toute requête non authentifiée
+        // 2. Sécurisation obligatoire et Rate Limiting de toutes les routes administratives (/api/leads*)
+        // Bloque les attaques de force brute (max 10 req / 15 min) et rejette les requêtes non authentifiées
         if (url.startsWith('/api/leads')) {
+          const clientIp = getClientIp(req);
+          const limitCheck = rateLimiter.check('admin', clientIp, RATE_LIMIT_RULES.ADMIN_ACCESS);
+
+          res.setHeader('X-RateLimit-Limit', limitCheck.limit);
+          res.setHeader('X-RateLimit-Remaining', limitCheck.remaining);
+          res.setHeader('X-RateLimit-Reset', Math.ceil(limitCheck.resetTimeMs / 1000));
+
+          if (!limitCheck.allowed) {
+            res.statusCode = 429;
+            res.setHeader('Content-Type', 'application/json');
+            res.setHeader('Retry-After', limitCheck.retryAfterSeconds);
+            res.end(
+              JSON.stringify({
+                success: false,
+                error: 'Too Many Requests',
+                message: limitCheck.message,
+                retryAfterSeconds: limitCheck.retryAfterSeconds,
+              })
+            );
+            return;
+          }
+
           const authCheck = isAuthorizedAdminRequest(req);
           if (!authCheck.authorized) {
             res.statusCode = authCheck.statusCode || 401;

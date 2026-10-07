@@ -36,8 +36,25 @@ app.post(['/api/rfq', '/api/contact'], async (req, res) => {
   res.status(result.statusCode).json(result.body);
 });
 
-// Middleware de sécurité administrative : protège toutes les routes /api/leads*
+// Middleware de sécurité administrative : protège toutes les routes /api/leads* avec Rate Limiting anti-bruteforce
 app.use('/api/leads', (req, res, next) => {
+  const clientIp = getClientIp(req);
+  const limitCheck = rateLimiter.check('admin', clientIp, RATE_LIMIT_RULES.ADMIN_ACCESS);
+
+  res.setHeader('X-RateLimit-Limit', limitCheck.limit);
+  res.setHeader('X-RateLimit-Remaining', limitCheck.remaining);
+  res.setHeader('X-RateLimit-Reset', Math.ceil(limitCheck.resetTimeMs / 1000));
+
+  if (!limitCheck.allowed) {
+    res.setHeader('Retry-After', limitCheck.retryAfterSeconds);
+    return res.status(429).json({
+      success: false,
+      error: 'Too Many Requests',
+      message: limitCheck.message,
+      retryAfterSeconds: limitCheck.retryAfterSeconds,
+    });
+  }
+
   const auth = isAuthorizedAdminRequest(req);
   if (!auth.authorized) {
     if (auth.statusCode === 401) {

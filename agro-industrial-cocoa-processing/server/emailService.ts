@@ -41,6 +41,19 @@ if (smtpHost && process.env.SMTP_USER && process.env.SMTP_PASS) {
 }
 
 /**
+ * Neutralise les caractères HTML spéciaux pour prévenir l'injection HTML dans les clients mail.
+ */
+export function escapeHtml(str: string | undefined | null): string {
+  if (!str) return '';
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
+/**
  * 1. Génère le Template HTML pour l'accusé de réception envoyé au client
  */
 export function generateCustomerEmailHtml(lead: B2BLeadRecord): string {
@@ -51,6 +64,16 @@ export function generateCustomerEmailHtml(lead: B2BLeadRecord): string {
     productsList = [lead.products_requested];
   }
 
+  const safeLeadId = escapeHtml(lead.id);
+  const safeCompanyName = escapeHtml(lead.company_name);
+  const safeContactName = escapeHtml(lead.contact_name);
+  const safeEmail = escapeHtml(lead.email);
+  const safeCountry = escapeHtml(lead.country);
+  const safeIncoterm = escapeHtml(lead.incoterm || 'FOB/CIF');
+  const safeDestination = escapeHtml(lead.destination_port || lead.country);
+  const safeOrderVolume = escapeHtml(lead.order_volume || 'Non spécifié');
+  const safeProductsList = productsList.map(escapeHtml);
+
   const isSample = lead.is_sample_request === 1;
   const requestLabel = isSample ? 'Demande d’Échantillons R&D Laboratoire' : 'Demande de Cotation Industrielle (Spot/FCL)';
 
@@ -58,7 +81,7 @@ export function generateCustomerEmailHtml(lead: B2BLeadRecord): string {
 <html lang="fr">
 <head>
   <meta charset="utf-8">
-  <title>Accusé de réception - Réf. ${lead.id}</title>
+  <title>Accusé de réception - Réf. ${safeLeadId}</title>
   <style>
     body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background-color: #F8F4EE; margin: 0; padding: 24px; color: #221510; }
     .container { max-width: 620px; margin: 0 auto; background: #FFFFFF; border: 1px solid #E4DDD3; border-radius: 10px; overflow: hidden; box-shadow: 0 4px 16px rgba(34,21,16,0.06); }
@@ -85,41 +108,41 @@ export function generateCustomerEmailHtml(lead: B2BLeadRecord): string {
 
     <div class="body-content">
       <div class="ref-badge">
-        RÉFÉRENCE OFFICIELLE : ${lead.id}
+        RÉFÉRENCE OFFICIELLE : ${safeLeadId}
       </div>
 
       <p style="font-size: 15px; line-height: 1.5; margin-top: 0;">
-        Bonjour <strong>${lead.contact_name}</strong>,
+        Bonjour <strong>${safeContactName}</strong>,
       </p>
 
       <p style="font-size: 14px; line-height: 1.6; color: #4f4541;">
-        Nous accusons bonne réception de votre <strong>${requestLabel.toLowerCase()}</strong> pour le compte de l'entreprise <strong>${lead.company_name}</strong>.
+        Nous accusons bonne réception de votre <strong>${escapeHtml(requestLabel.toLowerCase())}</strong> pour le compte de l'entreprise <strong>${safeCompanyName}</strong>.
       </p>
 
       <p style="font-size: 14px; line-height: 1.6; color: #4f4541;">
-        Votre dossier a été transmis à notre ingénieur commercial export référent pour la zone <strong>${lead.country}</strong>. Une étude technique et notre cotation officielle vous parviendront sous <strong>24 à 48 heures ouvrées</strong>.
+        Votre dossier a été transmis à notre ingénieur commercial export référent pour la zone <strong>${safeCountry}</strong>. Une étude technique et notre cotation officielle vous parviendront sous <strong>24 à 48 heures ouvrées</strong>.
       </p>
 
       <table class="lead-table">
         <tr>
           <td class="label">Raison Sociale</td>
-          <td class="val">${lead.company_name}</td>
+          <td class="val">${safeCompanyName}</td>
         </tr>
         <tr>
           <td class="label">Contact Référent</td>
-          <td class="val">${lead.contact_name} (${lead.email})</td>
+          <td class="val">${safeContactName} (${safeEmail})</td>
         </tr>
         <tr>
           <td class="label">Volume / Format</td>
-          <td class="val">${lead.order_volume || 'Non spécifié'}</td>
+          <td class="val">${safeOrderVolume}</td>
         </tr>
         <tr>
           <td class="label">Incoterm & Destination</td>
-          <td class="val">${lead.incoterm || 'FOB/CIF'} — ${lead.destination_port || lead.country}</td>
+          <td class="val">${safeIncoterm} — ${safeDestination}</td>
         </tr>
         <tr>
           <td class="label">Produits sélectionnés</td>
-          <td class="val">${productsList.join(', ')}</td>
+          <td class="val">${safeProductsList.join(', ')}</td>
         </tr>
       </table>
 
@@ -155,6 +178,20 @@ export function generateInternalAlertEmailHtml(lead: B2BLeadRecord): string {
     productsList = [lead.products_requested];
   }
 
+  const safeLeadId = escapeHtml(lead.id);
+  const safeCompanyName = escapeHtml(lead.company_name);
+  const safeContactName = escapeHtml(lead.contact_name);
+  const safeEmail = escapeHtml(lead.email);
+  const safePhone = escapeHtml(lead.phone || 'Non renseigné');
+  const safeVatNumber = escapeHtml(lead.vat_number || 'Non renseigné');
+  const safeCountry = escapeHtml(lead.country);
+  const safeDestinationPort = escapeHtml(lead.destination_port || 'Non spécifié');
+  const safeIncoterm = escapeHtml(lead.incoterm || 'FOB/CIF standard');
+  const safeOrderVolume = escapeHtml(lead.order_volume || 'Non renseigné');
+  const safeProjectDescription = escapeHtml(lead.project_description || 'Aucune note particulière formulée');
+  const safeIpAddress = escapeHtml(lead.ip_address || 'Non capturée');
+  const safeProductsList = productsList.map(escapeHtml);
+
   const isSample = lead.is_sample_request === 1;
   const priorityBadge = isSample ? 'PRIORITÉ R&D / ÉCHANTILLONS' : 'LEAD COMMERCIAL VOLUME FCL/LCL';
   const badgeColor = isSample ? '#C29958' : '#2E5A36';
@@ -163,7 +200,7 @@ export function generateInternalAlertEmailHtml(lead: B2BLeadRecord): string {
 <html lang="fr">
 <head>
   <meta charset="utf-8">
-  <title>[LEAD B2B] ${lead.company_name} - ${lead.id}</title>
+  <title>[LEAD B2B] ${safeCompanyName} - ${safeLeadId}</title>
   <style>
     body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background-color: #221510; margin: 0; padding: 24px; color: #221510; }
     .container { max-width: 650px; margin: 0 auto; background: #FFFFFF; border-radius: 8px; overflow: hidden; border: 2px solid #C29958; }
@@ -182,10 +219,10 @@ export function generateInternalAlertEmailHtml(lead: B2BLeadRecord): string {
     <div class="alert-banner">
       <span class="badge">${priorityBadge}</span>
       <h2 style="margin: 10px 0 0; color: #FFFFFF; font-size: 18px;">
-        Nouvelle opportunité : ${lead.company_name} (${lead.country})
+        Nouvelle opportunité : ${safeCompanyName} (${safeCountry})
       </h2>
       <div style="font-family: monospace; font-size: 12px; color: #C29958; margin-top: 4px;">
-        Réf : ${lead.id} · Enregistré le ${new Date(lead.created_at).toLocaleString('fr-FR')}
+        Réf : ${safeLeadId} · Enregistré le ${new Date(lead.created_at).toLocaleString('fr-FR')}
       </div>
     </div>
 
@@ -197,51 +234,51 @@ export function generateInternalAlertEmailHtml(lead: B2BLeadRecord): string {
       <table class="table">
         <tr>
           <td class="head">Entreprise</td>
-          <td><strong>${lead.company_name}</strong> (TVA: ${lead.vat_number || 'Non renseigné'})</td>
+          <td><strong>${safeCompanyName}</strong> (TVA: ${safeVatNumber})</td>
         </tr>
         <tr>
           <td class="head">Contact</td>
           <td>
-            <strong>${lead.contact_name}</strong><br>
-            E-mail : <a href="mailto:${lead.email}">${lead.email}</a><br>
-            Tél : ${lead.phone || 'Non renseigné'}
+            <strong>${safeContactName}</strong><br>
+            E-mail : <a href="mailto:${safeEmail}">${safeEmail}</a><br>
+            Tél : ${safePhone}
           </td>
         </tr>
         <tr>
           <td class="head">Pays & Destination</td>
-          <td>${lead.country} — Port/Ville: <strong>${lead.destination_port || 'Non spécifié'}</strong></td>
+          <td>${safeCountry} — Port/Ville: <strong>${safeDestinationPort}</strong></td>
         </tr>
         <tr>
           <td class="head">Incoterm Souhaité</td>
-          <td>${lead.incoterm || 'FOB/CIF standard'}</td>
+          <td>${safeIncoterm}</td>
         </tr>
         <tr>
           <td class="head">Volume / Échantillon</td>
-          <td><strong>${lead.order_volume || 'Non renseigné'}</strong></td>
+          <td><strong>${safeOrderVolume}</strong></td>
         </tr>
         <tr>
           <td class="head">Produits ciblés</td>
           <td>
             <ul>
-              ${productsList.map((p) => `<li>${p}</li>`).join('')}
+              ${safeProductsList.map((p) => `<li>${p}</li>`).join('')}
             </ul>
           </td>
         </tr>
         <tr>
           <td class="head">Projet / Spécifications</td>
-          <td>${lead.project_description || 'Aucune note particulière formulée'}</td>
+          <td>${safeProjectDescription}</td>
         </tr>
         <tr>
           <td class="head">IP Détectée</td>
-          <td><code>${lead.ip_address || 'Non capturée'}</code></td>
+          <td><code>${safeIpAddress}</code></td>
         </tr>
       </table>
 
       <div style="margin-top: 24px;">
-        <a href="mailto:${lead.email}?subject=Suite%20%C3%A0%20votre%20demande%20de%20cotation%20${lead.id}" class="btn">
+        <a href="mailto:${safeEmail}?subject=Suite%20%C3%A0%20votre%20demande%20de%20cotation%20${safeLeadId}" class="btn">
           Répondre au Prospect
         </a>
-        <a href="${SITE_URL}/api/leads/${lead.id}" class="btn" style="background: #C29958; color: #221510;">
+        <a href="${SITE_URL}/api/leads/${safeLeadId}" class="btn" style="background: #C29958; color: #221510;">
           Voir la Fiche Lead API (JSON)
         </a>
       </div>
@@ -333,7 +370,7 @@ export async function sendRfqEmails(lead: B2BLeadRecord): Promise<{
   const internalHtml = generateInternalAlertEmailHtml(lead);
   const internalResult = await dispatchEmail({
     to: COMMERCIAL_EMAIL_TO,
-    subject: `[LEAD B2B URGENT] Nouvelle demande de cotation : ${lead.company_name} (${lead.country}) — ${lead.id}`,
+    subject: `[LEAD B2B URGENT] Nouvelle demande de cotation : ${escapeHtml(lead.company_name)} (${escapeHtml(lead.country)}) — ${escapeHtml(lead.id)}`,
     html: internalHtml,
     leadId: lead.id,
     type: 'INTERNAL',
