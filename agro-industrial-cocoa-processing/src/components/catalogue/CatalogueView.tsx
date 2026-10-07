@@ -1,8 +1,8 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import { CocoaProduct, ProductCategory, IndustrySector } from '../../types';
 import { COCOA_PRODUCTS } from '../../data/products';
-import { Search, RotateCcw, Filter, Factory, Layers, FileText, Check, Plus, Package, Eye } from 'lucide-react';
-import { ProductImage } from '../common/ProductImage';
+import { Search, RotateCcw } from 'lucide-react';
+import { ProductCard } from '../ProductCard';
 
 interface CatalogueViewProps {
   onOpenSpecs: (product: CocoaProduct) => void;
@@ -13,7 +13,6 @@ interface CatalogueViewProps {
 }
 
 export const CatalogueView: React.FC<CatalogueViewProps> = ({
-  onOpenSpecs,
   onOpenTdsModal,
   onToggleRfq,
   onSelectProduct,
@@ -114,342 +113,131 @@ export const CatalogueView: React.FC<CatalogueViewProps> = ({
     COCOA_PRODUCTS.filter((p) => p.category === cat).length;
 
   return (
-    <section className="space-y-10">
+    <section className="space-y-8">
       {/* Title & Description */}
-      <div className="border-b border-[#E4DDD3] pb-6 space-y-4">
+      <div className="border-b border-[#E4DDD3] pb-6 space-y-3">
         <div className="flex items-center gap-2 text-xs font-mono text-[#C29958] uppercase tracking-wider">
           <span>CATALOGUE OFFICIEL DES FRACTIONS & DÉRIVÉS DU CACAO</span>
           <span>·</span>
           <span>DISPONIBILITÉ SPOT & CONTRATS CADRES ANNUELS</span>
         </div>
 
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
-          <div>
-            <h1 className="font-display text-3xl sm:text-4xl font-bold tracking-tight text-[#221510]">
-              Catalogue des 9 Ingrédients Industriels
-            </h1>
-            <p className="font-body text-sm text-[#4f4541] max-w-2xl mt-1">
-              Beurres de pression pure et raffinés, poudres micronisées naturelles et alcalinisées, masses fluides et tourteaux. Filtrage combinatoire réactif instantané.
-            </p>
-          </div>
-
-          <div className="flex items-center gap-3">
-            <span
-              aria-live="polite"
-              aria-atomic="true"
-              className="font-mono text-xs text-[#5D5753] bg-[#FFFFFF] border border-[#E4DDD3] px-3.5 py-1.5 rounded-[6px]"
-            >
-              Résultats : <strong className="text-[#221510] font-bold">{filteredProducts.length}</strong> / {COCOA_PRODUCTS.length} ingrédients
-            </span>
-          </div>
+        <div>
+          <h1 className="font-display text-3xl sm:text-4xl font-bold tracking-tight text-[#221510]">
+            Catalogue des 9 Ingrédients Industriels
+          </h1>
+          <p className="font-body text-sm text-[#4f4541] max-w-2xl mt-1">
+            Beurres de pression pure et raffinés, poudres micronisées naturelles et alcalinisées, masses fluides et tourteaux. Filtrage combinatoire réactif instantané.
+          </p>
         </div>
       </div>
 
-      {/* Dual-Axis Filter Controls Container */}
-      <aside
+      {/* 1. Barre d'outils et filtres (Toolbar industrielle unifiée monobloc) */}
+      <div
         role="search"
-        aria-label="Filtres combinatoires du catalogue"
-        className="bg-[#FFFFFF] border border-[#E4DDD3] rounded-[8px] p-5 sm:p-6 space-y-6"
+        aria-label="Barre d'outils et filtres du catalogue"
+        className="bg-white border border-[#E4DDD3] rounded-lg p-3 flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-3 shadow-none"
       >
-        {/* Search input + Reset */}
-        <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4 border-b border-[#E4DDD3]/60 pb-4">
-          <div className="relative flex-1 max-w-md">
-            <Search className="w-4 h-4 text-[#5D5753] absolute left-3 top-2.5" />
-            <input
-              type="text"
-              aria-label="Rechercher un ingrédient par nom, INCI, application"
-              placeholder="Rechercher par nom, INCI, point de fusion, application..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-9 pr-3 py-2 text-xs bg-[#F8F4EE] border border-[#E4DDD3] rounded-[6px] focus:outline-none focus:border-[#C29958] focus:bg-[#FFFFFF] transition-colors"
-            />
+        {/* Recherche textuelle */}
+        <div className="relative flex-1 min-w-[220px]">
+          <Search className="w-4 h-4 text-[#78716C] absolute left-3 top-2.5" />
+          <input
+            type="text"
+            aria-label="Rechercher un ingrédient par nom, INCI, point de fusion, application"
+            placeholder="Filtrer par nom, référence, INCI, point de fusion..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="w-full pl-9 pr-3 py-1.5 text-xs bg-[#FAF7F2] border border-[#E4DDD3] rounded-[6px] focus:outline-none focus:border-[#C29958] focus:bg-white text-[#221510] placeholder:text-[#78716C] transition-colors"
+          />
+        </div>
+
+        {/* Sélecteurs compacts pour Application & Famille */}
+        <div className="flex flex-wrap items-center gap-2.5">
+          {/* Dropdown Application */}
+          <div className="flex items-center gap-1.5">
+            <label className="font-mono text-[10px] text-[#78716C] uppercase font-bold shrink-0">
+              Application :
+            </label>
+            <select
+              value={selectedIndustry}
+              onChange={(e) => setSelectedIndustry(e.target.value as any)}
+              className="text-xs font-mono bg-[#FAF7F2] border border-[#E4DDD3] rounded-[6px] px-2.5 py-1.5 text-[#221510] focus:outline-none focus:border-[#C29958] cursor-pointer"
+            >
+              <option value="all">Toutes ({COCOA_PRODUCTS.length})</option>
+              <option value="alimentaire">Agroalimentaire ({countByIndustry('alimentaire')})</option>
+              <option value="cosmetique">Cosmétique ({countByIndustry('cosmetique')})</option>
+            </select>
           </div>
 
+          {/* Dropdown Famille */}
+          <div className="flex items-center gap-1.5">
+            <label className="font-mono text-[10px] text-[#78716C] uppercase font-bold shrink-0">
+              Famille :
+            </label>
+            <select
+              value={selectedCategory}
+              onChange={(e) => setSelectedCategory(e.target.value as any)}
+              className="text-xs font-mono bg-[#FAF7F2] border border-[#E4DDD3] rounded-[6px] px-2.5 py-1.5 text-[#221510] focus:outline-none focus:border-[#C29958] cursor-pointer"
+            >
+              <option value="all">Toutes ({COCOA_PRODUCTS.length})</option>
+              <option value="beurres">Beurres ({countByCategory('beurres')})</option>
+              <option value="poudres">Poudres ({countByCategory('poudres')})</option>
+              <option value="masses">Masses & Tourteaux ({countByCategory('masses')})</option>
+            </select>
+          </div>
+
+          {/* Bouton de réinitialisation contextuel */}
           {hasActiveFilters && (
             <button
+              type="button"
               onClick={handleResetFilters}
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-display font-semibold uppercase tracking-wider text-[#4A2C21] hover:text-[#221510] border border-[#E4DDD3] rounded-[6px] hover:bg-[#F8F4EE] transition-colors cursor-pointer self-start sm:self-auto"
+              className="inline-flex items-center gap-1 text-[11px] font-mono text-[#78716C] hover:text-[#221510] underline cursor-pointer px-1 py-1"
+              title="Réinitialiser tous les filtres"
             >
-              <RotateCcw className="w-3.5 h-3.5" />
-              <span>Réinitialiser les filtres</span>
+              <RotateCcw className="w-3 h-3" />
+              <span>Effacer</span>
             </button>
           )}
         </div>
 
-        {/* Dual Axis Controls */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {/* Axis 1 : Industrie */}
-          <fieldset className="space-y-2 border-0 p-0 m-0">
-            <legend className="font-display text-xs font-bold uppercase tracking-wider text-[#4A2C21] flex items-center gap-1.5 mb-1.5">
-              <Factory className="w-3.5 h-3.5 text-[#C29958]" />
-              <span>Secteur d'Application Cible :</span>
-            </legend>
-
-            <div className="inline-flex flex-wrap p-1 bg-[#F1EDE7] rounded-[6px] border border-[#E4DDD3] w-full">
-              <button
-                type="button"
-                onClick={() => setSelectedIndustry('all')}
-                className={`flex-1 min-w-[90px] py-2 px-3 text-xs font-display font-semibold uppercase tracking-wider rounded-[4px] transition-colors cursor-pointer text-center ${
-                  selectedIndustry === 'all'
-                    ? 'bg-[#221510] text-[#FFFFFF]'
-                    : 'text-[#4A2C21] hover:text-[#221510]'
-                }`}
-              >
-                Tous ({COCOA_PRODUCTS.length})
-              </button>
-              <button
-                type="button"
-                onClick={() => setSelectedIndustry('alimentaire')}
-                className={`flex-1 min-w-[110px] py-2 px-3 text-xs font-display font-semibold uppercase tracking-wider rounded-[4px] transition-colors cursor-pointer text-center ${
-                  selectedIndustry === 'alimentaire'
-                    ? 'bg-[#221510] text-[#FFFFFF]'
-                    : 'text-[#4A2C21] hover:text-[#221510]'
-                }`}
-              >
-                Agroalimentaire ({countByIndustry('alimentaire')})
-              </button>
-              <button
-                type="button"
-                onClick={() => setSelectedIndustry('cosmetique')}
-                className={`flex-1 min-w-[110px] py-2 px-3 text-xs font-display font-semibold uppercase tracking-wider rounded-[4px] transition-colors cursor-pointer text-center ${
-                  selectedIndustry === 'cosmetique'
-                    ? 'bg-[#221510] text-[#FFFFFF]'
-                    : 'text-[#4A2C21] hover:text-[#221510]'
-                }`}
-              >
-                Cosmétique ({countByIndustry('cosmetique')})
-              </button>
-            </div>
-          </fieldset>
-
-          {/* Axis 2 : Catégorie */}
-          <fieldset className="space-y-2 border-0 p-0 m-0">
-            <legend className="font-display text-xs font-bold uppercase tracking-wider text-[#4A2C21] flex items-center gap-1.5 mb-1.5">
-              <Layers className="w-3.5 h-3.5 text-[#C29958]" />
-              <span>Famille de Dérivé :</span>
-            </legend>
-
-            <div className="inline-flex flex-wrap p-1 bg-[#F1EDE7] rounded-[6px] border border-[#E4DDD3] w-full">
-              <button
-                type="button"
-                onClick={() => setSelectedCategory('all')}
-                className={`flex-1 min-w-[70px] py-2 px-2.5 text-xs font-display font-semibold uppercase tracking-wider rounded-[4px] transition-colors cursor-pointer text-center ${
-                  selectedCategory === 'all'
-                    ? 'bg-[#221510] text-[#FFFFFF]'
-                    : 'text-[#4A2C21] hover:text-[#221510]'
-                }`}
-              >
-                Toutes
-              </button>
-              <button
-                type="button"
-                onClick={() => setSelectedCategory('beurres')}
-                className={`flex-1 min-w-[85px] py-2 px-2.5 text-xs font-display font-semibold uppercase tracking-wider rounded-[4px] transition-colors cursor-pointer text-center ${
-                  selectedCategory === 'beurres'
-                    ? 'bg-[#221510] text-[#FFFFFF]'
-                    : 'text-[#4A2C21] hover:text-[#221510]'
-                }`}
-              >
-                Beurres ({countByCategory('beurres')})
-              </button>
-              <button
-                type="button"
-                onClick={() => setSelectedCategory('poudres')}
-                className={`flex-1 min-w-[85px] py-2 px-2.5 text-xs font-display font-semibold uppercase tracking-wider rounded-[4px] transition-colors cursor-pointer text-center ${
-                  selectedCategory === 'poudres'
-                    ? 'bg-[#221510] text-[#FFFFFF]'
-                    : 'text-[#4A2C21] hover:text-[#221510]'
-                }`}
-              >
-                Poudres ({countByCategory('poudres')})
-              </button>
-              <button
-                type="button"
-                onClick={() => setSelectedCategory('masses')}
-                className={`flex-1 min-w-[95px] py-2 px-2.5 text-xs font-display font-semibold uppercase tracking-wider rounded-[4px] transition-colors cursor-pointer text-center ${
-                  selectedCategory === 'masses'
-                    ? 'bg-[#221510] text-[#FFFFFF]'
-                    : 'text-[#4A2C21] hover:text-[#221510]'
-                }`}
-              >
-                Masses & Tourteaux ({countByCategory('masses')})
-              </button>
-            </div>
-          </fieldset>
+        {/* Compteur d'inventaire officiel */}
+        <div className="font-mono text-xs font-bold text-[#221510] bg-[#FAF7F2] border border-[#E4DDD3] px-3 py-1.5 rounded-[4px] whitespace-nowrap text-center shrink-0">
+          INDEX · {filteredProducts.length} RÉFÉRENCE{filteredProducts.length > 1 ? 'S' : ''} DISPONIBLE{filteredProducts.length > 1 ? 'S' : ''}
         </div>
-      </aside>
+      </div>
 
-      {/* Grid of 9 Product Cards */}
+      {/* 2. Grille des Cartes Produits Épurées */}
       {filteredProducts.length > 0 ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredProducts.map((product) => {
-            const isAdded = selectedRfqProductIds.includes(product.id);
-            return (
-              <article
-                key={product.id}
-                className="bg-[#FFFFFF] rounded-[8px] border border-[#E4DDD3] overflow-hidden flex flex-col justify-between hover:border-[#C29958] transition-colors group"
-              >
-                {/* Zone cliquable principale : redirige vers les détails du produit */}
-                <div
-                  onClick={() => onSelectProduct(product.id)}
-                  className="cursor-pointer flex-1 flex flex-col justify-between"
-                  role="button"
-                  tabIndex={0}
-                  onKeyDown={(e) => {
-                    if (e.key === 'Enter' || e.key === ' ') {
-                      e.preventDefault();
-                      onSelectProduct(product.id);
-                    }
-                  }}
-                  aria-label={`Voir la fiche détaillée de ${product.name}`}
-                >
-                  {/* Visual Header with Badges */}
-                  <div className="relative h-48 sm:h-52 w-full bg-[#F1EDE7] overflow-hidden border-b border-[#E4DDD3]">
-                    <ProductImage
-                      src={product.image_url}
-                      alt={product.name}
-                      productName={product.name}
-                      category={product.category}
-                    />
-
-                    {/* Sector badges overlay */}
-                    <div className="absolute top-3 right-3 flex items-center gap-1.5 pointer-events-none">
-                      {product.industry.map((ind) => (
-                        <span
-                          key={ind}
-                          className={`text-[10px] font-mono font-bold uppercase tracking-wider px-2 py-0.5 rounded-[4px] ${
-                            ind === 'cosmetique'
-                              ? 'bg-[#221510] text-[#C29958] border border-[#C29958]/40'
-                              : 'bg-[#F8F4EE] text-[#221510] border border-[#E4DDD3]'
-                          }`}
-                        >
-                          {ind === 'cosmetique' ? 'Cosmétique' : 'Agroalimentaire'}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* Body Content */}
-                  <div className="p-5 sm:p-6 space-y-3.5">
-                    {/* Category & ID */}
-                    <div className="flex items-center justify-between border-b border-[#E4DDD3]/60 pb-2">
-                      <span className="font-display text-[11px] font-bold uppercase tracking-wider text-[#C29958]">
-                        {product.category === 'beurres'
-                          ? 'BEURRES DE CACAO PURS'
-                          : product.category === 'poudres'
-                          ? 'POUDRES MICRONISÉES'
-                          : 'MASSES & DÉRIVÉS'}
-                      </span>
-                      <span className="font-mono text-[10px] text-[#5D5753]">
-                        MOQ : {product.moq.split('(')[0]}
-                      </span>
-                    </div>
-
-                    {/* Title & Description */}
-                    <div>
-                      <h3
-                        className="font-display text-lg font-bold text-[#221510] leading-snug group-hover:text-[#4A2C21] transition-colors"
-                      >
-                        {product.name}
-                      </h3>
-                      {product.inciName && (
-                        <span className="font-mono text-[10px] text-[#C29958] block mt-0.5">
-                          INCI : {product.inciName}
-                        </span>
-                      )}
-                      <p className="font-body text-xs text-[#4f4541] leading-relaxed mt-2 line-clamp-3">
-                        {product.description}
-                      </p>
-                    </div>
-
-                    {/* 2 Spécifications Clés Standard Barry Callebaut */}
-                    <div className="pt-2 border-t border-[#E4DDD3]">
-                      <div className="grid grid-cols-2 divide-x divide-[#E4DDD3] bg-[#FAF7F2] border border-[#E4DDD3] rounded-[4px] font-mono text-xs">
-                        {Object.entries(product.specs).slice(0, 2).map(([key, val]) => (
-                          <div key={key} className="p-2.5 space-y-0.5">
-                            <span className="text-[10px] text-[#5D5753] block truncate uppercase font-sans font-semibold">
-                              {key.replace(/_/g, ' ')}
-                            </span>
-                            <span className="font-bold text-[#221510] block truncate">
-                              {String(val)}
-                            </span>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-
-                    {/* Packaging Preview & Lien détails */}
-                    <div className="pt-1 text-[11px] text-[#5D5753] flex items-center justify-between">
-                      <div className="flex items-center gap-1.5 truncate">
-                        <Package className="w-3.5 h-3.5 text-[#C29958] shrink-0" />
-                        <span className="truncate">
-                          <strong className="text-[#221510]">Format :</strong> {product.packaging[0]?.format || 'Cartons 25 kg'}
-                        </span>
-                      </div>
-                      <span className="text-[#C29958] font-bold text-[11px] group-hover:text-[#221510] transition-colors shrink-0">
-                        Détails →
-                      </span>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Actions style Barry Callebaut : Fiche Technique TDS & Devis RFQ */}
-                <div
-                  onClick={(e) => e.stopPropagation()}
-                  className="p-5 sm:p-6 pt-0 border-t border-[#E4DDD3] grid grid-cols-2 gap-2 mt-2 pt-3"
-                >
-                  <button
-                    onClick={() => onOpenTdsModal(product)}
-                    className="w-full py-2.5 px-3 text-center text-xs font-display font-bold uppercase tracking-wider text-[#221510] bg-[#FFFFFF] border border-[#E4DDD3] rounded-[6px] hover:border-[#221510] hover:bg-[#FAF7F2] transition-colors inline-flex items-center justify-center gap-1.5 cursor-pointer"
-                    title="Télécharger la fiche technique TDS certifiée"
-                  >
-                    <FileText className="w-3.5 h-3.5 text-[#C29958]" />
-                    <span>Fiche TDS</span>
-                  </button>
-
-                  <button
-                    onClick={() => onToggleRfq(product)}
-                    className={`w-full py-2.5 px-3 text-center text-xs font-display font-bold uppercase tracking-wider rounded-[6px] transition-colors inline-flex items-center justify-center gap-1.5 cursor-pointer border ${
-                      isAdded
-                        ? 'bg-[#2E5A36] text-[#FFFFFF] border-[#2E5A36]'
-                        : 'bg-[#C29958] text-[#221510] hover:bg-[#b08745] border-[#b08745]'
-                    }`}
-                  >
-                    {isAdded ? (
-                      <>
-                        <Check className="w-3.5 h-3.5" />
-                        <span>Ajouté ✓</span>
-                      </>
-                    ) : (
-                      <>
-                        <Plus className="w-3.5 h-3.5" />
-                        <span>Devis RFQ</span>
-                      </>
-                    )}
-                  </button>
-                </div>
-              </article>
-            );
-          })}
+          {filteredProducts.map((product) => (
+            <ProductCard
+              key={product.id}
+              product={product}
+              onSelectProduct={onSelectProduct}
+              onOpenTdsModal={onOpenTdsModal}
+              onToggleRfq={onToggleRfq}
+              isAddedToRfq={selectedRfqProductIds.includes(product.id)}
+            />
+          ))}
         </div>
       ) : (
         /* Empty State */
         <div className="bg-[#FFFFFF] border border-[#E4DDD3] rounded-[8px] p-12 text-center space-y-4 max-w-lg mx-auto">
-          <div className="w-12 h-12 bg-[#F8F4EE] text-[#C29958] rounded-[6px] border border-[#E4DDD3] flex items-center justify-center mx-auto">
-            <Filter className="w-6 h-6" />
+          <div className="font-mono text-xs font-bold text-[#C29958] bg-[#FAF7F2] border border-[#E4DDD3] px-3 py-1.5 rounded-[4px] inline-block">
+            INVENTAIRE · 0 CORRESPONDANCE
           </div>
           <h3 className="font-display text-lg font-bold text-[#221510]">
             Aucun ingrédient ne correspond à ces critères
           </h3>
           <p className="font-body text-xs text-[#5D5753] leading-relaxed">
-            Essayez de réinitialiser la recherche ou de changer les filtres de secteur ou de famille.
+            Modifiez votre terme de recherche ou sélectionnez une autre combinaison d'application et de famille de dérivé.
           </p>
           <div className="pt-2">
             <button
               onClick={handleResetFilters}
-              className="px-5 py-2.5 text-xs font-display font-semibold uppercase tracking-wider text-[#221510] bg-[#C29958] rounded-[6px] hover:bg-[#b08745] transition-colors cursor-pointer"
+              className="px-5 py-2.5 text-xs font-display font-semibold uppercase tracking-wider text-[#221510] bg-[#C29958] rounded-[6px] hover:bg-[#b08745] transition-colors cursor-pointer border border-[#b08745]"
             >
-              Réinitialiser et afficher les 9 produits
+              Afficher les 9 produits disponibles
             </button>
           </div>
         </div>

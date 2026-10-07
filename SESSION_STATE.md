@@ -61,6 +61,15 @@
   - **`ContactRfqView.tsx` & `TdsDownloadModal.tsx` :** Éradication de 100% des icônes décoratives à l'intérieur des inputs (`Building`, `User`, `Mail`, `Phone`, `Globe`), suppression du padding décalé `pl-9` au profit d'un padding standard net `px-3 py-2`, et remplacement des icônes latérales par des trigrammes de localisation (`LOC · FAC-01`, `LOG · HUB-EUR`, `HQ · SALES`).
   - **`CookieBanner.tsx` :** Retrait de l'icône de biscuit `Cookie` au profit d'un en-tête technique sobre sur la gouvernance des données et les traceurs ePrivacy / RGPD.
   - **Interface globale (`Header`, `QualityView`, `Footer`, `CoaModal`, `ProductCard`, `ProductDetailView`) :** Conservation stricte des icônes utilitaires réelles (`Search`, `X`, `Download`, `Printer`, `Check`, `Chevron`). Zéro warning ou erreur TypeScript (`tsc --noEmit` code 0, `npm run build` réussi).
+- **Phase 11 Refonte Ergonomique du Catalogue & des Cartes Produits (`CatalogueView.tsx` & `ProductCard.tsx`) :**
+  - **Toolbar industrielle unifiée (`CatalogueView.tsx`) :** Fusion de la recherche textuelle, des sélecteurs Application (Agroalimentaire/Cosmétique) et Famille (Beurres/Poudres/Masses) dans un conteneur unique monobloc blanc bordé (`border border-[#E4DDD3] rounded-lg p-3`).
+  - **Indicateur d'inventaire :** Affichage officiel sous forme monospace `"INDEX · 9 RÉFÉRENCES DISPONIBLES"`.
+  - **Épuration des cartes produits (`ProductCard.tsx`) :** Suppression des paragraphes descriptifs narratifs générant des troncatures (...). Affichage d'un sous-titre technique d'une seule ligne.
+  - **Mini-grille physico-chimique à 3 colonnes :** 3 paramètres normalisés par famille sous forme de grille monospace délimitée par une bordure fine et diviseurs verticaux.
+  - **Badge technique d'application :** Badges en `JetBrains Mono` (`text-[11px] font-mono px-2 py-0.5 rounded border`) en haut à droite de l'image.
+  - **Ligne d'expédition :** Format d'emballage net (`"EMBALLAGE : Carton export 25 kg · Liner PE"`).
+  - **Hiérarchisation des boutons :** `"Fiche TDS"` en outline sobre (`border border-[#E4DDD3] hover:border-[#221510]`) et `"Devis RFQ"` en bouton plein laiton/chocolat (`bg-[#C29958]`).
+  - **Validation & Build :** `npm run lint` (`tsc --noEmit`) code 0, `npm run build` réussi.
 
 ### B. Modélisation Exhaustive des Données Métier
 - **9 Dérivés de Cacao Purs modélisés :**
