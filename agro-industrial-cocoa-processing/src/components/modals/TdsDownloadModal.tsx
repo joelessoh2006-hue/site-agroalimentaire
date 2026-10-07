@@ -78,11 +78,11 @@ export const TdsDownloadModal: React.FC<TdsDownloadModalProps> = ({
       aria-labelledby="tds-modal-title"
       className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#221510]/80 backdrop-blur-xs"
     >
-      <div className="bg-[#FFFFFF] border border-[#E4DDD3] rounded-[2px] max-w-xl w-full max-h-[90vh] overflow-y-auto">
+      <div className="bg-[#FFFFFF] border border-[#E4DDD3] rounded-[8px] max-w-xl w-full max-h-[90vh] overflow-y-auto">
         {/* Header */}
         <div className="flex items-center justify-between p-5 border-b border-[#E4DDD3] bg-[#F8F4EE]">
           <div className="flex items-center gap-2">
-            <div className="p-2 bg-[#221510] text-[#C29958] rounded-[2px]">
+            <div className="p-2 bg-[#221510] text-[#C29958] rounded-[6px]">
               <FileText className="w-4 h-4" />
             </div>
             <div>
@@ -96,7 +96,7 @@ export const TdsDownloadModal: React.FC<TdsDownloadModalProps> = ({
           </div>
           <button
             onClick={handleReset}
-            className="p-1.5 text-[#5D5753] hover:text-[#221510] hover:bg-[#E4DDD3]/50 rounded-[2px] transition-colors cursor-pointer"
+            className="p-1.5 text-[#5D5753] hover:text-[#221510] hover:bg-[#E4DDD3]/50 rounded-[4px] transition-colors cursor-pointer"
             aria-label="Fermer la boîte de dialogue"
           >
             <X className="w-5 h-5" />
@@ -179,7 +179,7 @@ export const TdsDownloadModal: React.FC<TdsDownloadModalProps> = ({
                   />
                 </div>
                 {isFreeEmailDomain && (
-                  <div className="flex items-start gap-1.5 mt-1.5 text-[11px] text-[#A0522D] bg-[#F8F4EE] p-2 rounded-[2px] border border-[#E4DDD3]">
+                  <div className="flex items-start gap-1.5 mt-1.5 text-[11px] text-[#A0522D] bg-[#F8F4EE] p-2 rounded-[4px] border border-[#E4DDD3]">
                     <AlertCircle className="w-3.5 h-3.5 shrink-0 mt-0.5" />
                     <span>
                       Pour accélérer le traitement de vos demandes d'échantillons ou d'audits, nous recommandons une adresse e-mail professionnelle d'entreprise.
@@ -191,7 +191,7 @@ export const TdsDownloadModal: React.FC<TdsDownloadModalProps> = ({
               <div className="pt-2">
                 <button
                   type="submit"
-                  className="w-full py-2.5 px-4 text-xs font-display font-semibold uppercase tracking-wider text-[#221510] bg-[#C29958] rounded-[2px] hover:bg-[#b08745] transition-colors flex items-center justify-center gap-2 cursor-pointer border border-[#b08745]"
+                  className="w-full py-2.5 px-4 text-xs font-display font-semibold uppercase tracking-wider text-[#221510] bg-[#C29958] rounded-[6px] hover:bg-[#b08745] transition-colors flex items-center justify-center gap-2 cursor-pointer border border-[#b08745]"
                 >
                   <Download className="w-4 h-4" />
                   <span>Générer & Télécharger la Fiche TDS</span>
@@ -204,7 +204,7 @@ export const TdsDownloadModal: React.FC<TdsDownloadModalProps> = ({
             </form>
           ) : (
             <div className="text-center py-6 space-y-4">
-              <div className="w-12 h-12 bg-[#2E5A36]/10 text-[#2E5A36] rounded-[2px] flex items-center justify-center mx-auto border border-[#2E5A36]/30">
+              <div className="w-12 h-12 bg-[#2E5A36]/10 text-[#2E5A36] rounded-[8px] flex items-center justify-center mx-auto border border-[#2E5A36]/30">
                 <CheckCircle2 className="w-7 h-7" />
               </div>
               <div className="space-y-1">
@@ -216,7 +216,7 @@ export const TdsDownloadModal: React.FC<TdsDownloadModalProps> = ({
                 </p>
               </div>
 
-              <div className="bg-[#F8F4EE] border border-[#E4DDD3] rounded-[2px] p-3 text-left font-mono text-[11px] text-[#4A2C21] space-y-1">
+              <div className="bg-[#F8F4EE] border border-[#E4DDD3] rounded-[6px] p-3 text-left font-mono text-[11px] text-[#4A2C21] space-y-1">
                 <div className="flex justify-between">
                   <span className="text-[#5D5753]">Réf. Document :</span>
                   <span className="font-bold">TDS-{product.slug.toUpperCase()}-2026</span>
@@ -235,7 +235,7 @@ export const TdsDownloadModal: React.FC<TdsDownloadModalProps> = ({
                 <a
                   href={`/api/docs/tds/${product.slug}`}
                   download={`TDS_${product.slug}_AgroIndustrial_2026.pdf`}
-                  className="px-4 py-2 text-xs font-display font-semibold uppercase tracking-wider text-[#221510] bg-[#C29958] rounded-[2px] hover:bg-[#b08745] transition-colors inline-flex items-center gap-1.5 border border-[#b08745]"
+                  className="px-4 py-2 text-xs font-display font-semibold uppercase tracking-wider text-[#221510] bg-[#C29958] rounded-[6px] hover:bg-[#b08745] transition-colors inline-flex items-center gap-1.5 border border-[#b08745]"
                 >
                   <Download className="w-3.5 h-3.5" />
                   <span>Re-télécharger le PDF</span>
@@ -245,7 +245,7 @@ export const TdsDownloadModal: React.FC<TdsDownloadModalProps> = ({
                   href={`/api/docs/tds/${product.slug}?inline=true`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="px-4 py-2 text-xs font-display font-semibold uppercase tracking-wider text-[#221510] bg-[#FAF7F2] border border-[#E4DDD3] rounded-[2px] hover:bg-[#E4DDD3] transition-colors inline-flex items-center gap-1.5"
+                  className="px-4 py-2 text-xs font-display font-semibold uppercase tracking-wider text-[#221510] bg-[#FAF7F2] border border-[#E4DDD3] rounded-[6px] hover:bg-[#E4DDD3] transition-colors inline-flex items-center gap-1.5"
                 >
                   <FileText className="w-3.5 h-3.5" />
                   <span>Ouvrir dans le navigateur</span>

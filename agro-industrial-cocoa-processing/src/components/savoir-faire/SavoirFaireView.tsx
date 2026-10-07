@@ -97,7 +97,7 @@ export const SavoirFaireView: React.FC<SavoirFaireViewProps> = ({
               <button
                 key={step.stepNumber}
                 onClick={() => setActiveStepIndex(idx)}
-                className={`p-3 text-left rounded-[2px] border transition-colors cursor-pointer flex flex-col justify-between min-h-[92px] ${
+                className={`p-3 text-left rounded-[6px] border transition-colors cursor-pointer flex flex-col justify-between min-h-[92px] ${
                   isActive
                     ? 'bg-[#221510] text-[#FFFFFF] border-[#221510]'
                     : 'bg-[#FFFFFF] text-[#4A2C21] border-[#E4DDD3] hover:border-[#C29958] hover:bg-[#F8F4EE]'
@@ -123,7 +123,7 @@ export const SavoirFaireView: React.FC<SavoirFaireViewProps> = ({
         </div>
 
         {/* Active Step Deep Dive Card */}
-        <div className="bg-[#FFFFFF] border border-[#E4DDD3] rounded-[2px] p-6 sm:p-8 space-y-6">
+        <div className="bg-[#FFFFFF] border border-[#E4DDD3] rounded-[8px] p-6 sm:p-8 space-y-6">
           <div className="flex flex-col lg:flex-row lg:items-start justify-between gap-6 pb-6 border-b border-[#E4DDD3]">
             <div className="space-y-2 max-w-2xl">
               <div className="flex items-center gap-2">
@@ -193,7 +193,7 @@ export const SavoirFaireView: React.FC<SavoirFaireViewProps> = ({
       </section>
 
       {/* 3. Cadre Zéro Déforestation EUDR & Indicateurs ESG */}
-      <section className="bg-[#221510] text-[#F8F4EE] rounded-[2px] border border-[#4A2C21] p-8 sm:p-12 space-y-8">
+      <section className="bg-[#221510] text-[#F8F4EE] rounded-[8px] border border-[#4A2C21] p-8 sm:p-12 space-y-8">
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-[#4A2C21]/80 pb-6">
           <div className="space-y-2 max-w-2xl">
             <div className="flex items-center gap-2 text-xs font-mono text-[#C29958] uppercase">
@@ -211,7 +211,7 @@ export const SavoirFaireView: React.FC<SavoirFaireViewProps> = ({
           <div className="shrink-0">
             <button
               onClick={() => onNavigate('contact')}
-              className="px-4 py-2.5 text-xs font-display font-semibold uppercase tracking-wider text-[#221510] bg-[#C29958] rounded-[2px] hover:bg-[#b08745] transition-colors cursor-pointer"
+              className="px-4 py-2.5 text-xs font-display font-semibold uppercase tracking-wider text-[#221510] bg-[#C29958] rounded-[6px] hover:bg-[#b08745] transition-colors cursor-pointer"
             >
               Demander un Audit de Traçabilité
             </button>
@@ -220,25 +220,25 @@ export const SavoirFaireView: React.FC<SavoirFaireViewProps> = ({
 
         {/* Metrics Grid */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6 font-mono">
-          <div className="bg-[#301C15] p-4 rounded-[2px] border border-[#4A2C21]">
+          <div className="bg-[#301C15] p-4 rounded-[6px] border border-[#4A2C21]">
             <span className="text-xl sm:text-2xl font-bold text-[#FFFFFF]">{ESG_EUDR_METRICS.totalGeoMappedHectares}</span>
             <span className="block text-[11px] text-[#C29958] mt-1">Superficie Cartographiée</span>
             <span className="text-[10px] text-[#E4DDD3]/60 block mt-0.5">Parcelles GPS polygonales</span>
           </div>
 
-          <div className="bg-[#301C15] p-4 rounded-[2px] border border-[#4A2C21]">
+          <div className="bg-[#301C15] p-4 rounded-[6px] border border-[#4A2C21]">
             <span className="text-xl sm:text-2xl font-bold text-[#FFFFFF]">{ESG_EUDR_METRICS.polygonalPlotsVerified}</span>
             <span className="block text-[11px] text-[#C29958] mt-1">Parcelles Auditées</span>
             <span className="text-[10px] text-[#E4DDD3]/60 block mt-0.5">Contrôlées par satellites radar</span>
           </div>
 
-          <div className="bg-[#301C15] p-4 rounded-[2px] border border-[#4A2C21]">
-            <span className="text-xl sm:text-2xl font-bold text-[#2E5A36] bg-[#2E5A36]/20 px-2 py-0.5 rounded-[2px] border border-[#2E5A36]/40 inline-block">100% CONFORME</span>
+          <div className="bg-[#301C15] p-4 rounded-[6px] border border-[#4A2C21]">
+            <span className="text-xl sm:text-2xl font-bold text-[#2E5A36] bg-[#2E5A36]/20 px-2 py-0.5 rounded-[4px] border border-[#2E5A36]/40 inline-block">100% CONFORME</span>
             <span className="block text-[11px] text-[#C29958] mt-1">Déforestation Post-2020</span>
             <span className="text-[10px] text-[#E4DDD3]/60 block mt-0.5">Zéro déforestation prouvée</span>
           </div>
 
-          <div className="bg-[#301C15] p-4 rounded-[2px] border border-[#4A2C21]">
+          <div className="bg-[#301C15] p-4 rounded-[6px] border border-[#4A2C21]">
             <span className="text-xl sm:text-2xl font-bold text-[#FFFFFF]">-42% CO₂</span>
             <span className="block text-[11px] text-[#C29958] mt-1">Gain Carbone Maritime</span>
             <span className="text-[10px] text-[#E4DDD3]/60 block mt-0.5">Raffinage local à la source</span>
@@ -300,7 +300,7 @@ export const SavoirFaireView: React.FC<SavoirFaireViewProps> = ({
               <button
                 key={batch.lotCode}
                 onClick={() => setSelectedLotCode(batch.lotCode)}
-                className={`p-4 text-left rounded-[2px] border transition-colors cursor-pointer flex flex-col justify-between space-y-3 ${
+                className={`p-4 text-left rounded-[6px] border transition-colors cursor-pointer flex flex-col justify-between space-y-3 ${
                   isSelected
                     ? 'bg-[#FFFFFF] border-[#C29958]'
                     : 'bg-[#FFFFFF] border-[#E4DDD3] hover:border-[#C29958] hover:bg-[#F8F4EE]'
@@ -310,7 +310,7 @@ export const SavoirFaireView: React.FC<SavoirFaireViewProps> = ({
                   <div className="flex items-center justify-between">
                     <span className="font-mono text-xs font-bold text-[#221510]">{batch.lotCode}</span>
                     <span
-                      className={`text-[9px] font-mono px-1.5 py-0.5 rounded-[2px] font-bold border ${
+                      className={`text-[9px] font-mono px-1.5 py-0.5 rounded-[4px] font-bold border ${
                         batch.status === 'VALIDÉ EXPORT'
                           ? 'bg-[#2E5A36]/10 text-[#2E5A36] border-[#2E5A36]/30'
                           : 'bg-[#C29958]/20 text-[#221510] border-[#C29958]/40'
@@ -340,7 +340,7 @@ export const SavoirFaireView: React.FC<SavoirFaireViewProps> = ({
         </div>
 
         {/* Selected Batch Detailed Card */}
-        <div className="bg-[#FFFFFF] border border-[#E4DDD3] rounded-[2px] p-6 sm:p-8 space-y-6">
+        <div className="bg-[#FFFFFF] border border-[#E4DDD3] rounded-[8px] p-6 sm:p-8 space-y-6">
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-[#E4DDD3] pb-4">
             <div>
               <div className="flex items-center gap-2 text-xs font-mono text-[#C29958] font-bold">
@@ -358,7 +358,7 @@ export const SavoirFaireView: React.FC<SavoirFaireViewProps> = ({
             <div className="flex items-center gap-3">
               <button
                 onClick={() => onOpenCoaForBatch(selectedBatch)}
-                className="px-4 py-2 text-xs font-display font-bold uppercase tracking-wider text-[#221510] bg-[#C29958] rounded-[2px] hover:bg-[#b08745] transition-colors inline-flex items-center gap-2 cursor-pointer border border-[#b08745]"
+                className="px-4 py-2 text-xs font-display font-bold uppercase tracking-wider text-[#221510] bg-[#C29958] rounded-[6px] hover:bg-[#b08745] transition-colors inline-flex items-center gap-2 cursor-pointer border border-[#b08745]"
               >
                 <FileSpreadsheet className="w-4 h-4" />
                 <span>Ouvrir le Certificat CoA</span>

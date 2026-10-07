@@ -31,9 +31,9 @@ export const HomeView: React.FC<HomeViewProps> = ({
   return (
     <div className="space-y-20">
       {/* 1. Hero Section Industrielle */}
-      <section className="bg-[#221510] text-[#F8F4EE] rounded-[2px] border border-[#4A2C21] p-8 sm:p-12 lg:p-16">
+      <section className="bg-[#221510] text-[#F8F4EE] rounded-[8px] border border-[#4A2C21] p-8 sm:p-12 lg:p-16">
         <div className="max-w-4xl space-y-6">
-          <div className="inline-flex items-center gap-2 px-3 py-1 bg-[#301C15] border border-[#4A2C21] rounded-[2px] text-xs font-mono text-[#C29958] uppercase tracking-wider">
+          <div className="inline-flex items-center gap-2 px-3 py-1 bg-[#301C15] border border-[#4A2C21] rounded-[4px] text-xs font-mono text-[#C29958] uppercase tracking-wider">
             <span>Usine de San Pedro · Hub logistique Le Havre · Export mondial FCL</span>
           </div>
 
@@ -48,7 +48,7 @@ export const HomeView: React.FC<HomeViewProps> = ({
           <div className="pt-2 flex flex-wrap items-center gap-4">
             <button
               onClick={() => onNavigate('catalogue')}
-              className="px-6 py-3.5 text-xs font-display font-bold uppercase tracking-wider text-[#221510] bg-[#C29958] rounded-[2px] hover:bg-[#b08745] transition-colors inline-flex items-center gap-2 cursor-pointer border border-[#b08745]"
+              className="px-6 py-3.5 text-xs font-display font-bold uppercase tracking-wider text-[#221510] bg-[#C29958] rounded-[6px] hover:bg-[#b08745] transition-colors inline-flex items-center gap-2 cursor-pointer border border-[#b08745]"
             >
               <span>Consulter le catalogue technique (9 dérivés)</span>
               <ArrowRight className="w-4 h-4" />
@@ -56,7 +56,7 @@ export const HomeView: React.FC<HomeViewProps> = ({
 
             <button
               onClick={() => onNavigate('contact')}
-              className="px-6 py-3.5 text-xs font-display font-semibold uppercase tracking-wider text-[#F8F4EE] bg-[#4A2C21] border border-[#C29958]/40 rounded-[2px] hover:bg-[#392118] transition-colors inline-flex items-center gap-2 cursor-pointer"
+              className="px-6 py-3.5 text-xs font-display font-semibold uppercase tracking-wider text-[#F8F4EE] bg-[#4A2C21] border border-[#C29958]/40 rounded-[6px] hover:bg-[#392118] transition-colors inline-flex items-center gap-2 cursor-pointer"
             >
               <Send className="w-3.5 h-3.5" />
               <span>Demande de cotation ou échantillon R&D</span>
@@ -130,8 +130,8 @@ export const HomeView: React.FC<HomeViewProps> = ({
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {/* Segment 1: Chocolaterie */}
-          <div className="bg-[#FFFFFF] border border-[#E4DDD3] rounded-[2px] p-6 space-y-4 hover:border-[#C29958] transition-colors group">
-            <div className="w-10 h-10 rounded-[2px] bg-[#221510] text-[#C29958] flex items-center justify-center">
+          <div className="bg-[#FFFFFF] border border-[#E4DDD3] rounded-[8px] p-6 space-y-4 hover:border-[#C29958] transition-colors group">
+            <div className="w-10 h-10 rounded-[6px] bg-[#221510] text-[#C29958] flex items-center justify-center">
               <Factory className="w-5 h-5" />
             </div>
             <div>
@@ -171,8 +171,8 @@ export const HomeView: React.FC<HomeViewProps> = ({
           </div>
 
           {/* Segment 2: Biscuiterie & Glacerie */}
-          <div className="bg-[#FFFFFF] border border-[#E4DDD3] rounded-[2px] p-6 space-y-4 hover:border-[#C29958] transition-colors group">
-            <div className="w-10 h-10 rounded-[2px] bg-[#4A2C21] text-[#C29958] flex items-center justify-center">
+          <div className="bg-[#FFFFFF] border border-[#E4DDD3] rounded-[8px] p-6 space-y-4 hover:border-[#C29958] transition-colors group">
+            <div className="w-10 h-10 rounded-[6px] bg-[#4A2C21] text-[#C29958] flex items-center justify-center">
               <Layers className="w-5 h-5" />
             </div>
             <div>
@@ -212,8 +212,8 @@ export const HomeView: React.FC<HomeViewProps> = ({
           </div>
 
           {/* Segment 3: Cosmétique & Dermopharmacie */}
-          <div className="bg-[#FFFFFF] border border-[#E4DDD3] rounded-[2px] p-6 space-y-4 hover:border-[#C29958] transition-colors group">
-            <div className="w-10 h-10 rounded-[2px] bg-[#2E5A36] text-[#FFFFFF] flex items-center justify-center">
+          <div className="bg-[#FFFFFF] border border-[#E4DDD3] rounded-[8px] p-6 space-y-4 hover:border-[#C29958] transition-colors group">
+            <div className="w-10 h-10 rounded-[6px] bg-[#2E5A36] text-[#FFFFFF] flex items-center justify-center">
               <FlaskConical className="w-5 h-5" />
             </div>
             <div>
@@ -273,9 +273,9 @@ export const HomeView: React.FC<HomeViewProps> = ({
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {/* Pilier 1 : Traçabilité EUDR */}
-          <div className="bg-[#FFFFFF] border border-[#E4DDD3] rounded-[2px] p-6 sm:p-7 flex flex-col justify-between space-y-5">
+          <div className="bg-[#FFFFFF] border border-[#E4DDD3] rounded-[8px] p-6 sm:p-7 flex flex-col justify-between space-y-5">
             <div className="space-y-3">
-              <div className="w-10 h-10 rounded-[2px] bg-[#2E5A36] text-[#FFFFFF] flex items-center justify-center">
+              <div className="w-10 h-10 rounded-[6px] bg-[#2E5A36] text-[#FFFFFF] flex items-center justify-center">
                 <Globe2 className="w-5 h-5" />
               </div>
               <div>
@@ -308,9 +308,9 @@ export const HomeView: React.FC<HomeViewProps> = ({
           </div>
 
           {/* Pilier 2 : Laboratoire ISO 17025 */}
-          <div className="bg-[#FFFFFF] border border-[#E4DDD3] rounded-[2px] p-6 sm:p-7 flex flex-col justify-between space-y-5">
+          <div className="bg-[#FFFFFF] border border-[#E4DDD3] rounded-[8px] p-6 sm:p-7 flex flex-col justify-between space-y-5">
             <div className="space-y-3">
-              <div className="w-10 h-10 rounded-[2px] bg-[#221510] text-[#C29958] flex items-center justify-center">
+              <div className="w-10 h-10 rounded-[6px] bg-[#221510] text-[#C29958] flex items-center justify-center">
                 <FlaskConical className="w-5 h-5" />
               </div>
               <div>
@@ -328,14 +328,14 @@ export const HomeView: React.FC<HomeViewProps> = ({
 
             <div className="pt-3 border-t border-[#E4DDD3] space-y-2">
               <div className="flex flex-wrap gap-1 font-mono text-[10px]">
-                <span className="bg-[#F8F4EE] border border-[#E4DDD3] px-2 py-0.5 rounded-[2px] text-[#221510]">FSSC 22000</span>
-                <span className="bg-[#F8F4EE] border border-[#E4DDD3] px-2 py-0.5 rounded-[2px] text-[#221510]">Halal</span>
-                <span className="bg-[#F8F4EE] border border-[#E4DDD3] px-2 py-0.5 rounded-[2px] text-[#221510]">Kasher</span>
-                <span className="bg-[#F8F4EE] border border-[#E4DDD3] px-2 py-0.5 rounded-[2px] text-[#221510]">Bio / Cosmos</span>
+                <span className="bg-[#F8F4EE] border border-[#E4DDD3] px-2 py-0.5 rounded-[4px] text-[#221510]">FSSC 22000</span>
+                <span className="bg-[#F8F4EE] border border-[#E4DDD3] px-2 py-0.5 rounded-[4px] text-[#221510]">Halal</span>
+                <span className="bg-[#F8F4EE] border border-[#E4DDD3] px-2 py-0.5 rounded-[4px] text-[#221510]">Kasher</span>
+                <span className="bg-[#F8F4EE] border border-[#E4DDD3] px-2 py-0.5 rounded-[4px] text-[#221510]">Bio / Cosmos</span>
               </div>
               <button
                 onClick={() => onNavigate('qualite')}
-                className="w-full py-2 px-3 text-xs font-display font-semibold uppercase tracking-wider text-[#221510] bg-[#F8F4EE] border border-[#E4DDD3] rounded-[2px] hover:border-[#C29958] hover:bg-[#FAF7F2] transition-colors cursor-pointer text-center"
+                className="w-full py-2 px-3 text-xs font-display font-semibold uppercase tracking-wider text-[#221510] bg-[#F8F4EE] border border-[#E4DDD3] rounded-[6px] hover:border-[#C29958] hover:bg-[#FAF7F2] transition-colors cursor-pointer text-center"
               >
                 Consulter les protocoles d'analyse
               </button>
@@ -343,9 +343,9 @@ export const HomeView: React.FC<HomeViewProps> = ({
           </div>
 
           {/* Pilier 3 : Conditionnements & Logistique */}
-          <div className="bg-[#FFFFFF] border border-[#E4DDD3] rounded-[2px] p-6 sm:p-7 flex flex-col justify-between space-y-5">
+          <div className="bg-[#FFFFFF] border border-[#E4DDD3] rounded-[8px] p-6 sm:p-7 flex flex-col justify-between space-y-5">
             <div className="space-y-3">
-              <div className="w-10 h-10 rounded-[2px] bg-[#4A2C21] text-[#C29958] flex items-center justify-center">
+              <div className="w-10 h-10 rounded-[6px] bg-[#4A2C21] text-[#C29958] flex items-center justify-center">
                 <PackageCheck className="w-5 h-5" />
               </div>
               <div>
@@ -367,7 +367,7 @@ export const HomeView: React.FC<HomeViewProps> = ({
               </div>
               <button
                 onClick={() => onNavigate('contact')}
-                className="w-full py-2 px-3 text-xs font-display font-semibold uppercase tracking-wider text-[#221510] bg-[#C29958] rounded-[2px] hover:bg-[#b08745] transition-colors cursor-pointer text-center border border-[#b08745]"
+                className="w-full py-2 px-3 text-xs font-display font-semibold uppercase tracking-wider text-[#221510] bg-[#C29958] rounded-[6px] hover:bg-[#b08745] transition-colors cursor-pointer text-center border border-[#b08745]"
               >
                 Demander une cotation logistique
               </button>
@@ -389,7 +389,7 @@ export const HomeView: React.FC<HomeViewProps> = ({
           </div>
           <button
             onClick={() => onNavigate('catalogue')}
-            className="text-xs font-display font-bold uppercase tracking-wider text-[#221510] bg-[#FFFFFF] border border-[#E4DDD3] hover:border-[#C29958] px-4 py-2 rounded-[2px] transition-colors inline-flex items-center gap-1.5 cursor-pointer self-start sm:self-auto"
+            className="text-xs font-display font-bold uppercase tracking-wider text-[#221510] bg-[#FFFFFF] border border-[#E4DDD3] hover:border-[#C29958] px-4 py-2 rounded-[6px] transition-colors inline-flex items-center gap-1.5 cursor-pointer self-start sm:self-auto"
           >
             <span>Voir les 9 produits & filtrer</span>
             <ExternalLink className="w-3.5 h-3.5 text-[#C29958]" />
@@ -402,7 +402,7 @@ export const HomeView: React.FC<HomeViewProps> = ({
             return (
               <div
                 key={product.id}
-                className="bg-[#FFFFFF] border border-[#E4DDD3] rounded-[2px] overflow-hidden flex flex-col justify-between hover:border-[#C29958] transition-colors group"
+                className="bg-[#FFFFFF] border border-[#E4DDD3] rounded-[8px] overflow-hidden flex flex-col justify-between hover:border-[#C29958] transition-colors group"
               >
                 <div>
                   <div className="relative h-44 w-full bg-[#F1EDE7] overflow-hidden border-b border-[#E4DDD3]">
@@ -413,7 +413,7 @@ export const HomeView: React.FC<HomeViewProps> = ({
                       category={product.category}
                     />
                     <div className="absolute top-2.5 right-2.5">
-                      <span className="text-[10px] font-mono font-bold uppercase tracking-wider px-2 py-0.5 rounded-[2px] bg-[#221510]/85 text-[#C29958] border border-[#4A2C21]">
+                      <span className="text-[10px] font-mono font-bold uppercase tracking-wider px-2 py-0.5 rounded-[4px] bg-[#221510]/85 text-[#C29958] border border-[#4A2C21]">
                         {product.category.toUpperCase()}
                       </span>
                     </div>
@@ -430,7 +430,7 @@ export const HomeView: React.FC<HomeViewProps> = ({
                     </div>
 
                     {/* 2 Spécifications Clés Standard Barry Callebaut */}
-                    <div className="grid grid-cols-2 divide-x divide-[#E4DDD3] bg-[#FAF7F2] border border-[#E4DDD3] rounded-[2px] font-mono text-xs">
+                    <div className="grid grid-cols-2 divide-x divide-[#E4DDD3] bg-[#FAF7F2] border border-[#E4DDD3] rounded-[4px] font-mono text-xs">
                       {Object.entries(product.specs).slice(0, 2).map(([key, val]) => (
                         <div key={key} className="p-2 space-y-0.5">
                           <span className="text-[10px] text-[#5D5753] block truncate uppercase font-sans font-semibold">
@@ -452,13 +452,13 @@ export const HomeView: React.FC<HomeViewProps> = ({
                 <div className="p-5 pt-0 border-t border-[#E4DDD3]/60 grid grid-cols-2 gap-2 mt-2 pt-3">
                   <button
                     onClick={() => onNavigate('produit', product.id)}
-                    className="w-full py-2.5 px-2 text-center text-xs font-display font-bold uppercase tracking-wider text-[#221510] bg-[#FFFFFF] border border-[#E4DDD3] rounded-[2px] hover:border-[#221510] hover:bg-[#FAF7F2] transition-colors cursor-pointer"
+                    className="w-full py-2.5 px-2 text-center text-xs font-display font-bold uppercase tracking-wider text-[#221510] bg-[#FFFFFF] border border-[#E4DDD3] rounded-[6px] hover:border-[#221510] hover:bg-[#FAF7F2] transition-colors cursor-pointer"
                   >
                     Fiche Produit
                   </button>
                   <button
                     onClick={() => onToggleRfq(product)}
-                    className={`w-full py-2.5 px-2 text-center text-xs font-display font-bold uppercase tracking-wider rounded-[2px] transition-colors cursor-pointer border ${
+                    className={`w-full py-2.5 px-2 text-center text-xs font-display font-bold uppercase tracking-wider rounded-[6px] transition-colors cursor-pointer border ${
                       isAdded
                         ? 'bg-[#2E5A36] text-[#FFFFFF] border-[#2E5A36]'
                         : 'bg-[#C29958] text-[#221510] border-[#b08745] hover:bg-[#b08745]'
@@ -474,9 +474,9 @@ export const HomeView: React.FC<HomeViewProps> = ({
       </section>
 
       {/* 5. Appel à l'Action B2B Industriel */}
-      <section className="bg-[#FAF7F2] border border-[#E4DDD3] rounded-[2px] p-8 sm:p-12 text-center space-y-6">
+      <section className="bg-[#FAF7F2] border border-[#E4DDD3] rounded-[8px] p-8 sm:p-12 text-center space-y-6">
         <div className="max-w-2xl mx-auto space-y-3">
-          <div className="w-12 h-12 bg-[#221510] text-[#C29958] rounded-[2px] border border-[#4A2C21] flex items-center justify-center mx-auto mb-2">
+          <div className="w-12 h-12 bg-[#221510] text-[#C29958] rounded-[6px] border border-[#4A2C21] flex items-center justify-center mx-auto mb-2">
             <ShieldCheck className="w-6 h-6" />
           </div>
           <h2 className="font-display text-2xl sm:text-3xl font-bold text-[#221510]">
@@ -490,13 +490,13 @@ export const HomeView: React.FC<HomeViewProps> = ({
         <div className="flex flex-wrap items-center justify-center gap-4 pt-2">
           <button
             onClick={() => onNavigate('contact')}
-            className="px-6 py-3 text-xs font-display font-bold uppercase tracking-wider text-[#221510] bg-[#C29958] rounded-[2px] hover:bg-[#b08745] transition-colors cursor-pointer border border-[#b08745]"
+            className="px-6 py-3 text-xs font-display font-bold uppercase tracking-wider text-[#221510] bg-[#C29958] rounded-[6px] hover:bg-[#b08745] transition-colors cursor-pointer border border-[#b08745]"
           >
             Déposer une demande de cotation ou échantillon
           </button>
           <button
             onClick={() => onNavigate('catalogue')}
-            className="px-6 py-3 text-xs font-display font-semibold uppercase tracking-wider text-[#221510] bg-[#FFFFFF] border border-[#E4DDD3] rounded-[2px] hover:bg-[#F8F4EE] transition-colors cursor-pointer"
+            className="px-6 py-3 text-xs font-display font-semibold uppercase tracking-wider text-[#221510] bg-[#FFFFFF] border border-[#E4DDD3] rounded-[6px] hover:bg-[#F8F4EE] transition-colors cursor-pointer"
           >
             Consulter les 9 fiches techniques
           </button>

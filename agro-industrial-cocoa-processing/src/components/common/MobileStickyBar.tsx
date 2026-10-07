@@ -18,11 +18,11 @@ export const MobileStickyBar: React.FC<MobileStickyBarProps> = ({
         <button
           type="button"
           onClick={onOpenRfq}
-          className="flex-1 flex items-center justify-center gap-2 py-3 px-4 bg-[#C29958] active:bg-[#a88243] text-[#221510] font-semibold text-sm rounded-[2px] border border-[#a88243] transition-colors"
+          className="flex-1 flex items-center justify-center gap-2 py-3 px-4 bg-[#C29958] active:bg-[#a88243] text-[#221510] font-semibold text-sm rounded-[6px] border border-[#a88243] transition-colors"
         >
           <span>Demander une cotation (RFQ)</span>
           {rfqItemsCount > 0 && (
-            <span className="inline-flex items-center justify-center text-xs font-mono bg-[#221510] text-[#C29958] px-2 py-0.5 rounded-[2px]">
+            <span className="inline-flex items-center justify-center text-xs font-mono bg-[#221510] text-[#C29958] px-2 py-0.5 rounded-[4px]">
               {rfqItemsCount}
             </span>
           )}

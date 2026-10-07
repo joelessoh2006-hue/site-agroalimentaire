@@ -33,7 +33,7 @@ export const CoaModal: React.FC<CoaModalProps> = ({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#221510]/70 backdrop-blur-sm">
-      <div className="relative w-full max-w-3xl max-h-[90vh] overflow-y-auto bg-[#FFFFFF] border border-[#E4DDD3] rounded-[2px] p-6 sm:p-10 space-y-8">
+      <div className="relative w-full max-w-3xl max-h-[90vh] overflow-y-auto bg-[#FFFFFF] border border-[#E4DDD3] rounded-[8px] p-6 sm:p-10 space-y-8">
         {/* Top controls */}
         <div className="flex items-center justify-between border-b border-[#E4DDD3] pb-4">
           <div className="flex items-center gap-2 font-mono text-xs text-[#C29958] font-bold">
@@ -45,7 +45,7 @@ export const CoaModal: React.FC<CoaModalProps> = ({
             <a
               href={`/api/docs/coa/${lotCode}`}
               download={`COA_${lotCode}_Certificat_Analyse_2026.pdf`}
-              className="px-3 py-1.5 text-xs font-display font-semibold uppercase tracking-wider text-[#221510] bg-[#C29958] hover:bg-[#b08745] rounded-[2px] transition-colors inline-flex items-center gap-1.5 border border-[#b08745]"
+              className="px-3 py-1.5 text-xs font-display font-semibold uppercase tracking-wider text-[#221510] bg-[#C29958] hover:bg-[#b08745] rounded-[6px] transition-colors inline-flex items-center gap-1.5 border border-[#b08745]"
             >
               <Download className="w-3.5 h-3.5" />
               <span>Télécharger PDF</span>
@@ -53,7 +53,7 @@ export const CoaModal: React.FC<CoaModalProps> = ({
 
             <button
               onClick={handlePrint}
-              className="px-3 py-1.5 text-xs font-display font-semibold uppercase tracking-wider text-[#221510] bg-[#FAF7F2] border border-[#E4DDD3] rounded-[2px] hover:bg-[#E4DDD3] transition-colors cursor-pointer inline-flex items-center gap-1.5"
+              className="px-3 py-1.5 text-xs font-display font-semibold uppercase tracking-wider text-[#221510] bg-[#FAF7F2] border border-[#E4DDD3] rounded-[6px] hover:bg-[#E4DDD3] transition-colors cursor-pointer inline-flex items-center gap-1.5"
             >
               <Printer className="w-3.5 h-3.5" />
               <span>Imprimer</span>
@@ -61,7 +61,7 @@ export const CoaModal: React.FC<CoaModalProps> = ({
 
             <button
               onClick={onClose}
-              className="p-1.5 text-[#5D5753] hover:text-[#221510] hover:bg-[#F8F4EE] rounded-[2px] transition-colors cursor-pointer"
+              className="p-1.5 text-[#5D5753] hover:text-[#221510] hover:bg-[#F8F4EE] rounded-[4px] transition-colors cursor-pointer"
             >
               <X className="w-5 h-5" />
             </button>
@@ -82,7 +82,7 @@ export const CoaModal: React.FC<CoaModalProps> = ({
         </div>
 
         {/* Sample Identification Grid */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 p-4 bg-[#F8F4EE] rounded-[2px] border border-[#E4DDD3] text-xs font-mono">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 p-4 bg-[#F8F4EE] rounded-[6px] border border-[#E4DDD3] text-xs font-mono">
           <div>
             <span className="text-[#5D5753] block text-[10px]">NUMÉRO DE LOT :</span>
             <strong className="text-[#221510] font-bold">{lotCode}</strong>
@@ -223,7 +223,7 @@ export const CoaModal: React.FC<CoaModalProps> = ({
             </p>
           </div>
 
-          <div className="border border-[#E4DDD3] rounded-[2px] p-3 bg-[#FCFAF7] text-center space-y-1">
+          <div className="border border-[#E4DDD3] rounded-[6px] p-3 bg-[#FCFAF7] text-center space-y-1">
             <div className="font-mono text-[10px] text-[#C29958] font-bold">
               SCEAU D'AUTHENTICITÉ DIGITALE
             </div>

@@ -47,7 +47,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
   };
 
   return (
-    <article className="bg-[#FFFFFF] rounded-[2px] border border-[#E4DDD3] overflow-hidden flex flex-col justify-between hover:border-[#C29958] transition-colors group">
+    <article className="bg-[#FFFFFF] rounded-[8px] border border-[#E4DDD3] overflow-hidden flex flex-col justify-between hover:border-[#C29958] transition-colors group">
       <div>
         {/* Visual Container */}
         <div className="relative h-48 sm:h-52 w-full bg-[#F1EDE7] overflow-hidden border-b border-[#E4DDD3]">
@@ -73,7 +73,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
           ) : (
             /* Resilient SVG/CSS fallback per zero-broken-image policy */
             <div className="w-full h-full flex flex-col items-center justify-center p-4 bg-[#F1EDE7] text-[#4A2C21] text-center">
-              <div className="w-10 h-10 rounded-[2px] bg-[#4A2C21]/10 flex items-center justify-center mb-2">
+              <div className="w-10 h-10 rounded-[6px] bg-[#4A2C21]/10 flex items-center justify-center mb-2">
                 <FileText className="w-5 h-5 text-[#C29958]" />
               </div>
               <span className="font-display text-xs font-bold uppercase tracking-wider text-[#221510]">
@@ -90,7 +90,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
             {product.industry.map((ind: string) => (
               <span
                 key={ind}
-                className={`text-[10px] font-mono font-bold uppercase tracking-wider px-2 py-0.5 rounded-[2px] ${
+                className={`text-[10px] font-mono font-bold uppercase tracking-wider px-2 py-0.5 rounded-[4px] ${
                   ind === 'cosmetique'
                     ? 'bg-[#221510] text-[#C29958] border border-[#C29958]/40'
                     : ind === 'agricole'
@@ -145,7 +145,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
 
           {/* 2 Spécifications Clés Standard Barry Callebaut */}
           <div className="pt-2 border-t border-[#E4DDD3]">
-            <div className="grid grid-cols-2 divide-x divide-[#E4DDD3] bg-[#FAF7F2] border border-[#E4DDD3] rounded-[2px] font-mono text-xs">
+            <div className="grid grid-cols-2 divide-x divide-[#E4DDD3] bg-[#FAF7F2] border border-[#E4DDD3] rounded-[4px] font-mono text-xs">
               {Object.entries(product.specs).slice(0, 2).map(([key, val]) => (
                 <div key={key} className="p-2.5 space-y-0.5">
                   <span className="text-[10px] text-[#5D5753] block truncate uppercase font-sans font-semibold">
@@ -178,7 +178,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
       <div className="p-5 sm:p-6 pt-0 border-t border-[#E4DDD3] grid grid-cols-2 gap-2 mt-4 pt-4">
         <button
           onClick={() => onOpenSpecs(product)}
-          className="w-full py-2.5 px-3 text-center text-xs font-display font-bold uppercase tracking-wider text-[#221510] bg-[#FFFFFF] border border-[#E4DDD3] rounded-[2px] hover:border-[#221510] hover:bg-[#FAF7F2] transition-colors inline-flex items-center justify-center gap-1.5 cursor-pointer"
+          className="w-full py-2.5 px-3 text-center text-xs font-display font-bold uppercase tracking-wider text-[#221510] bg-[#FFFFFF] border border-[#E4DDD3] rounded-[6px] hover:border-[#221510] hover:bg-[#FAF7F2] transition-colors inline-flex items-center justify-center gap-1.5 cursor-pointer"
         >
           <FileText className="w-3.5 h-3.5 text-[#C29958]" />
           <span>Fiche CoA</span>
@@ -186,7 +186,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
 
         <button
           onClick={() => onToggleRfq(product)}
-          className={`w-full py-2.5 px-3 text-center text-xs font-display font-bold uppercase tracking-wider rounded-[2px] transition-colors inline-flex items-center justify-center gap-1.5 cursor-pointer border ${
+          className={`w-full py-2.5 px-3 text-center text-xs font-display font-bold uppercase tracking-wider rounded-[6px] transition-colors inline-flex items-center justify-center gap-1.5 cursor-pointer border ${
             isAddedToRfq
               ? 'bg-[#2E5A36] text-[#FFFFFF] border-[#2E5A36]'
               : 'bg-[#C29958] text-[#221510] hover:bg-[#b08745] border-[#b08745]'

@@ -20,9 +20,15 @@
   - **Indicateurs d'usine vérifiables :** Métriques réelles (85 000 t/an broyage San Pedro, 450 bars pressage mécanique PPP, &lt; 75 µm finesse alpine, &lt; 0.050 ppm seuil ICP-MS cadmium).
 - **Phase 3 Alignement Design B2B Standard Barry Callebaut :**
   - **Typographie néo-grotesque éditoriale :** Déclaration de `--font-sans`, `--font-display`, `--font-title` et `--font-body` avec `Source Sans 3` pour une application globale sans régression sur l'ensemble des balises, couplée à `JetBrains Mono` pour les valeurs chiffrées de laboratoire.
-  - **Boutons et CTA industriels :** Rectangles nets avec chanfrein 2px (`rounded-[2px]`), aplats de couleur pleins (laiton mat `#C29958`, chocolat `#221510`, vert homologation `#2E5A36`), sans ombre portée, bascule franche de contraste au survol.
+  - **Boutons et CTA industriels :** Rectangles nets avec chanfrein 2px initial, puis adoucissement harmonisé.
   - **Fiches produits standard Barry Callebaut :** Conteneur blanc pur sur fond écru léger, séparation par bordure fine 1px, image nette, badge de segment sobre, tableau succinct de 2 spécifications clés en grille 2 colonnes avec diviseur vertical (`divide-x divide-[#E4DDD3] bg-[#FAF7F2]`), et boutons directs de téléchargement TDS et devis RFQ.
-  - **Filtres du catalogue :** Élimination des arrondis (10px, 8px, 6px) et micro-ombres résiduelles sur les filtres au profit de rectangles 2px nets et bordures 1px.
+  - **Filtres du catalogue :** Élimination des arrondis hétérogènes au profit d'un design net et cohérent.
+- **Phase 4 Harmonisation des Arrondis (Adoucissement des angles rigides) :**
+  - **Cartes et conteneurs principaux :** Passage généralisé à `rounded-[8px]` sur les cartes de segment métier, cartes produits, cartes piliers industriels, conteneurs de modales, panneaux de filtres et sections.
+  - **Boutons d'action, CTA & Contrôles de formulaire :** Passage généralisé à `rounded-[6px]` sur l'ensemble des boutons du site (Header, CTA, RFQ, TDS, CoA, filtres, inputs, selects, textareas).
+  - **Boîtes d'icônes techniques (`w-10 h-10`, `w-12 h-12`, `w-8 h-8`) :** Passage à `rounded-[6px]`.
+  - **Badges, puces et étiquettes techniques :** Passage à `rounded-[4px]`.
+  - **Couverture exhaustive :** 100% des composants mis à jour (`Header`, `HomeView`, `CatalogueView`, `ProductCard`, `ProductDetailView`, `SavoirFaireView`, `QualityView`, `ContactRfqView`, `Footer`, `TermsModal`, `PrivacyModal`, `TdsDownloadModal`, `CoaModal`, `MobileStickyBar`, `CookieBanner`, `NotFoundView`). Zero régression, zéro `rounded-[2px]` restant, build vérifié.
 
 ### B. Modélisation Exhaustive des Données Métier
 - **9 Dérivés de Cacao Purs modélisés :**
