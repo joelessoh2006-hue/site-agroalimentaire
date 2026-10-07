@@ -46,6 +46,11 @@
   - **Affichage du débit volumique en JetBrains Mono :** Positionnement du débit volumique (`15.0 T/h`, etc.) en haut à droite en police `font-mono text-xs text-[#78716C]` (ou laiton `#C29958` quand l'étape est active).
   - **Trigrammes industriels d'unité normalisés :** Association en haut à gauche du numéro et du code machine officiel (`01 · REC-01`, `02 · TOR-02`, `03 · MOY-03`, `04 · PRS-04`, `05 · ALC-05`, `06 · EMB-06`).
   - **Maintien de l'interaction dynamique :** Préservation du fond sombre `#221510` et des accents laiton `#C29958` pour l'étape active.
+- **Phase 8 Allègement Ergonomique & Densité de Texte (`SavoirFaireView.tsx`) :**
+  - **En-tête épuré :** Suppression du badge vert flottant et réduction du sous-titre à une seule phrase technique concise.
+  - **Tableau télégraphique à 3 colonnes :** Remplacement des longs paragraphes et encadrés narratifs de l'étape active par un tableau compact Input / Output / CCP avec maintien des cadrans Température et Débit en JetBrains Mono.
+  - **Bloc EUDR minéral clair :** Passage sur fond clair `#FAF7F2` bordé `#E4DDD3`, élimination des 3 longs pavés narratifs et conservation exclusive du titre, du CTA et des 4 KPIs majeurs en JetBrains Mono.
+  - **Bande de métriques compacte et rectiligne :** Fiche de lot simplifiée avec métriques analytiques LIMS (Fermentation, Cadmium, Calibre, Sceau sanitaire) sous forme d'une ligne technique avec diviseurs fins.
 
 ### B. Modélisation Exhaustive des Données Métier
 - **9 Dérivés de Cacao Purs modélisés :**
