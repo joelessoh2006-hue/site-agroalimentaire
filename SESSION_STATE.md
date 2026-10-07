@@ -14,6 +14,11 @@
   - **Typographie éditoriale & technique :** Remplacement de Space Grotesk par `Fraunces` pour les titres éditoriaux de caractère, couplée à `IBM Plex Sans` pour le corps technique et `JetBrains Mono` pour les valeurs de laboratoire et de contrôle LIMS.
   - **Géométrie industrielle stricte :** Élimination de toutes les ombres portées diffuses (`shadow-md`, `shadow-xl`, `shadow-2xl`, etc.). Remplacement par des bordures rectilignes de 1px (`#E4DDD3` ou `#4A2C21`) et un chanfrein sobre de 2px (`rounded-[2px]`).
   - **Micro-interactions sobres :** Suppression des effets de lévitation (`hover:-translate-y-*`, `hover:scale-*`, `group-hover:scale-105`) au profit de transitions directes de contraste (`transition-colors`).
+- **Phase 2 Refactoring Structurel de la Page d'Accueil (`HomeView.tsx`) :**
+  - **Hero industriel :** Titre affirmé décrivant le métier exact de l'usine, suppression de la grille de points en arrière-plan, suppression du badge pilule pulsant au profit d'un indicateur technique sobre.
+  - **Suppression de la grille Bento :** Remplacement des blocs asymétriques décoratifs par une structure équilibrée en 3 piliers industriels (Traçabilité EUDR 2023/1115, Laboratoire ISO 17025, Logistique maritime & conditionnements).
+  - **Indicateurs d'usine vérifiables :** Métriques réelles (85 000 t/an broyage San Pedro, 450 bars pressage mécanique PPP, &lt; 75 µm finesse alpine, &lt; 0.050 ppm seuil ICP-MS cadmium).
+  - **Harmonisation globale :** Remplacement de tous les badges pilules, arrondis et zooms de cartes par des chanfreins 2px et transitions directes de couleur.
 
 ### B. Modélisation Exhaustive des Données Métier
 - **9 Dérivés de Cacao Purs modélisés :**

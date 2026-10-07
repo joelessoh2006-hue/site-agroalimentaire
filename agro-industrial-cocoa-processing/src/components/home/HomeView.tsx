@@ -6,14 +6,12 @@ import {
   ShieldCheck,
   CheckCircle2,
   Factory,
-  Sparkles,
   Layers,
   FlaskConical,
   Globe2,
   PackageCheck,
   ExternalLink,
-  Send,
-  Award
+  Send
 } from 'lucide-react';
 import { ProductImage } from '../common/ProductImage';
 
@@ -33,46 +31,43 @@ export const HomeView: React.FC<HomeViewProps> = ({
   return (
     <div className="space-y-20">
       {/* 1. Hero Section Industrielle */}
-      <section className="relative overflow-hidden bg-[#221510] text-[#F8F4EE] rounded-[14px] border border-[#4A2C21] p-8 sm:p-12 lg:p-16 shadow-xl">
-        {/* Subtle geometric pattern overlay */}
-        <div className="absolute inset-0 opacity-5 pointer-events-none bg-[radial-gradient(#C29958_1px,transparent_1px)] [background-size:18px_18px]" />
-
-        <div className="relative z-10 max-w-4xl space-y-6">
-          <div className="inline-flex items-center gap-2.5 px-3 py-1 bg-[#4A2C21]/70 border border-[#C29958]/30 rounded-full text-xs font-mono text-[#C29958] uppercase tracking-wider">
-            <span className="w-2 h-2 rounded-full bg-[#C29958] animate-pulse" />
-            <span>UNITÉ INDUSTRIELLE INTÉGRÉE · SAN PEDRO & HUB EXPORT LE HAVRE</span>
+      <section className="bg-[#221510] text-[#F8F4EE] rounded-[2px] border border-[#4A2C21] p-8 sm:p-12 lg:p-16">
+        <div className="max-w-4xl space-y-6">
+          <div className="inline-flex items-center gap-2 px-3 py-1 bg-[#301C15] border border-[#4A2C21] rounded-[2px] text-xs font-mono text-[#C29958] uppercase tracking-wider">
+            <span>Usine de San Pedro · Hub logistique Le Havre · Export mondial FCL</span>
           </div>
 
           <h1 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-[#FFFFFF] leading-[1.12]">
-            TRANSFORMATION DU CACAO INDUSTRIEL DE HAUTE PRÉCISION
+            Transformateur de cacao pur : beurres, poudres et masses pour l'industrie
           </h1>
 
           <p className="font-body text-base sm:text-lg text-[#E4DDD3]/90 leading-relaxed max-w-3xl">
-            Du terroir africain rigoureusement tracé par polygones GPS aux dérivés purs prêts pour vos lignes de fabrication. Nous approvisionnons les chocolatiers, formulateurs agroalimentaires et laboratoires cosmétiques mondiaux en beurres de première pression, poudres micronisées et masses pures.
+            Broyage, pressage mécanique et raffinage de fèves ivoiriennes tracées par polygone GPS. Nous approvisionnons les chocolatiers, formulateurs agroalimentaires et marques cosmétiques sous certification FSSC 22000 et conformité EUDR 2023/1115.
           </p>
 
           <div className="pt-2 flex flex-wrap items-center gap-4">
             <button
               onClick={() => onNavigate('catalogue')}
-              className="px-6 py-3.5 text-xs font-display font-bold uppercase tracking-wider text-[#221510] bg-[#C29958] rounded-[8px] hover:bg-[#b08745] transition-all inline-flex items-center gap-2 cursor-pointer shadow-md hover:translate-y-[-1px]"
+              className="px-6 py-3.5 text-xs font-display font-bold uppercase tracking-wider text-[#221510] bg-[#C29958] rounded-[2px] hover:bg-[#b08745] transition-colors inline-flex items-center gap-2 cursor-pointer border border-[#b08745]"
             >
-              <span>Consulter le Catalogue (9 Dérivés)</span>
+              <span>Consulter le catalogue technique (9 dérivés)</span>
               <ArrowRight className="w-4 h-4" />
             </button>
 
             <button
-              onClick={() => onNavigate('savoir-faire')}
-              className="px-6 py-3.5 text-xs font-display font-semibold uppercase tracking-wider text-[#F8F4EE] bg-[#4A2C21] border border-[#C29958]/40 rounded-[8px] hover:bg-[#392118] transition-colors inline-flex items-center gap-2 cursor-pointer"
+              onClick={() => onNavigate('contact')}
+              className="px-6 py-3.5 text-xs font-display font-semibold uppercase tracking-wider text-[#F8F4EE] bg-[#4A2C21] border border-[#C29958]/40 rounded-[2px] hover:bg-[#392118] transition-colors inline-flex items-center gap-2 cursor-pointer"
             >
-              <span>Traçabilité & Pipeline 6 Étapes</span>
+              <Send className="w-3.5 h-3.5" />
+              <span>Demande de cotation ou échantillon R&D</span>
             </button>
 
             <button
-              onClick={() => onNavigate('contact')}
+              onClick={() => onNavigate('savoir-faire')}
               className="px-5 py-3.5 text-xs font-display font-semibold uppercase tracking-wider text-[#C29958] hover:text-[#FFFFFF] transition-colors inline-flex items-center gap-1.5 cursor-pointer"
             >
-              <Send className="w-3.5 h-3.5" />
-              <span>Demande RFQ & Échantillons</span>
+              <span>Traçabilité & Procédé usine</span>
+              <ArrowRight className="w-3.5 h-3.5" />
             </button>
           </div>
         </div>
@@ -81,48 +76,48 @@ export const HomeView: React.FC<HomeViewProps> = ({
         <div className="mt-14 pt-8 border-t border-[#4A2C21]/80 grid grid-cols-2 md:grid-cols-4 gap-6">
           <div>
             <div className="font-mono text-2xl sm:text-3xl font-bold text-[#FFFFFF] tabular-nums">
-              85 000 <span className="text-sm font-sans font-normal text-[#C29958]">T/an</span>
+              85 000 <span className="text-sm font-sans font-normal text-[#C29958]">t/an</span>
             </div>
             <div className="font-display text-[11px] uppercase tracking-wider text-[#E4DDD3]/70 mt-1">
-              Capacité de Broyage Annuelle
+              Capacité de broyage à San Pedro
             </div>
           </div>
 
           <div>
             <div className="font-mono text-2xl sm:text-3xl font-bold text-[#FFFFFF] tabular-nums">
-              450 <span className="text-sm font-sans font-normal text-[#C29958]">BARS</span>
+              450 <span className="text-sm font-sans font-normal text-[#C29958]">bars</span>
             </div>
             <div className="font-display text-[11px] uppercase tracking-wider text-[#E4DDD3]/70 mt-1">
-              Pressage Isotherme Beurre PPP
+              Pressage mécanique isotherme
             </div>
           </div>
 
           <div>
             <div className="font-mono text-2xl sm:text-3xl font-bold text-[#FFFFFF] tabular-nums">
-              99.85 <span className="text-sm font-sans font-normal text-[#C29958]">%</span>
+              &lt; 75 <span className="text-sm font-sans font-normal text-[#C29958]">µm</span>
             </div>
             <div className="font-display text-[11px] uppercase tracking-wider text-[#E4DDD3]/70 mt-1">
-              Finesse Alpine &lt; 75 µm
+              Finesse alpine 200 mesh
             </div>
           </div>
 
           <div>
             <div className="font-mono text-2xl sm:text-3xl font-bold text-[#FFFFFF] tabular-nums">
-              99.2 <span className="text-sm font-sans font-normal text-[#C29958]">/ 100</span>
+              &lt; 0.050 <span className="text-sm font-sans font-normal text-[#C29958]">ppm</span>
             </div>
             <div className="font-display text-[11px] uppercase tracking-wider text-[#E4DDD3]/70 mt-1">
-              Score d'Audit FSSC 22000 Ver. 6.0
+              Seuil ICP-MS cadmium par lot
             </div>
           </div>
         </div>
       </section>
 
-      {/* 2. Segments de Marché B2B façon Barry Callebaut */}
+      {/* 2. Segments de Marché B2B */}
       <section className="space-y-8">
         <div className="border-b border-[#E4DDD3] pb-4 flex flex-col md:flex-row md:items-end justify-between gap-4">
           <div>
             <span className="font-mono text-xs text-[#C29958] uppercase tracking-wider font-bold">
-              SOLUTIONS SUR-MESURE POUR LES INDUSTRIELS
+              SOLUTIONS PAR FILIÈRE INDUSTRIELLE
             </span>
             <h2 className="font-display text-2xl sm:text-3xl font-bold tracking-tight text-[#221510] mt-1">
               Trois Grands Segments Métier
@@ -135,9 +130,9 @@ export const HomeView: React.FC<HomeViewProps> = ({
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {/* Segment 1: Chocolaterie */}
-          <div className="bg-[#FFFFFF] border border-[#E4DDD3] rounded-[10px] p-6 space-y-4 hover:border-[#C29958] transition-all group shadow-xs">
-            <div className="w-12 h-12 rounded-[8px] bg-[#221510] text-[#C29958] flex items-center justify-center">
-              <Factory className="w-6 h-6" />
+          <div className="bg-[#FFFFFF] border border-[#E4DDD3] rounded-[2px] p-6 space-y-4 hover:border-[#C29958] transition-colors group">
+            <div className="w-10 h-10 rounded-[2px] bg-[#221510] text-[#C29958] flex items-center justify-center">
+              <Factory className="w-5 h-5" />
             </div>
             <div>
               <span className="font-mono text-[10px] font-bold text-[#C29958] uppercase tracking-wider block">
@@ -176,9 +171,9 @@ export const HomeView: React.FC<HomeViewProps> = ({
           </div>
 
           {/* Segment 2: Biscuiterie & Glacerie */}
-          <div className="bg-[#FFFFFF] border border-[#E4DDD3] rounded-[10px] p-6 space-y-4 hover:border-[#C29958] transition-all group shadow-xs">
-            <div className="w-12 h-12 rounded-[8px] bg-[#4A2C21] text-[#C29958] flex items-center justify-center">
-              <Layers className="w-6 h-6" />
+          <div className="bg-[#FFFFFF] border border-[#E4DDD3] rounded-[2px] p-6 space-y-4 hover:border-[#C29958] transition-colors group">
+            <div className="w-10 h-10 rounded-[2px] bg-[#4A2C21] text-[#C29958] flex items-center justify-center">
+              <Layers className="w-5 h-5" />
             </div>
             <div>
               <span className="font-mono text-[10px] font-bold text-[#C29958] uppercase tracking-wider block">
@@ -217,9 +212,9 @@ export const HomeView: React.FC<HomeViewProps> = ({
           </div>
 
           {/* Segment 3: Cosmétique & Dermopharmacie */}
-          <div className="bg-[#FFFFFF] border border-[#E4DDD3] rounded-[10px] p-6 space-y-4 hover:border-[#C29958] transition-all group shadow-xs">
-            <div className="w-12 h-12 rounded-[8px] bg-[#2E5A36] text-[#FFFFFF] flex items-center justify-center">
-              <Sparkles className="w-6 h-6" />
+          <div className="bg-[#FFFFFF] border border-[#E4DDD3] rounded-[2px] p-6 space-y-4 hover:border-[#C29958] transition-colors group">
+            <div className="w-10 h-10 rounded-[2px] bg-[#2E5A36] text-[#FFFFFF] flex items-center justify-center">
+              <FlaskConical className="w-5 h-5" />
             </div>
             <div>
               <span className="font-mono text-[10px] font-bold text-[#C29958] uppercase tracking-wider block">
@@ -260,136 +255,143 @@ export const HomeView: React.FC<HomeViewProps> = ({
       </section>
 
       {/* 3. Bento Grid : Capacités & Gouvernance Industrielle */}
+      {/* 3. Piliers Industriels & Gouvernance Opérationnelle */}
       <section className="space-y-6">
-        <div className="border-b border-[#E4DDD3] pb-4">
-          <span className="font-mono text-xs text-[#C29958] uppercase tracking-wider font-bold">
-            EXCELLENCE OPÉRATIONNELLE & CONFORMITÉ MONDIALE
-          </span>
-          <h2 className="font-display text-2xl sm:text-3xl font-bold tracking-tight text-[#221510] mt-1">
-            Infrastructures & Capacités Certifiées
-          </h2>
+        <div className="border-b border-[#E4DDD3] pb-4 flex flex-col md:flex-row md:items-end justify-between gap-4">
+          <div>
+            <span className="font-mono text-xs text-[#C29958] uppercase tracking-wider font-bold">
+              CADRE NORMATIF & CAPACITÉS D'USINE
+            </span>
+            <h2 className="font-display text-2xl sm:text-3xl font-bold tracking-tight text-[#221510] mt-1">
+              Gouvernance Industrielle & Logistique
+            </h2>
+          </div>
+          <p className="font-body text-xs text-[#5D5753] max-w-sm">
+            Audits continus, contrôle laboratoire par lot et expéditions maritimes cadencées vers l'Europe et l'Amérique du Nord.
+          </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {/* Bento Card 1 : Grand bloc Traçabilité EUDR */}
-          <div className="md:col-span-2 bg-[#F8F4EE] border border-[#E4DDD3] rounded-[10px] p-6 sm:p-8 flex flex-col justify-between space-y-4">
+          {/* Pilier 1 : Traçabilité EUDR */}
+          <div className="bg-[#FFFFFF] border border-[#E4DDD3] rounded-[2px] p-6 sm:p-7 flex flex-col justify-between space-y-5">
             <div className="space-y-3">
-              <div className="inline-flex items-center gap-2 text-xs font-mono text-[#2E5A36] font-bold">
-                <Globe2 className="w-4 h-4" />
-                <span>REGLEMENT UE 2023/1115 · ZERO DEFORESTATION GARANTIE</span>
+              <div className="w-10 h-10 rounded-[2px] bg-[#2E5A36] text-[#FFFFFF] flex items-center justify-center">
+                <Globe2 className="w-5 h-5" />
               </div>
-              <h3 className="font-display text-xl sm:text-2xl font-bold text-[#221510]">
-                Traçabilité Polygonale GPS de l'Arbre au Conteneur
-              </h3>
-              <p className="font-body text-xs sm:text-sm text-[#4f4541] leading-relaxed max-w-2xl">
-                100% de nos fèves proviennent de parcelles agricoles cartographiées par polygones GPS. Chaque lot expédié est audité par imagerie satellitaire radar (Sentinel-2) attestant l'absence totale de déforestation post-décembre 2020.
+              <div>
+                <span className="text-[10px] font-mono text-[#2E5A36] font-bold uppercase tracking-wider block">
+                  RÈGLEMENT UE 2023/1115
+                </span>
+                <h3 className="font-display text-lg font-bold text-[#221510] mt-0.5">
+                  Traçabilité Polygonale GPS
+                </h3>
+              </div>
+              <p className="font-body text-xs text-[#4f4541] leading-relaxed">
+                Chaque lot est adossé aux polygones cartographiques de nos coopératives partenaires. Audits réguliers par imagerie satellite Sentinel-2 prouvant l'absence de déforestation post-2020.
               </p>
             </div>
 
-            <div className="grid grid-cols-3 gap-4 pt-4 border-t border-[#E4DDD3] font-mono">
-              <div>
-                <span className="text-xl sm:text-2xl font-bold text-[#221510]">38 450 ha</span>
-                <span className="block text-[11px] text-[#5D5753]">Superficie Géomappée</span>
+            <div className="pt-3 border-t border-[#E4DDD3] font-mono text-xs space-y-1.5">
+              <div className="flex justify-between">
+                <span className="text-[#5D5753]">Superficie géomappée :</span>
+                <strong className="text-[#221510]">38 450 ha</strong>
               </div>
-              <div>
-                <span className="text-xl sm:text-2xl font-bold text-[#221510]">14 250</span>
-                <span className="block text-[11px] text-[#5D5753]">Polygones GPS Validés</span>
+              <div className="flex justify-between">
+                <span className="text-[#5D5753]">Polygones audités :</span>
+                <strong className="text-[#221510]">14 250 parcelles</strong>
               </div>
-              <div>
-                <span className="text-xl sm:text-2xl font-bold text-[#2E5A36]">100%</span>
-                <span className="block text-[11px] text-[#5D5753]">Conforme EUDR</span>
+              <div className="flex justify-between">
+                <span className="text-[#5D5753]">Conformité EUDR :</span>
+                <strong className="text-[#2E5A36]">100% vérifiée</strong>
               </div>
             </div>
           </div>
 
-          {/* Bento Card 2 : Laboratoire ISO 17025 */}
-          <div className="bg-[#FFFFFF] border border-[#E4DDD3] rounded-[10px] p-6 flex flex-col justify-between space-y-4 shadow-xs">
-            <div className="space-y-2">
-              <div className="w-10 h-10 rounded-[6px] bg-[#221510] text-[#C29958] flex items-center justify-center">
+          {/* Pilier 2 : Laboratoire ISO 17025 */}
+          <div className="bg-[#FFFFFF] border border-[#E4DDD3] rounded-[2px] p-6 sm:p-7 flex flex-col justify-between space-y-5">
+            <div className="space-y-3">
+              <div className="w-10 h-10 rounded-[2px] bg-[#221510] text-[#C29958] flex items-center justify-center">
                 <FlaskConical className="w-5 h-5" />
               </div>
-              <h3 className="font-display text-lg font-bold text-[#221510]">
-                Laboratoire Interne ISO 17025
-              </h3>
-              <p className="font-body text-xs text-[#5D5753] leading-relaxed">
-                Spectrométrie ICP-MS pour le dosage ultra-précis du cadmium (&lt; 0.050 ppm) selon Règl. UE 488/2014, PCR temps réel pour Salmonella sp., et chromatographie HPLC mycotoxines.
+              <div>
+                <span className="text-[10px] font-mono text-[#C29958] font-bold uppercase tracking-wider block">
+                  ACCRÉDITATION ISO 17025
+                </span>
+                <h3 className="font-display text-lg font-bold text-[#221510] mt-0.5">
+                  Laboratoire Analytique Interne
+                </h3>
+              </div>
+              <p className="font-body text-xs text-[#4f4541] leading-relaxed">
+                Spectrométrie ICP-MS pour le dosage du cadmium (&lt; 0.050 ppm) et plomb, PCR temps réel pour Salmonella (375 g) et chromatographie HPLC pour mycotoxines avant toute libération.
               </p>
             </div>
 
-            <div className="pt-2">
+            <div className="pt-3 border-t border-[#E4DDD3] space-y-2">
+              <div className="flex flex-wrap gap-1 font-mono text-[10px]">
+                <span className="bg-[#F8F4EE] border border-[#E4DDD3] px-2 py-0.5 rounded-[2px] text-[#221510]">FSSC 22000</span>
+                <span className="bg-[#F8F4EE] border border-[#E4DDD3] px-2 py-0.5 rounded-[2px] text-[#221510]">Halal</span>
+                <span className="bg-[#F8F4EE] border border-[#E4DDD3] px-2 py-0.5 rounded-[2px] text-[#221510]">Kasher</span>
+                <span className="bg-[#F8F4EE] border border-[#E4DDD3] px-2 py-0.5 rounded-[2px] text-[#221510]">Bio / Cosmos</span>
+              </div>
               <button
                 onClick={() => onNavigate('qualite')}
-                className="w-full py-2 px-3 text-xs font-display font-semibold uppercase tracking-wider text-[#221510] bg-[#F8F4EE] border border-[#E4DDD3] rounded-[6px] hover:bg-[#C29958] transition-colors cursor-pointer text-center"
+                className="w-full py-2 px-3 text-xs font-display font-semibold uppercase tracking-wider text-[#221510] bg-[#F8F4EE] border border-[#E4DDD3] rounded-[2px] hover:border-[#C29958] hover:bg-[#FAF7F2] transition-colors cursor-pointer text-center"
               >
-                Explorer la Matrice Labo
+                Consulter les protocoles d'analyse
               </button>
             </div>
           </div>
 
-          {/* Bento Card 3 : Badges & Certifications Globales */}
-          <div className="bg-[#FFFFFF] border border-[#E4DDD3] rounded-[10px] p-6 space-y-3 shadow-xs">
-            <div className="w-10 h-10 rounded-[6px] bg-[#C29958]/20 text-[#C29958] flex items-center justify-center">
-              <Award className="w-5 h-5" />
-            </div>
-            <h3 className="font-display text-lg font-bold text-[#221510]">
-              Accréditations Mondiales
-            </h3>
-            <p className="font-body text-xs text-[#5D5753]">
-              Lignes de production auditées en continu : FSSC 22000, ISO 9001, Halal International, Casher Parve, Ecocert Cosmos et Rainforest Alliance.
-            </p>
-            <div className="flex flex-wrap gap-1.5 pt-2 font-mono text-[10px]">
-              <span className="bg-[#F8F4EE] border border-[#E4DDD3] px-2 py-0.5 rounded-[4px] text-[#221510]">FSSC 22000</span>
-              <span className="bg-[#F8F4EE] border border-[#E4DDD3] px-2 py-0.5 rounded-[4px] text-[#221510]">ISO 9001</span>
-              <span className="bg-[#F8F4EE] border border-[#E4DDD3] px-2 py-0.5 rounded-[4px] text-[#221510]">Halal</span>
-              <span className="bg-[#F8F4EE] border border-[#E4DDD3] px-2 py-0.5 rounded-[4px] text-[#221510]">Kosher</span>
-              <span className="bg-[#F8F4EE] border border-[#E4DDD3] px-2 py-0.5 rounded-[4px] text-[#221510]">Bio / EOS</span>
-            </div>
-          </div>
-
-          {/* Bento Card 4 : Conditionnements & Logistique Maritime FCL/LCL */}
-          <div className="md:col-span-2 bg-[#221510] text-[#F8F4EE] border border-[#4A2C21] rounded-[10px] p-6 sm:p-8 flex flex-col justify-between space-y-4">
-            <div className="space-y-2">
-              <div className="inline-flex items-center gap-2 text-xs font-mono text-[#C29958] uppercase">
-                <PackageCheck className="w-4 h-4" />
-                <span>EXPÉDITIONS INTERNATIONALES FCL & LCL · INCOTERMS FOB / CIF</span>
+          {/* Pilier 3 : Conditionnements & Logistique */}
+          <div className="bg-[#FFFFFF] border border-[#E4DDD3] rounded-[2px] p-6 sm:p-7 flex flex-col justify-between space-y-5">
+            <div className="space-y-3">
+              <div className="w-10 h-10 rounded-[2px] bg-[#4A2C21] text-[#C29958] flex items-center justify-center">
+                <PackageCheck className="w-5 h-5" />
               </div>
-              <h3 className="font-display text-xl font-bold text-[#FFFFFF]">
-                Conditionnements Industriels & Cadencement
-              </h3>
-              <p className="font-body text-xs sm:text-sm text-[#E4DDD3]/80 leading-relaxed max-w-2xl">
-                Cartons export 25 kg sous doublure PE hermétique, sacs kraft multicouches soudés, fûts métalliques thermolaqués de 190 kg, Big Bags de 1 000 kg et citernes calorifugées inox 316L (24 tonnes liquides à 45°C).
+              <div>
+                <span className="text-[10px] font-mono text-[#C29958] font-bold uppercase tracking-wider block">
+                  LOGISTIQUE FCL & LCL
+                </span>
+                <h3 className="font-display text-lg font-bold text-[#221510] mt-0.5">
+                  Formats Export & Cadencement
+                </h3>
+              </div>
+              <p className="font-body text-xs text-[#4f4541] leading-relaxed">
+                Cartons 25 kg sous liner PE, sacs kraft soudés, fûts métalliques 190 kg, Big Bags 1 000 kg et citernes inox 316L (24 t liquides maintenues à 45°C). Départ portuaire direct à San Pedro.
               </p>
             </div>
 
-            <div className="pt-2 flex flex-wrap items-center gap-4">
-              <span className="text-xs font-mono text-[#C29958]">Départ : Port Autonome de San Pedro / Hub Le Havre</span>
+            <div className="pt-3 border-t border-[#E4DDD3] space-y-2">
+              <div className="font-mono text-[11px] text-[#5D5753]">
+                Incoterms : <strong className="text-[#221510]">FOB San Pedro / CIF Le Havre, Rotterdam, Anvers</strong>
+              </div>
               <button
                 onClick={() => onNavigate('contact')}
-                className="px-4 py-2 text-xs font-display font-semibold uppercase tracking-wider text-[#221510] bg-[#C29958] rounded-[6px] hover:bg-[#b08745] transition-colors cursor-pointer"
+                className="w-full py-2 px-3 text-xs font-display font-semibold uppercase tracking-wider text-[#221510] bg-[#C29958] rounded-[2px] hover:bg-[#b08745] transition-colors cursor-pointer text-center border border-[#b08745]"
               >
-                Demander une cotation FOB / CIF
+                Demander une cotation logistique
               </button>
             </div>
           </div>
         </div>
       </section>
 
-      {/* 4. Aperçu des 9 Ingrédients Clés */}
+      {/* 4. Aperçu des 6 Premiers Ingrédients du Catalogue */}
       <section className="space-y-6">
         <div className="border-b border-[#E4DDD3] pb-4 flex flex-col sm:flex-row sm:items-end justify-between gap-4">
           <div>
             <span className="font-mono text-xs text-[#C29958] uppercase tracking-wider font-bold">
-              CATALOGUE OFFICIEL DES FRACTIONS DE CACAO
+              INGRÉDIENTS INDUSTRIELS DE RÉFÉRENCE
             </span>
             <h2 className="font-display text-2xl sm:text-3xl font-bold tracking-tight text-[#221510] mt-1">
-              Les 9 Ingrédients Industriels de Référence
+              Extraits du Catalogue Technique
             </h2>
           </div>
           <button
             onClick={() => onNavigate('catalogue')}
-            className="text-xs font-display font-bold uppercase tracking-wider text-[#221510] bg-[#FFFFFF] border border-[#E4DDD3] hover:border-[#C29958] px-4 py-2 rounded-[6px] transition-colors inline-flex items-center gap-1.5 cursor-pointer self-start sm:self-auto"
+            className="text-xs font-display font-bold uppercase tracking-wider text-[#221510] bg-[#FFFFFF] border border-[#E4DDD3] hover:border-[#C29958] px-4 py-2 rounded-[2px] transition-colors inline-flex items-center gap-1.5 cursor-pointer self-start sm:self-auto"
           >
-            <span>Voir la grille complète & filtres</span>
+            <span>Voir les 9 produits & filtrer</span>
             <ExternalLink className="w-3.5 h-3.5 text-[#C29958]" />
           </button>
         </div>
@@ -400,19 +402,18 @@ export const HomeView: React.FC<HomeViewProps> = ({
             return (
               <div
                 key={product.id}
-                className="bg-[#FFFFFF] border border-[#E4DDD3] rounded-[8px] overflow-hidden flex flex-col justify-between hover:border-[#C29958] hover:shadow-md transition-all group"
+                className="bg-[#FFFFFF] border border-[#E4DDD3] rounded-[2px] overflow-hidden flex flex-col justify-between hover:border-[#C29958] transition-colors group"
               >
                 <div>
-                  <div className="relative h-44 w-full bg-[#F1EDE7] overflow-hidden">
+                  <div className="relative h-44 w-full bg-[#F1EDE7] overflow-hidden border-b border-[#E4DDD3]">
                     <ProductImage
                       src={product.image_url}
                       alt={product.name}
                       productName={product.name}
                       category={product.category}
-                      className="group-hover:scale-105"
                     />
                     <div className="absolute top-2.5 right-2.5">
-                      <span className="text-[10px] font-mono font-bold uppercase tracking-wider px-2 py-0.5 rounded-[4px] bg-[#221510]/80 text-[#C29958] backdrop-blur-xs">
+                      <span className="text-[10px] font-mono font-bold uppercase tracking-wider px-2 py-0.5 rounded-[2px] bg-[#221510]/85 text-[#C29958] border border-[#4A2C21]">
                         {product.category.toUpperCase()}
                       </span>
                     </div>
@@ -434,16 +435,16 @@ export const HomeView: React.FC<HomeViewProps> = ({
                 <div className="p-5 pt-0 border-t border-[#E4DDD3]/60 grid grid-cols-2 gap-2 mt-2 pt-3">
                   <button
                     onClick={() => onNavigate('produit', product.id)}
-                    className="w-full py-1.5 px-2 text-center text-xs font-display font-semibold uppercase tracking-wider text-[#221510] bg-[#F8F4EE] border border-[#E4DDD3] rounded-[6px] hover:border-[#C29958] transition-colors cursor-pointer"
+                    className="w-full py-1.5 px-2 text-center text-xs font-display font-semibold uppercase tracking-wider text-[#221510] bg-[#F8F4EE] border border-[#E4DDD3] rounded-[2px] hover:border-[#C29958] transition-colors cursor-pointer"
                   >
                     Fiche Produit
                   </button>
                   <button
                     onClick={() => onToggleRfq(product)}
-                    className={`w-full py-1.5 px-2 text-center text-xs font-display font-semibold uppercase tracking-wider rounded-[6px] transition-colors cursor-pointer ${
+                    className={`w-full py-1.5 px-2 text-center text-xs font-display font-semibold uppercase tracking-wider rounded-[2px] transition-colors cursor-pointer border ${
                       isAdded
-                        ? 'bg-[#2E5A36] text-[#FFFFFF]'
-                        : 'bg-[#C29958] text-[#221510] hover:bg-[#b08745]'
+                        ? 'bg-[#2E5A36] text-[#FFFFFF] border-[#2E5A36]'
+                        : 'bg-[#C29958] text-[#221510] border-[#b08745] hover:bg-[#b08745]'
                     }`}
                   >
                     {isAdded ? 'Ajouté ✓' : '+ RFQ'}
@@ -455,32 +456,32 @@ export const HomeView: React.FC<HomeViewProps> = ({
         </div>
       </section>
 
-      {/* 5. Bannière d'Appel à l'Action B2B Finale */}
-      <section className="bg-[#FAF7F2] border border-[#E4DDD3] rounded-[12px] p-8 sm:p-12 text-center space-y-6">
+      {/* 5. Appel à l'Action B2B Industriel */}
+      <section className="bg-[#FAF7F2] border border-[#E4DDD3] rounded-[2px] p-8 sm:p-12 text-center space-y-6">
         <div className="max-w-2xl mx-auto space-y-3">
-          <div className="w-12 h-12 bg-[#221510] text-[#C29958] rounded-full flex items-center justify-center mx-auto mb-2">
+          <div className="w-12 h-12 bg-[#221510] text-[#C29958] rounded-[2px] border border-[#4A2C21] flex items-center justify-center mx-auto mb-2">
             <ShieldCheck className="w-6 h-6" />
           </div>
           <h2 className="font-display text-2xl sm:text-3xl font-bold text-[#221510]">
-            Prêt à Homologuer nos Ingrédients dans vos Formulations ?
+            Homologation d'Ingrédients dans vos Lignes de Production
           </h2>
           <p className="font-body text-xs sm:text-sm text-[#5D5753] leading-relaxed">
-            Notre cellule R&D et notre desk export vous accompagnent. Demandez des échantillons pilotes de 250 g à 1 kg expédiés sous 48h ou établissez votre calendrier annuel de livraison conteneurisée.
+            Notre desk export et nos ingénieurs qualité traitent vos demandes de cotation volume (FCL/LCL) et organisent l'expédition d'échantillons d'essais sous 48 heures.
           </p>
         </div>
 
         <div className="flex flex-wrap items-center justify-center gap-4 pt-2">
           <button
             onClick={() => onNavigate('contact')}
-            className="px-6 py-3 text-xs font-display font-bold uppercase tracking-wider text-[#221510] bg-[#C29958] rounded-[8px] hover:bg-[#b08745] transition-colors cursor-pointer shadow-sm"
+            className="px-6 py-3 text-xs font-display font-bold uppercase tracking-wider text-[#221510] bg-[#C29958] rounded-[2px] hover:bg-[#b08745] transition-colors cursor-pointer border border-[#b08745]"
           >
-            Déposer une Demande de Cotation & Échantillon
+            Déposer une demande de cotation ou échantillon
           </button>
           <button
             onClick={() => onNavigate('catalogue')}
-            className="px-6 py-3 text-xs font-display font-semibold uppercase tracking-wider text-[#221510] bg-[#FFFFFF] border border-[#E4DDD3] rounded-[8px] hover:bg-[#F8F4EE] transition-colors cursor-pointer"
+            className="px-6 py-3 text-xs font-display font-semibold uppercase tracking-wider text-[#221510] bg-[#FFFFFF] border border-[#E4DDD3] rounded-[2px] hover:bg-[#F8F4EE] transition-colors cursor-pointer"
           >
-            Voir les 9 Produits
+            Consulter les 9 fiches techniques
           </button>
         </div>
       </section>
