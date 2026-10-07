@@ -1,19 +1,7 @@
-import fs from 'fs';
-import path from 'path';
-import { fileURLToPath } from 'url';
 import { RfqPayloadSchema, ValidatedRfqPayload } from './validation';
+import { saveLeadToDatabase, B2BLeadRecord, getAllLeads, getLeadById, updateLeadStatus } from './db';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-const LEADS_FILE = path.resolve(__dirname, 'leads.json');
-
-// Interface pour stocker le lead avec ses métadonnées
-export interface StoredRfqLead extends ValidatedRfqPayload {
-  reference: string;
-  createdAt: string;
-  status: 'PENDING_REVIEW' | 'ASSIGNED' | 'PROCESSED';
-  ipAddress?: string;
-}
+export { getAllLeads, getLeadById, updateLeadStatus };
 
 /**
  * Génère une référence de dossier industrielle unique formatée
@@ -23,25 +11,6 @@ export function generateRfqReference(): string {
   const currentYear = new Date().getFullYear();
   const randomNum = Math.floor(100000 + Math.random() * 900000);
   return `RFQ-${currentYear}-${randomNum}`;
-}
-
-/**
- * Sauvegarde le lead validé dans le fichier leads.json persistant
- */
-function persistLead(lead: StoredRfqLead): void {
-  try {
-    let existingLeads: StoredRfqLead[] = [];
-    if (fs.existsSync(LEADS_FILE)) {
-      const content = fs.readFileSync(LEADS_FILE, 'utf-8');
-      if (content.trim()) {
-        existingLeads = JSON.parse(content);
-      }
-    }
-    existingLeads.unshift(lead);
-    fs.writeFileSync(LEADS_FILE, JSON.stringify(existingLeads, null, 2), 'utf-8');
-  } catch (err) {
-    console.error('[API RFQ] Erreur lors de la sauvegarde du lead dans leads.json:', err);
-  }
 }
 
 /**
@@ -64,10 +33,11 @@ export async function processRfqSubmission(
       contactEmail: string;
       itemsCount: number;
       createdAt: string;
+      status: string;
     };
   };
 }> {
-  // 1. Validation de la structure du payload
+  // 1. Validation de la structure du payload avec Zod & Sanitization
   const parseResult = RfqPayloadSchema.safeParse(rawBody);
 
   if (!parseResult.success) {
@@ -86,12 +56,12 @@ export async function processRfqSubmission(
     };
   }
 
-  const validatedData = parseResult.data;
+  const validatedData: ValidatedRfqPayload = parseResult.data;
 
   // 2. Traitement du champ Honeypot anti-bot
   // Si le champ honeypot est renseigné par un robot, on feint le succès sans rien persister
   if (validatedData.honeypot && validatedData.honeypot.length > 0) {
-    console.warn(`[Anti-Spam] Bot submission intercepted via honeypot from IP: ${clientIp || 'unknown'}`);
+    console.warn(`[Anti-Spam] Bot submission interceptée via honeypot depuis IP: ${clientIp || 'inconnue'}`);
     return {
       statusCode: 200,
       body: {
@@ -102,21 +72,39 @@ export async function processRfqSubmission(
     };
   }
 
-  // 3. Création et enregistrement du dossier commercial B2B
+  // 3. Création et persistance relationnelle du prospect B2B
   const reference = generateRfqReference();
   const createdAt = new Date().toISOString();
+  const isSample = validatedData.requestType === 'sample' ? 1 : 0;
+  const orderVolume =
+    validatedData.requestType === 'sample'
+      ? `Échantillon R&D ${validatedData.sampleSize || '500g'}`
+      : validatedData.targetVolume || '';
 
-  const storedLead: StoredRfqLead = {
-    ...validatedData,
-    reference,
-    createdAt,
-    status: 'PENDING_REVIEW',
-    ipAddress: clientIp,
+  const leadRecord: B2BLeadRecord = {
+    id: reference,
+    created_at: createdAt,
+    company_name: validatedData.companyName,
+    contact_name: validatedData.contactName,
+    email: validatedData.contactEmail,
+    phone: validatedData.contactPhone || '',
+    country: validatedData.country,
+    incoterm: validatedData.incoterm || '',
+    products_requested: JSON.stringify(validatedData.selectedProductIds),
+    order_volume: orderVolume,
+    is_sample_request: isSample,
+    status: 'nouveau',
+    vat_number: validatedData.vatNumber || '',
+    destination_port: validatedData.destinationPort,
+    project_description: validatedData.projectDescription || '',
+    ip_address: clientIp || '127.0.0.1',
+    request_type: validatedData.requestType,
   };
 
-  persistLead(storedLead);
+  // Sauvegarde dans la base de données relationnelle SQLite + miroir JSON + Supabase (si configuré)
+  await saveLeadToDatabase(leadRecord);
 
-  console.log(`[API RFQ] ✅ Nouveau dossier créé : ${reference} (${validatedData.companyName} - ${validatedData.selectedProductIds.length} produit(s))`);
+  console.log(`[API RFQ] ✅ Nouveau prospect persistant sauvegardé : ${reference} (${leadRecord.company_name})`);
 
   return {
     statusCode: 201,
@@ -126,11 +114,12 @@ export async function processRfqSubmission(
       message: 'Votre demande de cotation et d’échantillons a été enregistrée avec succès par notre usine.',
       leadSummary: {
         reference,
-        companyName: validatedData.companyName,
-        contactName: validatedData.contactName,
-        contactEmail: validatedData.contactEmail,
+        companyName: leadRecord.company_name,
+        contactName: leadRecord.contact_name,
+        contactEmail: leadRecord.email,
         itemsCount: validatedData.selectedProductIds.length,
         createdAt,
+        status: leadRecord.status,
       },
     },
   };

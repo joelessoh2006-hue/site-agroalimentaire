@@ -41,3 +41,8 @@ tmp/
 temp/
 server/leads.json
 **/leads.json
+server/leads.db*
+**/*.db
+**/*.db-journal
+**/*.db-wal
+**/*.db-shm

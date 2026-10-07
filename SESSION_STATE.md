@@ -82,7 +82,7 @@
 | Priorité | Domaine | Tâche à réaliser | Description & Objectif |
 | :---: | :--- | :--- | :--- |
 | **P1** | **Internationalisation (i18n)** | Finaliser le dictionnaire bilingue FR / EN | Permettre le basculement complet de l'interface et des fiches produits en anglais pour les acheteurs internationaux (Europe, Asie, Amériques). |
-| **P2** | **Backend & API d'ingestion** | Routes API de réception des demandes | Créer les endpoints `POST /api/rfq` et `POST /api/tds-download` (Node.js/Express ou Fastify) avec validation Zod et stockage persistant / notification par e-mail commercial. |
+| **P2** | **Backend & API d'ingestion** | ✅ Endpoints `POST /api/rfq` & `/api/contact` opérationnels | Validation Zod stricte, filtrage des e-mails jetables, sanitization XSS, honeypot anti-bot, persistance locale `server/leads.json`, intégration Vite dev + serveur Express standalone. |
 | **P3** | **Export PDF Officiel** | Générateur de PDF certifiés (TDS / COA) | Intégrer un générateur de documents PDF officiels (avec logo de l'usine, cachet de contrôle qualité et signature électronique) en remplacement du simple export texte. |
 | **P4** | **Performance & Audit SEO** | Audit Core Web Vitals & Accessibilité | Mesurer et optimiser les scores Lighthouse (LCP < 1.2s, CLS < 0.05, accessibilité WCAG AA, balises OpenGraph et schema.org Product/Organization). |
 | **P5** | **Préparation Déploiement** | Configuration de production | Mettre en place la configuration pour hébergement cloud (Vercel, Cloudflare Pages ou Docker) et variables d'environnement (`.env.production`). |
