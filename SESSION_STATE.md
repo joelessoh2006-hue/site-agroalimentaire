@@ -84,6 +84,12 @@
   - **Protection Anti-MIME-Sniffing & COOP :** `X-Content-Type-Options: nosniff`, `Cross-Origin-Opener-Policy: same-origin-allow-popups`, `X-XSS-Protection: 0`.
   - **Multi-Environnement :** Appliqué de façon universelle sur le serveur Vite (`apiPlugin.ts`), le serveur Express (`server/index.ts`), et configuré pour le déploiement cloud via [`vercel.json`](file:///d:/Bureau/Site%20Agroalimentaire/agro-industrial-cocoa-processing/vercel.json) et [`public/_headers`](file:///d:/Bureau/Site%20Agroalimentaire/agro-industrial-cocoa-processing/public/_headers).
 
+- **Audit des Variables d'Environnement & Fuites de Secrets (Étanchéité .env) :**
+  - **Confinement Strict Côté Serveur (`server/`) :** Vérification exhaustive de toutes les clés d'API et secrets sensibles (`RESEND_API_KEY`, `SMTP_PASS`, `SUPABASE_SERVICE_ROLE_KEY`, `ADMIN_API_KEY`, `TURNSTILE_SECRET_KEY`). Aucune de ces clés n'est importée ni accessible dans le bundle frontend (`src/`).
+  - **Contrôle du Préfixe `VITE_` dans le Client :** La seule variable préfixée `VITE_` autorisée et présente est `VITE_TURNSTILE_SITE_KEY` (qui est par nature une clé publique de site requise par Cloudflare pour rendre le widget client). Aucune variable d'environnement privée n'est exposée aux visiteurs.
+  - **Étanchéité Git Maximale ([`.gitignore`](file:///d:/Bureau/Site%20Agroalimentaire/agro-industrial-cocoa-processing/.gitignore)) :** Renforcement avec exclusion stricte de `.env`, `.env.local`, `.env.*.local`, des bases de données SQLite locales (`server/leads.db*`, `*.db*`), des exports JSON de leads (`leads.json`) et des e-mails archivés en dev (`sent-emails/`).
+  - **Audit d'Historique Git Réalisé :** Aucun secret ni base de données n'a jamais été commité dans l'historique du dépôt Git.
+
 ### G. Gestion & Distribution des Fichiers Techniques (TDS & COA en PDF)
 - **Génération Haute Fidélité Vectorielle :** Module de génération dédié [`server/generatePdfs.ts`](file:///d:/Bureau/Site%20Agroalimentaire/agro-industrial-cocoa-processing/server/generatePdfs.ts) s'appuyant sur `pdf-lib` sans dépendance C native.
   - **9 Fiches Techniques TDS Officielles (`public/docs/tds/`) :** Strictement conformes aux 7 sections réglementaires (Codex Alimentarius Stan 87-1981, règlements UE 488/2014 & 1169/2011, critères physico-chimiques ISO, microbiologie PCR Salmonella 2x375g, traçabilité EUDR 2023/1115, emballages FCL et visas de conformité).
