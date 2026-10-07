@@ -19,9 +19,10 @@
   - **Suppression de la grille Bento :** Remplacement des blocs asymétriques décoratifs par une structure équilibrée en 3 piliers industriels (Traçabilité EUDR 2023/1115, Laboratoire ISO 17025, Logistique maritime & conditionnements).
   - **Indicateurs d'usine vérifiables :** Métriques réelles (85 000 t/an broyage San Pedro, 450 bars pressage mécanique PPP, &lt; 75 µm finesse alpine, &lt; 0.050 ppm seuil ICP-MS cadmium).
 - **Phase 3 Alignement Design B2B Standard Barry Callebaut :**
-  - **Typographie néo-grotesque éditoriale :** Adoption de `Source Sans 3` pour les titres et le corps de texte avec titrage dense et franc, couplée à `JetBrains Mono` pour les données chiffrées de laboratoire.
-  - **Boutons et CTA industriels :** Rectangles nets avec chanfrein 2px, aplats de couleur pleins (laiton mat `#C29958`, chocolat `#221510`, vert homologation `#2E5A36`), sans ombre portée, bascule franche de contraste au survol.
-  - **Fiches produits standard Barry Callebaut :** Conteneur blanc pur sur fond écru léger, séparation par bordure fine 1px, image nette sans zoom, badge de segment sobre, tableau succinct de 2 spécifications clés (matière grasse et pH/finesse/fusion), et boutons directs de téléchargement TDS et devis RFQ.
+  - **Typographie néo-grotesque éditoriale :** Déclaration de `--font-sans`, `--font-display`, `--font-title` et `--font-body` avec `Source Sans 3` pour une application globale sans régression sur l'ensemble des balises, couplée à `JetBrains Mono` pour les valeurs chiffrées de laboratoire.
+  - **Boutons et CTA industriels :** Rectangles nets avec chanfrein 2px (`rounded-[2px]`), aplats de couleur pleins (laiton mat `#C29958`, chocolat `#221510`, vert homologation `#2E5A36`), sans ombre portée, bascule franche de contraste au survol.
+  - **Fiches produits standard Barry Callebaut :** Conteneur blanc pur sur fond écru léger, séparation par bordure fine 1px, image nette, badge de segment sobre, tableau succinct de 2 spécifications clés en grille 2 colonnes avec diviseur vertical (`divide-x divide-[#E4DDD3] bg-[#FAF7F2]`), et boutons directs de téléchargement TDS et devis RFQ.
+  - **Filtres du catalogue :** Élimination des arrondis (10px, 8px, 6px) et micro-ombres résiduelles sur les filtres au profit de rectangles 2px nets et bordures 1px.
 
 ### B. Modélisation Exhaustive des Données Métier
 - **9 Dérivés de Cacao Purs modélisés :**
