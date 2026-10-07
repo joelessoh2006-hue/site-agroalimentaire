@@ -759,6 +759,12 @@ export const COCOA_PRODUCTS: CocoaProduct[] = [
   }
 ];
 
+// Attribution automatique et normalisée des liens de téléchargement PDF officiels
+COCOA_PRODUCTS.forEach((product) => {
+  product.tdsPdfUrl = `/api/docs/tds/${product.slug}`;
+  product.coaPdfUrl = `/api/docs/coa/LOT-${product.category.toUpperCase().slice(0, 3)}-2026-884A`;
+});
+
 // Helper functions for easy filtering and lookup
 export function getProductById(id: string): CocoaProduct | undefined {
   return COCOA_PRODUCTS.find((p) => p.id === id || p.slug === id);

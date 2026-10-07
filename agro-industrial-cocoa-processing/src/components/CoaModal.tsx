@@ -1,6 +1,6 @@
 import React from 'react';
 import { CocoaDerivative, ProcessingBatch, CocoaProduct } from '../types';
-import { ShieldCheck, Printer, X, CheckCircle2 } from 'lucide-react';
+import { ShieldCheck, Printer, X, Download, CheckCircle2 } from 'lucide-react';
 
 interface CoaModalProps {
   isOpen: boolean;
@@ -42,9 +42,18 @@ export const CoaModal: React.FC<CoaModalProps> = ({
           </div>
 
           <div className="flex items-center gap-2">
+            <a
+              href={`/api/docs/coa/${lotCode}`}
+              download={`COA_${lotCode}_Certificat_Analyse_2026.pdf`}
+              className="px-3 py-1.5 text-xs font-display font-semibold uppercase tracking-wider text-[#221510] bg-[#C29958] hover:bg-[#b08745] rounded-[6px] transition-colors inline-flex items-center gap-1.5 shadow-xs"
+            >
+              <Download className="w-3.5 h-3.5" />
+              <span>Télécharger PDF</span>
+            </a>
+
             <button
               onClick={handlePrint}
-              className="px-3 py-1.5 text-xs font-display font-semibold uppercase tracking-wider text-[#221510] bg-[#FAF7F2] border border-[#E4DDD3] rounded-[6px] hover:bg-[#C29958] transition-colors cursor-pointer inline-flex items-center gap-1.5"
+              className="px-3 py-1.5 text-xs font-display font-semibold uppercase tracking-wider text-[#221510] bg-[#FAF7F2] border border-[#E4DDD3] rounded-[6px] hover:bg-[#E4DDD3] transition-colors cursor-pointer inline-flex items-center gap-1.5"
             >
               <Printer className="w-3.5 h-3.5" />
               <span>Imprimer</span>

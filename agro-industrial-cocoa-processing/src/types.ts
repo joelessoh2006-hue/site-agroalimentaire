@@ -61,6 +61,8 @@ export interface CocoaProduct {
   macro_image_url: string;
   coaAvailable: boolean;
   tdsAvailable: boolean;
+  tdsPdfUrl?: string;
+  coaPdfUrl?: string;
 }
 
 // Backward-compatible alias for existing mock components

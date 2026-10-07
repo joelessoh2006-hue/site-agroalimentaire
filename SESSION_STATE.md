@@ -59,6 +59,21 @@
   - **E-mail B (Alerte Interne Commerciale Export) :** Dispatché instantanément à `commercial-desk@cacao-ivoire-industries.com` avec indicateur de priorité (Échantillons R&D vs Volume FCL/LCL), coordonnées complètes de l'acheteur (société, TVA, port, Incoterm, volume, IP) et boutons de contact direct.
   - **Résilience & Fallback Local :** Si le service mail subit une interruption externe ou est en mode dev sans clés configurées, les e-mails sont archivés en HTML dans `server/sent-emails/` sans jamais faire échouer l'enregistrement du prospect.
 
+### G. Gestion & Distribution des Fichiers Techniques (TDS & COA en PDF)
+- **Génération Haute Fidélité Vectorielle :** Module de génération dédié [`server/generatePdfs.ts`](file:///d:/Bureau/Site%20Agroalimentaire/agro-industrial-cocoa-processing/server/generatePdfs.ts) s'appuyant sur `pdf-lib` sans dépendance C native.
+  - **9 Fiches Techniques TDS Officielles (`public/docs/tds/`) :** Strictement conformes aux 7 sections réglementaires (Codex Alimentarius Stan 87-1981, règlements UE 488/2014 & 1169/2011, critères physico-chimiques ISO, microbiologie PCR Salmonella 2x375g, traçabilité EUDR 2023/1115, emballages FCL et visas de conformité).
+  - **Certificats d'Analyse COA de Lots (`public/docs/coa/`) :** Certificats conformes ISO/IEC 17025:2017 avec tableau d'essais, seuils d'acceptation, résultats mesurés et sceau cryptographique LIMS.
+- **En-têtes HTTP de Téléchargement Fiabilisés :**
+  - Routes dédiées `/api/docs/tds/:slug` et `/api/docs/coa/:lot` (avec fallback intelligent sur les identifiants et les numéros de lots standard).
+  - En-têtes stricts garantis :
+    * `Content-Type: application/pdf`
+    * `Content-Disposition: attachment; filename="TDS-[Produit]-AgroIndustrial-2026.pdf"` (ou `inline` avec `?inline=true` pour visualisation navigateur)
+    * `Cache-Control: public, max-age=86400, s-maxage=604800`
+    * `X-Content-Type-Options: nosniff`
+- **Mise à Jour des Composants Frontend :**
+  - [`TdsDownloadModal.tsx`](file:///d:/Bureau/Site%20Agroalimentaire/agro-industrial-cocoa-processing/src/components/modals/TdsDownloadModal.tsx) : Déclenche le téléchargement du vrai document PDF officiel tout en transmettant le lead à l'API industrielle. Écran de confirmation avec boutons de téléchargement direct et d'ouverture en ligne.
+  - [`CoaModal.tsx`](file:///d:/Bureau/Site%20Agroalimentaire/agro-industrial-cocoa-processing/src/components/CoaModal.tsx) : Ajout du bouton d'export direct du PDF officiel du CoA en plus de l'impression navigateur.
+
 ---
 
 ## 2. Fichiers Créés et Modifiés

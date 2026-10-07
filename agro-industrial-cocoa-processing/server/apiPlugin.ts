@@ -126,6 +126,96 @@ export function rfqApiPlugin(): Plugin {
           return;
         }
 
+        // 5. Téléchargement des Documents Techniques (TDS / COA en PDF) avec en-têtes HTTP fiabilisés
+        if (
+          req.method === 'GET' &&
+          (url.startsWith('/api/docs/') || url.startsWith('/docs/tds/') || url.startsWith('/docs/coa/'))
+        ) {
+          const fs = await import('fs');
+          const path = await import('path');
+          const { fileURLToPath } = await import('url');
+
+          const currFilename = fileURLToPath(import.meta.url);
+          const currDirname = path.dirname(currFilename);
+          const publicDocsDir = path.resolve(currDirname, '../public/docs');
+
+          let relativeFilePath = '';
+          let downloadFilename = 'Document-Technique-AgroIndustrial.pdf';
+
+          if (url.startsWith('/api/docs/tds/')) {
+            const rawParam = url.replace('/api/docs/tds/', '').trim();
+            let matchedSlug = rawParam;
+
+            // Tentative de résolution directe
+            if (!fs.existsSync(path.resolve(publicDocsDir, 'tds', `TDS_${matchedSlug}.pdf`))) {
+              const { COCOA_PRODUCTS } = await import('../src/data/products.js');
+              const found = COCOA_PRODUCTS.find(
+                (p) =>
+                  p.slug.toLowerCase() === rawParam.toLowerCase() ||
+                  p.id.toLowerCase() === rawParam.toLowerCase() ||
+                  p.slug.includes(rawParam.toLowerCase()) ||
+                  rawParam.toLowerCase().includes(p.slug)
+              );
+              if (found) {
+                matchedSlug = found.slug;
+              }
+            }
+
+            relativeFilePath = path.join('tds', `TDS_${matchedSlug}.pdf`);
+            downloadFilename = `TDS_${matchedSlug}_AgroIndustrial_2026.pdf`;
+          } else if (url.startsWith('/api/docs/coa/')) {
+            const lot = url.replace('/api/docs/coa/', '');
+            let coaFile = `COA_${lot}.pdf`;
+            if (!fs.existsSync(path.resolve(publicDocsDir, 'coa', coaFile))) {
+              coaFile = 'COA_LOT-COC-2026-STANDARD.pdf';
+            }
+            relativeFilePath = path.join('coa', coaFile);
+            downloadFilename = `COA_${lot}_Certificat_Analyse_2026.pdf`;
+          } else if (url.startsWith('/docs/tds/')) {
+            const filename = path.basename(url);
+            relativeFilePath = path.join('tds', filename);
+            downloadFilename = filename;
+          } else if (url.startsWith('/docs/coa/')) {
+            const filename = path.basename(url);
+            relativeFilePath = path.join('coa', filename);
+            downloadFilename = filename;
+          }
+
+          const absolutePath = path.resolve(publicDocsDir, relativeFilePath);
+
+          // Vérification de sécurité pour éviter le Directory Traversal
+          if (!absolutePath.startsWith(publicDocsDir) || !fs.existsSync(absolutePath)) {
+            res.statusCode = 404;
+            res.setHeader('Content-Type', 'application/json');
+            res.end(
+              JSON.stringify({
+                success: false,
+                message: 'Document technique introuvable.',
+                requested: url,
+              })
+            );
+            return;
+          }
+
+          const stat = fs.statSync(absolutePath);
+          const isInline = req.url?.includes('inline=true');
+
+          // En-têtes HTTP de distribution professionnelle de documents PDF
+          res.statusCode = 200;
+          res.setHeader('Content-Type', 'application/pdf');
+          res.setHeader(
+            'Content-Disposition',
+            `${isInline ? 'inline' : 'attachment'}; filename="${downloadFilename}"`
+          );
+          res.setHeader('Content-Length', stat.size);
+          res.setHeader('Cache-Control', 'public, max-age=86400, s-maxage=604800');
+          res.setHeader('X-Content-Type-Options', 'nosniff');
+
+          const readStream = fs.createReadStream(absolutePath);
+          readStream.pipe(res);
+          return;
+        }
+
         next();
       });
     },

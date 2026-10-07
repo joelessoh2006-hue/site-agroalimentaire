@@ -33,41 +33,33 @@ export const TdsDownloadModal: React.FC<TdsDownloadModalProps> = ({
     setIsSubmitted(true);
     setDownloadStarted(true);
 
-    // Simulate direct browser download trigger
-    setTimeout(() => {
-      const blob = new Blob(
-        [
-          `AGRO-INDUSTRIAL COCOA PROCESSING GROUP\n` +
-          `OFFICIAL TECHNICAL DATA SHEET (TDS) - CONFORME CODEX STAN 87-1981\n\n` +
-          `PRODUIT : ${product.name.toUpperCase()}\n` +
-          `GRADE COMMERCIAL : ${product.commercialName}\n` +
-          `CODE REF : ${product.id}\n` +
-          `ORIGINE : ${product.origin}\n` +
-          (product.inciName ? `INCI : ${product.inciName}\nCAS : ${product.casNumber}\n` : '') +
-          `\n--- SECTION 1 : SPÉCIFICATIONS PHYSICO-CHIMIQUES ---\n` +
-          product.detailedSpecs.map(s => `- ${s.parameter} : ${s.value} ${s.unit || ''} (Méthode : ${s.standardMethod || 'Standard'})`).join('\n') +
-          `\n\n--- SECTION 2 : CRITÈRES MICROBIOLOGIQUES ---\n` +
-          product.microbiologicalSpecs.map(m => `- ${m.parameter} : ${m.target} (${m.standardMethod})`).join('\n') +
-          `\n\n--- SECTION 3 : CONTAMINANTS & SÉCURITÉ ---\n` +
-          product.contaminantsSpecs.map(c => `- ${c.parameter} : ${c.limit} (${c.compliance})`).join('\n') +
-          `\n\n--- SECTION 4 : CONDITIONNEMENTS ---\n` +
-          product.packaging.map(p => `- ${p.format} | Palettisation : ${p.palletSpec}`).join('\n') +
-          `\n\nCERTIFICATIONS : ${product.certifications.join(', ')}\n` +
-          `DLUO : ${product.shelfLife}\n` +
-          `STOCKAGE : ${product.storageConditions}\n\n` +
-          `Document certifié délivré à ${company} (${email}) - Réf LIMS : TDS-DOC-${Date.now().toString().slice(-6)}`
-        ],
-        { type: 'text/plain;charset=utf-8' }
-      );
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = `TDS_${product.slug}_AgroIndustrial_2026.txt`;
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      URL.revokeObjectURL(url);
-    }, 600);
+    // 1. Déclenchement du téléchargement direct du PDF officiel avec les en-têtes Content-Type: application/pdf
+    const downloadUrl = `/api/docs/tds/${product.slug}`;
+    const a = document.createElement('a');
+    a.href = downloadUrl;
+    a.download = `TDS_${product.slug}_AgroIndustrial_2026.pdf`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+
+    // 2. Traçabilité et enregistrement du prospect dans l'API industrielle
+    fetch('/api/contact', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        companyName: company,
+        contactName: name || 'Responsable R&D / Achats',
+        contactEmail: email,
+        country: 'Non spécifié (Téléchargement Web)',
+        destinationPort: 'Téléchargement Direct TDS PDF',
+        requestType: 'sample',
+        selectedProductIds: [product.id],
+        projectDescription: `Lead capture via téléchargement de la Fiche Technique PDF : ${product.name} (${product.id})`,
+        honeypot: honeypot || '',
+      }),
+    }).catch((err) => {
+      console.warn('[TDS Download] Notification lead non critique :', err);
+    });
   };
 
   const handleReset = () => {
@@ -239,10 +231,29 @@ export const TdsDownloadModal: React.FC<TdsDownloadModalProps> = ({
                 </div>
               </div>
 
-              <div className="pt-3">
+              <div className="pt-3 flex flex-wrap items-center justify-center gap-2">
+                <a
+                  href={`/api/docs/tds/${product.slug}`}
+                  download={`TDS_${product.slug}_AgroIndustrial_2026.pdf`}
+                  className="px-4 py-2 text-xs font-display font-semibold uppercase tracking-wider text-[#221510] bg-[#C29958] rounded-[6px] hover:bg-[#b08745] transition-colors inline-flex items-center gap-1.5 shadow-xs"
+                >
+                  <Download className="w-3.5 h-3.5" />
+                  <span>Re-télécharger le PDF</span>
+                </a>
+
+                <a
+                  href={`/api/docs/tds/${product.slug}?inline=true`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="px-4 py-2 text-xs font-display font-semibold uppercase tracking-wider text-[#221510] bg-[#FAF7F2] border border-[#E4DDD3] rounded-[6px] hover:bg-[#E4DDD3] transition-colors inline-flex items-center gap-1.5"
+                >
+                  <FileText className="w-3.5 h-3.5" />
+                  <span>Ouvrir dans le navigateur</span>
+                </a>
+
                 <button
                   onClick={handleReset}
-                  className="px-5 py-2 text-xs font-display font-semibold uppercase tracking-wider text-[#221510] bg-[#C29958] rounded-[6px] hover:bg-[#b08745] transition-colors cursor-pointer"
+                  className="px-4 py-2 text-xs font-display font-semibold uppercase tracking-wider text-[#5D5753] hover:text-[#221510] hover:bg-[#F8F4EE] rounded-[6px] transition-colors cursor-pointer"
                 >
                   Fermer
                 </button>
