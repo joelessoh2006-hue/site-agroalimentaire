@@ -20,6 +20,8 @@ import {
   FileText
 } from 'lucide-react';
 
+import { TurnstileWidget } from '../common/TurnstileWidget';
+
 interface ContactRfqViewProps {
   selectedProducts: CocoaProduct[];
   onRemoveFromRfq: (id: string) => void;
@@ -45,6 +47,7 @@ export const ContactRfqView: React.FC<ContactRfqViewProps> = ({
   const [destinationPort, setDestinationPort] = useState('Le Havre, France');
   const [projectDescription, setProjectDescription] = useState('');
   const [honeypot, setHoneypot] = useState('');
+  const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submittedRef, setSubmittedRef] = useState<string | null>(null);
 
@@ -94,6 +97,7 @@ export const ContactRfqView: React.FC<ContactRfqViewProps> = ({
         projectDescription: projectDescription.trim(),
         selectedProductIds: selectedProducts.map((p) => p.id),
         honeypot,
+        turnstileToken: turnstileToken || undefined,
       };
 
       const response = await fetch('/api/rfq', {
@@ -133,6 +137,7 @@ export const ContactRfqView: React.FC<ContactRfqViewProps> = ({
     setSubmittedRef(null);
     setErrorMessage(null);
     setFieldErrors({});
+    setTurnstileToken(null);
   };
 
   if (submittedRef) {
@@ -590,6 +595,23 @@ export const ContactRfqView: React.FC<ContactRfqViewProps> = ({
                   className="w-full p-2.5 text-xs bg-[#FAF7F2] border border-[#E4DDD3] rounded-[6px] focus:outline-none focus:border-[#C29958] focus:bg-[#FFFFFF]"
                 />
               </div>
+            </div>
+
+            {/* Protection anti-bot Cloudflare Turnstile */}
+            <div className="pt-2">
+              <TurnstileWidget
+                action="rfq-submission"
+                onVerify={(token) => {
+                  setTurnstileToken(token);
+                  setErrorMessage(null);
+                }}
+                onExpire={() => {
+                  setTurnstileToken(null);
+                }}
+                onError={(errCode) => {
+                  console.warn('[Contact] Erreur challenge Turnstile :', errCode);
+                }}
+              />
             </div>
 
             <div className="pt-2 border-t border-[#E4DDD3]">

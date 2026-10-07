@@ -68,6 +68,13 @@
   - **E-mail B (Alerte Interne Commerciale Export) :** Dispatché instantanément à `commercial-desk@cacao-ivoire-industries.com` avec indicateur de priorité (Échantillons R&D vs Volume FCL/LCL), coordonnées complètes de l'acheteur (société, TVA, port, Incoterm, volume, IP) et boutons de contact direct.
   - **Résilience & Fallback Local :** Si le service mail subit une interruption externe ou est en mode dev sans clés configurées, les e-mails sont archivés en HTML dans `server/sent-emails/` sans jamais faire échouer l'enregistrement du prospect.
 
+- **Protection Anti-Bot par Captcha Invisible (Cloudflare Turnstile) ([`server/turnstile.ts`](file:///d:/Bureau/Site%20Agroalimentaire/agro-industrial-cocoa-processing/server/turnstile.ts)) :**
+  - **Fin des puzzles de feux et vélos :** Solution moderne, ultra-rapide et respectueuse de la vie privée (zéro tracking utilisateur, compatible RGPD).
+  - **Composant Frontend Dédié ([`TurnstileWidget.tsx`](file:///d:/Bureau/Site%20Agroalimentaire/agro-industrial-cocoa-processing/src/components/common/TurnstileWidget.tsx)) :** Widget discret intégré au formulaire de devis RFQ (`ContactRfqView.tsx`), chargement asynchrone du SDK Cloudflare avec fallback gracieux et gestion des cycles de réinitialisation/expiration.
+  - **Vérification Cryptographique Côté Serveur :** Validation du token via l'endpoint officiel Cloudflare `https://challenges.cloudflare.com/turnstile/v0/siteverify` avec l'adresse IP cliente et la clé secrète.
+  - **Rejet Immédiat des Bots Headless :** Blocage des scripts automatisés (Puppeteer, Playwright, curl) avec statut HTTP `403 Forbidden` (`CaptchaVerificationFailed`) avant toute persistance ou envoi d'e-mail.
+  - **Clés de Test Officielles Cloudflare :** Support natif des paires de clés officielles (`1x00000000000000000000AA` / `1x0000000000000000000000000000000AA` Always Passes, `2x...` Always Fails) configurables via `VITE_TURNSTILE_SITE_KEY` et `TURNSTILE_SECRET_KEY` dans `.env.example`.
+
 ### G. Gestion & Distribution des Fichiers Techniques (TDS & COA en PDF)
 - **Génération Haute Fidélité Vectorielle :** Module de génération dédié [`server/generatePdfs.ts`](file:///d:/Bureau/Site%20Agroalimentaire/agro-industrial-cocoa-processing/server/generatePdfs.ts) s'appuyant sur `pdf-lib` sans dépendance C native.
   - **9 Fiches Techniques TDS Officielles (`public/docs/tds/`) :** Strictement conformes aux 7 sections réglementaires (Codex Alimentarius Stan 87-1981, règlements UE 488/2014 & 1169/2011, critères physico-chimiques ISO, microbiologie PCR Salmonella 2x375g, traçabilité EUDR 2023/1115, emballages FCL et visas de conformité).
@@ -94,6 +101,7 @@
 - [`src/data/qualityData.ts`](file:///d:/Bureau/Site%20Agroalimentaire/agro-industrial-cocoa-processing/src/data/qualityData.ts) — Certifications officielles et protocoles d'analyse laboratoire ISO 17025.
 
 ### Backend, API, Base de Données, Transactional Email & Documents
+- [`server/turnstile.ts`](file:///d:/Bureau/Site%20Agroalimentaire/agro-industrial-cocoa-processing/server/turnstile.ts) — Module de validation cryptographique Cloudflare Turnstile anti-bot (`/siteverify`).
 - [`server/rateLimiter.ts`](file:///d:/Bureau/Site%20Agroalimentaire/agro-industrial-cocoa-processing/server/rateLimiter.ts) — Moteur de Rate Limiting anti-DDoS / Brute-force en mémoire (Sliding Window, extraction d'IP robuste, en-têtes IETF).
 - [`server/auth.ts`](file:///d:/Bureau/Site%20Agroalimentaire/agro-industrial-cocoa-processing/server/auth.ts) — Contrôle d'accès et authentification administrative (Bearer token & header `x-admin-key`) protégeant `/api/leads*`.
 - [`server/generatePdfs.ts`](file:///d:/Bureau/Site%20Agroalimentaire/agro-industrial-cocoa-processing/server/generatePdfs.ts) — Générateur de PDF vectoriels haute fidélité (TDS & COA) avec `pdf-lib`.
@@ -105,6 +113,7 @@
 - [`.env.example`](file:///d:/Bureau/Site%20Agroalimentaire/agro-industrial-cocoa-processing/.env.example) — Documentation complète des clés Resend, ADMIN_API_KEY, SMTP et Supabase.
 
 ### Composants & Vues
+- [`src/components/common/TurnstileWidget.tsx`](file:///d:/Bureau/Site%20Agroalimentaire/agro-industrial-cocoa-processing/src/components/common/TurnstileWidget.tsx) — Widget Cloudflare Turnstile moderne (chargement asynchrone, fallback, design cohérent).
 - [`src/components/common/ProductImage.tsx`](file:///d:/Bureau/Site%20Agroalimentaire/agro-industrial-cocoa-processing/src/components/common/ProductImage.tsx) — Composant d'image résilient avec skeleton et fallback.
 - [`src/components/home/HomeView.tsx`](file:///d:/Bureau/Site%20Agroalimentaire/agro-industrial-cocoa-processing/src/components/home/HomeView.tsx) — Page d'accueil B2B.
 - [`src/components/savoir-faire/SavoirFaireView.tsx`](file:///d:/Bureau/Site%20Agroalimentaire/agro-industrial-cocoa-processing/src/components/savoir-faire/SavoirFaireView.tsx) — Page Savoir-faire & Traçabilité EUDR.

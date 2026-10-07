@@ -144,6 +144,11 @@ export const RfqPayloadSchema = z.object({
     .string()
     .max(0, 'Tentative de soumission automatisée détectée')
     .optional(),
+
+  // Jeton cryptographique Cloudflare Turnstile anti-bot
+  turnstileToken: z
+    .string()
+    .optional(),
 });
 
 export type ValidatedRfqPayload = z.infer<typeof RfqPayloadSchema>;

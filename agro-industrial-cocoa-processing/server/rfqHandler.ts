@@ -1,6 +1,7 @@
 import { RfqPayloadSchema, ValidatedRfqPayload } from './validation';
 import { saveLeadToDatabase, B2BLeadRecord, getAllLeads, getLeadById, updateLeadStatus } from './db';
 import { sendRfqEmails } from './emailService';
+import { verifyTurnstileToken } from './turnstile';
 
 export { getAllLeads, getLeadById, updateLeadStatus };
 
@@ -77,7 +78,21 @@ export async function processRfqSubmission(
     };
   }
 
-  // 3. Création et persistance relationnelle du prospect B2B
+  // 3. Vérification cryptographique Cloudflare Turnstile anti-bot
+  const turnstileCheck = await verifyTurnstileToken(validatedData.turnstileToken, clientIp);
+  if (!turnstileCheck.success) {
+    console.warn(`[Anti-Bot Turnstile] Rejet soumission depuis IP ${clientIp || 'inconnue'}: ${turnstileCheck.message}`);
+    return {
+      statusCode: 403,
+      body: {
+        success: false,
+        message: turnstileCheck.message || 'Validation de sécurité Cloudflare Turnstile échouée.',
+        errors: [{ field: 'turnstileToken', message: 'Vérification cryptographique invalide.' }],
+      },
+    };
+  }
+
+  // 4. Création et persistance relationnelle du prospect B2B
   const reference = generateRfqReference();
   const createdAt = new Date().toISOString();
   const isSample = validatedData.requestType === 'sample' ? 1 : 0;
