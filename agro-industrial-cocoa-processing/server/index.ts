@@ -1,19 +1,36 @@
 import express from 'express';
 import { processRfqSubmission, getAllLeads, getLeadById, updateLeadStatus } from './rfqHandler';
+import { isAuthorizedAdminRequest } from './auth';
 
 const app = express();
 const PORT = process.env.PORT || 3001;
 
 app.use(express.json({ limit: '100kb' })); // Protection contre les payloads trop volumineux
 
-// Point de terminaison principal RFQ & Contact
+// Point de terminaison principal RFQ & Contact (public pour les prospects)
 app.post(['/api/rfq', '/api/contact'], async (req, res) => {
   const clientIp = req.ip || req.socket.remoteAddress;
   const result = await processRfqSubmission(req.body, clientIp);
   res.status(result.statusCode).json(result.body);
 });
 
-// Consultation des leads (liste)
+// Middleware de sécurité administrative : protège toutes les routes /api/leads*
+app.use('/api/leads', (req, res, next) => {
+  const auth = isAuthorizedAdminRequest(req);
+  if (!auth.authorized) {
+    if (auth.statusCode === 401) {
+      res.setHeader('WWW-Authenticate', 'Bearer realm="Admin Leads Access"');
+    }
+    return res.status(auth.statusCode || 401).json({
+      success: false,
+      error: auth.statusCode === 401 ? 'Unauthorized' : 'Forbidden',
+      message: auth.message,
+    });
+  }
+  next();
+});
+
+// Consultation des leads (liste) [Protégé]
 app.get('/api/leads', (_req, res) => {
   const leads = getAllLeads();
   res.json({ success: true, total: leads.length, leads });

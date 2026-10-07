@@ -1,5 +1,6 @@
 import type { Plugin } from 'vite';
 import { processRfqSubmission, getAllLeads, getLeadById, updateLeadStatus } from './rfqHandler';
+import { isAuthorizedAdminRequest } from './auth';
 
 /**
  * Plugin Vite pour servir les routes API (/api/rfq, /api/contact, /api/leads) directement
@@ -45,7 +46,28 @@ export function rfqApiPlugin(): Plugin {
           return;
         }
 
-        // 2. Consultation des leads enregistrés (GET /api/leads)
+        // 2. Sécurisation obligatoire de toutes les routes administratives (/api/leads*)
+        // Bloque immédiatement avec 401 Unauthorized ou 403 Forbidden toute requête non authentifiée
+        if (url.startsWith('/api/leads')) {
+          const authCheck = isAuthorizedAdminRequest(req);
+          if (!authCheck.authorized) {
+            res.statusCode = authCheck.statusCode || 401;
+            res.setHeader('Content-Type', 'application/json');
+            if (res.statusCode === 401) {
+              res.setHeader('WWW-Authenticate', 'Bearer realm="Admin Leads Access"');
+            }
+            res.end(
+              JSON.stringify({
+                success: false,
+                error: res.statusCode === 401 ? 'Unauthorized' : 'Forbidden',
+                message: authCheck.message,
+              })
+            );
+            return;
+          }
+        }
+
+        // 3. Consultation des leads enregistrés (GET /api/leads) [Protégé]
         if (req.method === 'GET' && url === '/api/leads') {
           const leads = getAllLeads();
           res.statusCode = 200;
