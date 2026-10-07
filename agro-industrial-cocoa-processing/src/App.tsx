@@ -9,6 +9,8 @@ import { QualityView } from './components/quality/QualityView';
 import { ContactRfqView } from './components/contact/ContactRfqView';
 import { CoaModal } from './components/modals/CoaModal';
 import { TdsDownloadModal } from './components/modals/TdsDownloadModal';
+import { NotFoundView } from './components/common/NotFoundView';
+import { MobileStickyBar } from './components/common/MobileStickyBar';
 import { COCOA_PRODUCTS } from './data/products';
 import { PROCESSING_BATCHES_DATA } from './data/pipelineData';
 import { CocoaProduct, ProcessingBatch } from './types';
@@ -27,7 +29,11 @@ function parseLocation(): { view: string; productId?: string } {
   }
   if (path.startsWith('produit/')) {
     const id = path.split('/')[1];
-    return { view: 'produit', productId: id };
+    const product = COCOA_PRODUCTS.find((p) => p.id === id || p.slug === id);
+    if (product) {
+      return { view: 'produit', productId: product.id };
+    }
+    return { view: 'not-found' };
   }
   if (path === 'qualite') {
     return { view: 'qualite' };
@@ -35,12 +41,19 @@ function parseLocation(): { view: string; productId?: string } {
   if (path === 'contact' || path === 'rfq') {
     return { view: 'contact' };
   }
-  // Fallback to home
-  return { view: 'home' };
+  // Route non reconnue : afficher la vue 404 dédiée
+  return { view: 'not-found' };
 }
 
 // Métadonnées SEO par page
 function getPageMeta(view: string, productId?: string): { title: string; description: string } {
+  if (view === 'not-found') {
+    return {
+      title: 'Page introuvable (404) | Agro-Industrial Cocoa Processing',
+      description:
+        'La page demandée est introuvable. Accédez au catalogue technique des dérivés de cacao purs ou contactez notre équipe commerciale.',
+    };
+  }
   if (view === 'savoir-faire') {
     return {
       title: 'Savoir-Faire & Traçabilité EUDR 2023/1115 | Agro-Industrial Cocoa',
@@ -152,6 +165,7 @@ export default function App() {
     else if (view === 'produit' && productId) targetPath = `/produit/${productId}`;
     else if (view === 'qualite') targetPath = '/qualite';
     else if (view === 'contact') targetPath = '/contact';
+    else if (view === 'not-found') targetPath = '/404';
 
     window.history.pushState(null, '', targetPath);
     setCurrentView(view);
@@ -207,7 +221,7 @@ export default function App() {
   );
 
   return (
-    <div className="min-h-screen bg-[#fdf9f3] text-[#1c1c18] flex flex-col font-body">
+    <div className="min-h-screen bg-[#fdf9f3] text-[#1c1c18] flex flex-col font-body pb-16 md:pb-0">
       {/* 1. Header with corporate navigation and actions */}
       <Header
         currentView={currentView}
@@ -276,6 +290,11 @@ export default function App() {
             onAddProductToRfq={handleAddProductToRfq}
           />
         )}
+
+        {/* Page 404: Ressource introuvable */}
+        {currentView === 'not-found' && (
+          <NotFoundView onNavigate={navigateTo} />
+        )}
       </main>
 
       {/* 3. Corporate Agro-Industrial Footer */}
@@ -294,6 +313,12 @@ export default function App() {
         isOpen={tdsModalOpen}
         onClose={() => setTdsModalOpen(false)}
         product={tdsProduct}
+      />
+
+      {/* 6. Barre d'action fixe sur smartphone (< 768px) */}
+      <MobileStickyBar
+        onOpenRfq={() => navigateTo('contact')}
+        rfqItemsCount={selectedRfqProductIds.length}
       />
     </div>
   );
