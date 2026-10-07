@@ -1,15 +1,32 @@
 import express from 'express';
 import { processRfqSubmission, getAllLeads, getLeadById, updateLeadStatus } from './rfqHandler';
 import { isAuthorizedAdminRequest } from './auth';
+import { rateLimiter, getClientIp, RATE_LIMIT_RULES } from './rateLimiter';
 
 const app = express();
 const PORT = process.env.PORT || 3001;
 
 app.use(express.json({ limit: '100kb' })); // Protection contre les payloads trop volumineux
 
-// Point de terminaison principal RFQ & Contact (public pour les prospects)
+// Point de terminaison principal RFQ & Contact (avec Rate Limiting anti-DDoS / Brute-force)
 app.post(['/api/rfq', '/api/contact'], async (req, res) => {
-  const clientIp = req.ip || req.socket.remoteAddress;
+  const clientIp = getClientIp(req);
+  const limitCheck = rateLimiter.check('rfq', clientIp, RATE_LIMIT_RULES.RFQ_SUBMISSION);
+
+  res.setHeader('X-RateLimit-Limit', limitCheck.limit);
+  res.setHeader('X-RateLimit-Remaining', limitCheck.remaining);
+  res.setHeader('X-RateLimit-Reset', Math.ceil(limitCheck.resetTimeMs / 1000));
+
+  if (!limitCheck.allowed) {
+    res.setHeader('Retry-After', limitCheck.retryAfterSeconds);
+    return res.status(429).json({
+      success: false,
+      error: 'Too Many Requests',
+      message: limitCheck.message,
+      retryAfterSeconds: limitCheck.retryAfterSeconds,
+    });
+  }
+
   const result = await processRfqSubmission(req.body, clientIp);
   res.status(result.statusCode).json(result.body);
 });
@@ -60,6 +77,28 @@ app.patch('/api/leads/:id/status', (req, res) => {
     success: true,
     message: `Statut mis à jour : ${status}`,
   });
+});
+
+// Middleware de Rate Limiting anti-scraping pour les documents techniques PDF
+app.use('/api/docs', (req, res, next) => {
+  const clientIp = getClientIp(req);
+  const limitCheck = rateLimiter.check('docs', clientIp, RATE_LIMIT_RULES.DOCS_DOWNLOAD);
+
+  res.setHeader('X-RateLimit-Limit', limitCheck.limit);
+  res.setHeader('X-RateLimit-Remaining', limitCheck.remaining);
+  res.setHeader('X-RateLimit-Reset', Math.ceil(limitCheck.resetTimeMs / 1000));
+
+  if (!limitCheck.allowed) {
+    res.setHeader('Retry-After', limitCheck.retryAfterSeconds);
+    return res.status(429).json({
+      success: false,
+      error: 'Too Many Requests',
+      message: limitCheck.message,
+      retryAfterSeconds: limitCheck.retryAfterSeconds,
+    });
+  }
+
+  next();
 });
 
 // Téléchargement sécurisé des Fiches Techniques (TDS) et Certificats d'Analyse (COA) en PDF

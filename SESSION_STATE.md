@@ -57,6 +57,11 @@
   - Authentification doublement supportée : en-tête `Authorization: Bearer <ADMIN_API_KEY>` ou en-tête personnalisé `x-admin-key: <ADMIN_API_KEY>`.
   - Rejet immédiat avec code HTTP `401 Unauthorized` (avec en-tête `WWW-Authenticate`) si le jeton est manquant, et `403 Forbidden` si la clé fournie est invalide.
   - La route de soumission de formulaires (`POST /api/rfq` / `POST /api/contact`) reste publique pour que les acheteurs puissent postuler sans restriction.
+- **Limitation de Débit & Protection Anti-DDoS / Anti-Scraping ([`server/rateLimiter.ts`](file:///d:/Bureau/Site%20Agroalimentaire/agro-industrial-cocoa-processing/server/rateLimiter.ts)) :**
+  - Moteur en mémoire autonome basé sur une fenêtre glissante temporelle (*Sliding Window*) avec normalisation des adresses IP (support `x-forwarded-for`, `x-real-ip`, IPv6/IPv4).
+  - **Soumissions RFQ / Contact :** Plafond strict de **5 requêtes par tranche de 15 minutes par IP**.
+  - **Téléchargement Fiches PDF (`/api/docs/*`) :** Plafond anti-scraping massif de **30 requêtes par minute par IP**.
+  - **Réponse HTTP Standardisée :** Dès dépassement du quota, renvoi immédiat du code **429 Too Many Requests**, avec en-têtes standard IETF (`X-RateLimit-Limit`, `X-RateLimit-Remaining`, `X-RateLimit-Reset`, `Retry-After: <seconds>`) et corps JSON explicatif.
 - **Routage des E-mails Transactionnels (SMTP Fiabilisé & Resend API) :**
   - Fin du risque de spam lié au simple `mail()` non configuré : intégration de l'API moderne Resend (`RESEND_API_KEY`) et du transporteur standardisé `nodemailer` pour serveurs SMTP professionnels (Brevo / Sendinblue, Postmark, SendGrid).
   - **E-mail A (Accusé de Réception Prospect) :** Modèle HTML élégant aux couleurs de l'usine (`#221510`, `#C29958`, `#2E5A36`), référence unique de dossier (`RFQ-2026-XXXXXX`), délai d'engagement de réponse sous 24 à 48h ouvrées, récapitulatif de la demande, rappel des garanties de conformité (FSSC 22000, EUDR traçabilité GPS) et lien direct vers le catalogue technique / fiches TDS.
@@ -89,13 +94,14 @@
 - [`src/data/qualityData.ts`](file:///d:/Bureau/Site%20Agroalimentaire/agro-industrial-cocoa-processing/src/data/qualityData.ts) — Certifications officielles et protocoles d'analyse laboratoire ISO 17025.
 
 ### Backend, API, Base de Données, Transactional Email & Documents
+- [`server/rateLimiter.ts`](file:///d:/Bureau/Site%20Agroalimentaire/agro-industrial-cocoa-processing/server/rateLimiter.ts) — Moteur de Rate Limiting anti-DDoS / Brute-force en mémoire (Sliding Window, extraction d'IP robuste, en-têtes IETF).
 - [`server/auth.ts`](file:///d:/Bureau/Site%20Agroalimentaire/agro-industrial-cocoa-processing/server/auth.ts) — Contrôle d'accès et authentification administrative (Bearer token & header `x-admin-key`) protégeant `/api/leads*`.
 - [`server/generatePdfs.ts`](file:///d:/Bureau/Site%20Agroalimentaire/agro-industrial-cocoa-processing/server/generatePdfs.ts) — Générateur de PDF vectoriels haute fidélité (TDS & COA) avec `pdf-lib`.
 - [`server/validation.ts`](file:///d:/Bureau/Site%20Agroalimentaire/agro-industrial-cocoa-processing/server/validation.ts) — Schémas Zod, sanitization et blacklist de domaines d'e-mails jetables.
 - [`server/db.ts`](file:///d:/Bureau/Site%20Agroalimentaire/agro-industrial-cocoa-processing/server/db.ts) — Moteur de persistance SQLite (`leads.db`), gestion des statuts de leads, fallback JSON et connecteur Supabase.
 - [`server/emailService.ts`](file:///d:/Bureau/Site%20Agroalimentaire/agro-industrial-cocoa-processing/server/emailService.ts) — Générateur de templates HTML soignés et dispatcher d'e-mails via Resend API, SMTP pro (Brevo/SendGrid) et archivage dev local.
 - [`server/rfqHandler.ts`](file:///d:/Bureau/Site%20Agroalimentaire/agro-industrial-cocoa-processing/server/rfqHandler.ts) — Pipeline complet recevant les soumissions RFQ, persistant les leads et orchestrant les e-mails.
-- [`server/apiPlugin.ts`](file:///d:/Bureau/Site%20Agroalimentaire/agro-industrial-cocoa-processing/server/apiPlugin.ts) — Middleware d'API Vite pour servir `/api/rfq`, `/api/contact`, `/api/leads` (sécurisé) et `/api/docs/*`.
+- [`server/apiPlugin.ts`](file:///d:/Bureau/Site%20Agroalimentaire/agro-industrial-cocoa-processing/server/apiPlugin.ts) — Middleware d'API Vite pour servir `/api/rfq`, `/api/contact`, `/api/leads` (sécurisé) et `/api/docs/*` avec Rate Limiting.
 - [`.env.example`](file:///d:/Bureau/Site%20Agroalimentaire/agro-industrial-cocoa-processing/.env.example) — Documentation complète des clés Resend, ADMIN_API_KEY, SMTP et Supabase.
 
 ### Composants & Vues

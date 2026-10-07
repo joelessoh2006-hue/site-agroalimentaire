@@ -1,9 +1,10 @@
 import type { Plugin } from 'vite';
 import { processRfqSubmission, getAllLeads, getLeadById, updateLeadStatus } from './rfqHandler';
 import { isAuthorizedAdminRequest } from './auth';
+import { rateLimiter, getClientIp, RATE_LIMIT_RULES } from './rateLimiter';
 
 /**
- * Plugin Vite pour servir les routes API (/api/rfq, /api/contact, /api/leads) directement
+ * Plugin Vite pour servir les routes API (/api/rfq, /api/contact, /api/leads, /api/docs) directement
  * dans le serveur de développement local sur http://localhost:3000/
  */
 export function rfqApiPlugin(): Plugin {
@@ -13,8 +14,31 @@ export function rfqApiPlugin(): Plugin {
       server.middlewares.use(async (req, res, next) => {
         const url = req.url?.split('?')[0] || '';
 
-        // 1. Soumission d'une demande RFQ / Contact (POST)
+        // 1. Soumission d'une demande RFQ / Contact (POST) avec Rate Limiting anti-DDoS / Brute-force
         if (req.method === 'POST' && (url === '/api/rfq' || url === '/api/contact')) {
+          const clientIp = getClientIp(req);
+          const limitCheck = rateLimiter.check('rfq', clientIp, RATE_LIMIT_RULES.RFQ_SUBMISSION);
+
+          // Positionner les en-têtes standard IETF RateLimit
+          res.setHeader('X-RateLimit-Limit', limitCheck.limit);
+          res.setHeader('X-RateLimit-Remaining', limitCheck.remaining);
+          res.setHeader('X-RateLimit-Reset', Math.ceil(limitCheck.resetTimeMs / 1000));
+
+          if (!limitCheck.allowed) {
+            res.statusCode = 429;
+            res.setHeader('Content-Type', 'application/json');
+            res.setHeader('Retry-After', limitCheck.retryAfterSeconds);
+            res.end(
+              JSON.stringify({
+                success: false,
+                error: 'Too Many Requests',
+                message: limitCheck.message,
+                retryAfterSeconds: limitCheck.retryAfterSeconds,
+              })
+            );
+            return;
+          }
+
           const chunks: Buffer[] = [];
           
           req.on('data', (chunk) => {
@@ -25,7 +49,6 @@ export function rfqApiPlugin(): Plugin {
             try {
               const bodyStr = Buffer.concat(chunks).toString('utf-8');
               const parsedBody = bodyStr ? JSON.parse(bodyStr) : {};
-              const clientIp = req.socket.remoteAddress;
               const result = await processRfqSubmission(parsedBody, clientIp);
 
               res.statusCode = result.statusCode;
@@ -148,11 +171,33 @@ export function rfqApiPlugin(): Plugin {
           return;
         }
 
-        // 5. Téléchargement des Documents Techniques (TDS / COA en PDF) avec en-têtes HTTP fiabilisés
+        // 5. Téléchargement des Documents Techniques (TDS / COA en PDF) avec Rate Limiting anti-scraping
         if (
           req.method === 'GET' &&
           (url.startsWith('/api/docs/') || url.startsWith('/docs/tds/') || url.startsWith('/docs/coa/'))
         ) {
+          const clientIp = getClientIp(req);
+          const limitCheck = rateLimiter.check('docs', clientIp, RATE_LIMIT_RULES.DOCS_DOWNLOAD);
+
+          res.setHeader('X-RateLimit-Limit', limitCheck.limit);
+          res.setHeader('X-RateLimit-Remaining', limitCheck.remaining);
+          res.setHeader('X-RateLimit-Reset', Math.ceil(limitCheck.resetTimeMs / 1000));
+
+          if (!limitCheck.allowed) {
+            res.statusCode = 429;
+            res.setHeader('Content-Type', 'application/json');
+            res.setHeader('Retry-After', limitCheck.retryAfterSeconds);
+            res.end(
+              JSON.stringify({
+                success: false,
+                error: 'Too Many Requests',
+                message: limitCheck.message,
+                retryAfterSeconds: limitCheck.retryAfterSeconds,
+              })
+            );
+            return;
+          }
+
           const fs = await import('fs');
           const path = await import('path');
           const { fileURLToPath } = await import('url');
