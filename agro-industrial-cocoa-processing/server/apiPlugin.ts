@@ -2,6 +2,7 @@ import type { Plugin } from 'vite';
 import { processRfqSubmission, getAllLeads, getLeadById, updateLeadStatus } from './rfqHandler';
 import { isAuthorizedAdminRequest } from './auth';
 import { rateLimiter, getClientIp, RATE_LIMIT_RULES } from './rateLimiter';
+import { applySecurityHeaders } from './securityHeaders';
 
 /**
  * Plugin Vite pour servir les routes API (/api/rfq, /api/contact, /api/leads, /api/docs) directement
@@ -12,6 +13,9 @@ export function rfqApiPlugin(): Plugin {
     name: 'rfq-api-plugin',
     configureServer(server) {
       server.middlewares.use(async (req, res, next) => {
+        // Application globale des en-têtes de sécurité OWASP (CSP, HSTS, X-Frame-Options, etc.)
+        applySecurityHeaders(res);
+
         const url = req.url?.split('?')[0] || '';
 
         // 1. Soumission d'une demande RFQ / Contact (POST) avec Rate Limiting anti-DDoS / Brute-force

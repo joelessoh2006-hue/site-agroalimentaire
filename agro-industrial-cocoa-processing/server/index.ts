@@ -2,11 +2,16 @@ import express from 'express';
 import { processRfqSubmission, getAllLeads, getLeadById, updateLeadStatus } from './rfqHandler';
 import { isAuthorizedAdminRequest } from './auth';
 import { rateLimiter, getClientIp, RATE_LIMIT_RULES } from './rateLimiter';
+import { securityHeadersMiddleware } from './securityHeaders';
 
 const app = express();
 const PORT = process.env.PORT || 3001;
 
-app.use(express.json({ limit: '100kb' })); // Protection contre les payloads trop volumineux
+// 1. En-têtes HTTP de sécurité globaux OWASP (CSP, HSTS, X-Frame-Options, Permissions-Policy, etc.)
+app.use(securityHeadersMiddleware);
+
+// 2. Protection contre les payloads trop volumineux
+app.use(express.json({ limit: '100kb' }));
 
 // Point de terminaison principal RFQ & Contact (avec Rate Limiting anti-DDoS / Brute-force)
 app.post(['/api/rfq', '/api/contact'], async (req, res) => {

@@ -75,6 +75,15 @@
   - **Rejet Immédiat des Bots Headless :** Blocage des scripts automatisés (Puppeteer, Playwright, curl) avec statut HTTP `403 Forbidden` (`CaptchaVerificationFailed`) avant toute persistance ou envoi d'e-mail.
   - **Clés de Test Officielles Cloudflare :** Support natif des paires de clés officielles (`1x00000000000000000000AA` / `1x0000000000000000000000000000000AA` Always Passes, `2x...` Always Fails) configurables via `VITE_TURNSTILE_SITE_KEY` et `TURNSTILE_SECRET_KEY` dans `.env.example`.
 
+- **En-têtes HTTP de Sécurité Globaux OWASP & CSP ([`server/securityHeaders.ts`](file:///d:/Bureau/Site%20Agroalimentaire/agro-industrial-cocoa-processing/server/securityHeaders.ts)) :**
+  - **Content-Security-Policy (CSP) Stricte :** Restreint les origines autorisées (`'self'`, Google Fonts, Cloudflare Turnstile, images Unsplash/data/blob, interdiction stricte de scripts externes non autorisés et plugins via `object-src: 'none'`).
+  - **Anti-Clickjacking :** `X-Frame-Options: DENY` et `frame-ancestors 'none'` interdisant tout encadrement malveillant dans des iframes externes.
+  - **Chiffrement Garanti (HSTS) :** `Strict-Transport-Security: max-age=31536000; includeSubDomains; preload` forçant HTTPS sur 1 an.
+  - **Contrôle des Référents :** `Referrer-Policy: strict-origin-when-cross-origin`.
+  - **Désactivation des Capteurs Matériels :** `Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=(), ...` désactivant tout accès intrusif non nécessaire aux périphériques.
+  - **Protection Anti-MIME-Sniffing & COOP :** `X-Content-Type-Options: nosniff`, `Cross-Origin-Opener-Policy: same-origin-allow-popups`, `X-XSS-Protection: 0`.
+  - **Multi-Environnement :** Appliqué de façon universelle sur le serveur Vite (`apiPlugin.ts`), le serveur Express (`server/index.ts`), et configuré pour le déploiement cloud via [`vercel.json`](file:///d:/Bureau/Site%20Agroalimentaire/agro-industrial-cocoa-processing/vercel.json) et [`public/_headers`](file:///d:/Bureau/Site%20Agroalimentaire/agro-industrial-cocoa-processing/public/_headers).
+
 ### G. Gestion & Distribution des Fichiers Techniques (TDS & COA en PDF)
 - **Génération Haute Fidélité Vectorielle :** Module de génération dédié [`server/generatePdfs.ts`](file:///d:/Bureau/Site%20Agroalimentaire/agro-industrial-cocoa-processing/server/generatePdfs.ts) s'appuyant sur `pdf-lib` sans dépendance C native.
   - **9 Fiches Techniques TDS Officielles (`public/docs/tds/`) :** Strictement conformes aux 7 sections réglementaires (Codex Alimentarius Stan 87-1981, règlements UE 488/2014 & 1169/2011, critères physico-chimiques ISO, microbiologie PCR Salmonella 2x375g, traçabilité EUDR 2023/1115, emballages FCL et visas de conformité).
@@ -101,6 +110,9 @@
 - [`src/data/qualityData.ts`](file:///d:/Bureau/Site%20Agroalimentaire/agro-industrial-cocoa-processing/src/data/qualityData.ts) — Certifications officielles et protocoles d'analyse laboratoire ISO 17025.
 
 ### Backend, API, Base de Données, Transactional Email & Documents
+- [`server/securityHeaders.ts`](file:///d:/Bureau/Site%20Agroalimentaire/agro-industrial-cocoa-processing/server/securityHeaders.ts) — Configuration et middlewares des en-têtes HTTP de sécurité recommandés par l'OWASP (CSP, HSTS, anti-clickjacking).
+- [`vercel.json`](file:///d:/Bureau/Site%20Agroalimentaire/agro-industrial-cocoa-processing/vercel.json) — Configuration Vercel avec en-têtes de sécurité OWASP et réécriture SPA.
+- [`public/_headers`](file:///d:/Bureau/Site%20Agroalimentaire/agro-industrial-cocoa-processing/public/_headers) — En-têtes HTTP pour hébergeurs Cloudflare Pages et Netlify.
 - [`server/turnstile.ts`](file:///d:/Bureau/Site%20Agroalimentaire/agro-industrial-cocoa-processing/server/turnstile.ts) — Module de validation cryptographique Cloudflare Turnstile anti-bot (`/siteverify`).
 - [`server/rateLimiter.ts`](file:///d:/Bureau/Site%20Agroalimentaire/agro-industrial-cocoa-processing/server/rateLimiter.ts) — Moteur de Rate Limiting anti-DDoS / Brute-force en mémoire (Sliding Window, extraction d'IP robuste, en-têtes IETF).
 - [`server/auth.ts`](file:///d:/Bureau/Site%20Agroalimentaire/agro-industrial-cocoa-processing/server/auth.ts) — Contrôle d'accès et authentification administrative (Bearer token & header `x-admin-key`) protégeant `/api/leads*`.
