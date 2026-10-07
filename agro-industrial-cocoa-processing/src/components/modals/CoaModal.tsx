@@ -1,0 +1,1 @@
+export { CoaModal } from '../CoaModal';

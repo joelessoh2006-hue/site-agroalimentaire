@@ -1,0 +1,6 @@
+{
+  "name": "Agro-Industrial Cocoa Processing",
+  "description": "B2B Agro-Industrial cocoa processing platform with technical derivative specifications, batch traceability, laboratory assays, and RFQ procurement.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

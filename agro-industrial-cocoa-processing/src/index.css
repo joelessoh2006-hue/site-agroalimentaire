@@ -1,0 +1,51 @@
+@import "tailwindcss";
+
+@theme {
+  --font-display: 'Space Grotesk', system-ui, sans-serif;
+  --font-body: 'Hanken Grotesk', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  --color-roasted-noir: #221510;
+  --color-cocoa-core: #4A2C21;
+  --color-harvest-bronze: #C29958;
+  --color-cream-substrate: #F8F4EE;
+  --color-border-neutral: #E4DDD3;
+  --color-status-certified: #2E5A36;
+  --color-spec-code-gray: #5D5753;
+  --color-surface: #fdf9f3;
+}
+
+body {
+  font-family: 'Hanken Grotesk', system-ui, sans-serif;
+  background-color: #fdf9f3;
+  color: #1c1c18;
+}
+
+.font-display {
+  font-family: 'Space Grotesk', system-ui, sans-serif;
+}
+
+.font-body {
+  font-family: 'Hanken Grotesk', system-ui, sans-serif;
+}
+
+.font-mono {
+  font-family: 'JetBrains Mono', monospace;
+}
+
+/* Custom scrollbar for data tables */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #F8F4EE;
+}
+::-webkit-scrollbar-thumb {
+  background: #d2c3bf;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #C29958;
+}
+
