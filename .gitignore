@@ -35,7 +35,9 @@ Thumbs.db
 *.sln
 *.sw?
 
-# Temporary files
+# Temporary & Data files
 scratch/
 tmp/
 temp/
+server/leads.json
+**/leads.json

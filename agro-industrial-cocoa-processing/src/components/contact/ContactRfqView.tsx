@@ -48,6 +48,9 @@ export const ContactRfqView: React.FC<ContactRfqViewProps> = ({
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submittedRef, setSubmittedRef] = useState<string | null>(null);
 
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
+
   const isFreeEmailDomain =
     /@(gmail\.com|yahoo\.[a-z]+|hotmail\.[a-z]+|outlook\.[a-z]+|proton\.[a-z]+)$/i.test(contactEmail);
 
@@ -56,21 +59,80 @@ export const ContactRfqView: React.FC<ContactRfqViewProps> = ({
     (p) => !selectedProducts.some((sp) => sp.id === p.id)
   );
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (honeypot) return; // Silent discard for bot attacks
-    if (!companyName || !contactEmail || !contactName) return;
+    setErrorMessage(null);
+    setFieldErrors({});
+
+    // Vérification du panier de produits
+    if (selectedProducts.length === 0) {
+      setErrorMessage('Veuillez sélectionner au moins un ingrédient ou échantillon dans votre demande.');
+      return;
+    }
+
+    if (!companyName.trim() || !contactEmail.trim() || !contactName.trim()) {
+      setErrorMessage('Veuillez renseigner les champs obligatoires (Entreprise, Contact, E-mail).');
+      return;
+    }
 
     setIsSubmitting(true);
-    setTimeout(() => {
+
+    try {
+      const payload = {
+        requestType,
+        companyName: companyName.trim(),
+        vatNumber: vatNumber.trim(),
+        contactName: contactName.trim(),
+        contactEmail: contactEmail.trim(),
+        contactPhone: contactPhone.trim(),
+        country,
+        industrySector,
+        targetVolume,
+        sampleSize,
+        incoterm,
+        destinationPort: destinationPort.trim(),
+        projectDescription: projectDescription.trim(),
+        selectedProductIds: selectedProducts.map((p) => p.id),
+        honeypot,
+      };
+
+      const response = await fetch('/api/rfq', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(payload),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        setErrorMessage(data.message || 'Une erreur est survenue lors de la validation de votre demande.');
+        if (data.errors && Array.isArray(data.errors)) {
+          const mappedErrors: Record<string, string> = {};
+          data.errors.forEach((err: { field: string; message: string }) => {
+            mappedErrors[err.field] = err.message;
+          });
+          setFieldErrors(mappedErrors);
+        }
+        return;
+      }
+
+      // Succès
+      setSubmittedRef(data.reference || `RFQ-2026-${Math.floor(100000 + Math.random() * 900000)}`);
+    } catch (err) {
+      setErrorMessage(
+        'Impossible de joindre le serveur de traitement. Veuillez vérifier votre connexion ou réessayer ultérieurement.'
+      );
+    } finally {
       setIsSubmitting(false);
-      const randomRef = `RFQ-2026-${Math.floor(100000 + Math.random() * 900000)}`;
-      setSubmittedRef(randomRef);
-    }, 800);
+    }
   };
 
   const handleReset = () => {
     setSubmittedRef(null);
+    setErrorMessage(null);
+    setFieldErrors({});
   };
 
   if (submittedRef) {
@@ -186,6 +248,28 @@ export const ContactRfqView: React.FC<ContactRfqViewProps> = ({
                 autoComplete="off"
               />
             </div>
+
+            {/* Error banner from API Validation */}
+            {errorMessage && (
+              <div
+                role="alert"
+                className="p-4 bg-red-50 border border-red-200 rounded-[8px] flex items-start gap-3 text-red-800 animate-in fade-in duration-150"
+              >
+                <AlertCircle className="w-5 h-5 text-red-600 shrink-0 mt-0.5" />
+                <div className="space-y-1 text-xs">
+                  <span className="font-bold block">{errorMessage}</span>
+                  {Object.keys(fieldErrors).length > 0 && (
+                    <ul className="list-disc pl-4 space-y-0.5 text-red-700">
+                      {Object.entries(fieldErrors).map(([field, msg]) => (
+                        <li key={field}>
+                          <strong className="font-semibold">{field} :</strong> {msg}
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </div>
+              </div>
+            )}
 
             {/* Type de Demande */}
             <div className="space-y-2">
@@ -437,9 +521,18 @@ export const ContactRfqView: React.FC<ContactRfqViewProps> = ({
                       placeholder="contact@votre-entreprise.com"
                       value={contactEmail}
                       onChange={(e) => setContactEmail(e.target.value)}
-                      className="w-full pl-9 pr-3 py-2 text-xs bg-[#FAF7F2] border border-[#E4DDD3] rounded-[6px] focus:outline-none focus:border-[#C29958] focus:bg-[#FFFFFF]"
+                      className={`w-full pl-9 pr-3 py-2 text-xs bg-[#FAF7F2] border rounded-[6px] focus:outline-none focus:bg-[#FFFFFF] ${
+                        fieldErrors['contactEmail']
+                          ? 'border-red-500 focus:border-red-600'
+                          : 'border-[#E4DDD3] focus:border-[#C29958]'
+                      }`}
                     />
                   </div>
+                  {fieldErrors['contactEmail'] && (
+                    <span className="text-[11px] text-red-600 block mt-1 font-medium">
+                      {fieldErrors['contactEmail']}
+                    </span>
+                  )}
                 </div>
 
                 <div>
