@@ -1,7 +1,17 @@
 import React from 'react';
 import { ShieldCheck, Award, Globe, Building2, MapPin, Phone, Mail } from 'lucide-react';
 
-export const Footer: React.FC<{ onNavigate: (view: string, productId?: string) => void }> = ({ onNavigate }) => {
+interface FooterProps {
+  onNavigate: (view: string, productId?: string) => void;
+  onOpenTerms?: () => void;
+  onOpenPrivacy?: () => void;
+}
+
+export const Footer: React.FC<FooterProps> = ({
+  onNavigate,
+  onOpenTerms,
+  onOpenPrivacy,
+}) => {
   return (
     <footer className="bg-[#221510] text-[#F8F4EE] border-t border-[#4A2C21] mt-24">
       <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 py-16">
@@ -158,12 +168,32 @@ export const Footer: React.FC<{ onNavigate: (view: string, productId?: string) =
         {/* Bottom Bar */}
         <div className="pt-8 flex flex-col sm:flex-row items-center justify-between text-[11px] text-[#E4DDD3]/60 gap-4">
           <p>© 2026 Agro-Industrial Cocoa Processing Group. Tous droits réservés.</p>
-          <div className="flex items-center gap-6">
-            <span>Codex Alimentarius STAN 87-1981</span>
+          <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-5">
+            <span className="font-mono text-[#E4DDD3]/40">Codex STAN 87-1981</span>
             <span>·</span>
-            <span>Conformité EUDR 2023/1115</span>
+            <button
+              type="button"
+              onClick={() => onNavigate('savoir-faire')}
+              className="hover:text-[#FFFFFF] transition-colors cursor-pointer"
+            >
+              Conformité EUDR 2023/1115
+            </button>
             <span>·</span>
-            <span>Conditions Générales Export (Incoterms 2020)</span>
+            <button
+              type="button"
+              onClick={onOpenTerms}
+              className="hover:text-[#FFFFFF] transition-colors cursor-pointer"
+            >
+              Conditions Générales de Vente (Incoterms 2020)
+            </button>
+            <span>·</span>
+            <button
+              type="button"
+              onClick={onOpenPrivacy}
+              className="hover:text-[#FFFFFF] transition-colors cursor-pointer"
+            >
+              Politique de Confidentialité
+            </button>
           </div>
         </div>
       </div>

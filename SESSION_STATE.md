@@ -159,15 +159,20 @@
 - **Vue 404 dédiée ([`NotFoundView.tsx`](file:///d:/Bureau/Site%20Agroalimentaire/agro-industrial-cocoa-processing/src/components/common/NotFoundView.tsx)) :** Message sobre d'erreur HTTP 404, redirection vers le catalogue technique ou l'accueil, branchée sur toutes les routes inconnues dans `parseLocation()`.
 - **Barre d'action fixe mobile ([`MobileStickyBar.tsx`](file:///d:/Bureau/Site%20Agroalimentaire/agro-industrial-cocoa-processing/src/components/common/MobileStickyBar.tsx)) :** Barre ancrée en bas d'écran sur les terminaux inférieurs à 768 px avec bouton direct de cotation RFQ et indicateur de panier.
 
+### I. Conformité Légale B2B & Gestion des Cookies (Lot 3)
+- **Conditions Générales de Vente B2B ([`TermsModal.tsx`](file:///d:/Bureau/Site%20Agroalimentaire/agro-industrial-cocoa-processing/src/components/modals/TermsModal.tsx)) :** Clauses industrielles d'exportation réelles : Incoterms 2020 (FOB San Pedro, CIF Le Havre/Rotterdam/Hambourg), conformité obligatoire au règlement EUDR 2023/1115 (polygones GPS, déclaration de diligence raisonnée DDS), arbitrage de la Fédération du Commerce des Cacaos (FCC).
+- **Politique de Confidentialité B2B ([`PrivacyModal.tsx`](file:///d:/Bureau/Site%20Agroalimentaire/agro-industrial-cocoa-processing/src/components/modals/PrivacyModal.tsx)) :** Finalités de traitement inter-entreprises, conservation de 3 ans pour la prospection et 5 ans pour la traçabilité des lots, garantie de non-cession des données, contact DPO direct.
+- **Bandeau de cookies sobre avec refus ([`CookieBanner.tsx`](file:///d:/Bureau/Site%20Agroalimentaire/agro-industrial-cocoa-processing/src/components/common/CookieBanner.tsx)) :** Propose explicitement l'acceptation et le refus sans artifice, mémorise le choix dans le `localStorage` et ne réapparaît plus.
+- **Mesure d'audience sans traceurs (`index.html`) :** Intégration du script Cloudflare Web Analytics exempt de cookies et conforme aux exigences d'anonymat.
+- **Pied de page interactif ([`Footer.tsx`](file:///d:/Bureau/Site%20Agroalimentaire/agro-industrial-cocoa-processing/src/components/Footer.tsx)) :** Liens directs vers les modales CGV et Confidentialité.
+
 ### Fichiers Créés & Modifiés Récemment
-- [`src/components/common/NotFoundView.tsx`](file:///d:/Bureau/Site%20Agroalimentaire/agro-industrial-cocoa-processing/src/components/common/NotFoundView.tsx) - Vue 404 sobre avec retour au catalogue.
-- [`src/components/common/MobileStickyBar.tsx`](file:///d:/Bureau/Site%20Agroalimentaire/agro-industrial-cocoa-processing/src/components/common/MobileStickyBar.tsx) - Barre d'action fixe en bas d'écran mobile.
-- [`src/App.tsx`](file:///d:/Bureau/Site%20Agroalimentaire/agro-industrial-cocoa-processing/src/App.tsx) - Intégration de la route 404 et de la barre mobile fixe.
-- [`public/robots.txt`](file:///d:/Bureau/Site%20Agroalimentaire/agro-industrial-cocoa-processing/public/robots.txt) - Configuration robots.txt.
-- [`public/sitemap.xml`](file:///d:/Bureau/Site%20Agroalimentaire/agro-industrial-cocoa-processing/public/sitemap.xml) - Cartographie XML canonique.
-- [`public/favicon.svg`](file:///d:/Bureau/Site%20Agroalimentaire/agro-industrial-cocoa-processing/public/favicon.svg) - Favicon vectoriel.
-- [`public/images/og-share.jpg`](file:///d:/Bureau/Site%20Agroalimentaire/agro-industrial-cocoa-processing/public/images/og-share.jpg) - Visuel OpenGraph.
-- [`index.html`](file:///d:/Bureau/Site%20Agroalimentaire/agro-industrial-cocoa-processing/index.html) - Balises d'en-tête et métadonnées.
+- [`src/components/modals/TermsModal.tsx`](file:///d:/Bureau/Site%20Agroalimentaire/agro-industrial-cocoa-processing/src/components/modals/TermsModal.tsx) - Modale des CGV B2B export.
+- [`src/components/modals/PrivacyModal.tsx`](file:///d:/Bureau/Site%20Agroalimentaire/agro-industrial-cocoa-processing/src/components/modals/PrivacyModal.tsx) - Modale de confidentialité et droits des leads.
+- [`src/components/common/CookieBanner.tsx`](file:///d:/Bureau/Site%20Agroalimentaire/agro-industrial-cocoa-processing/src/components/common/CookieBanner.tsx) - Bandeau de consentement avec refus réel.
+- [`src/components/Footer.tsx`](file:///d:/Bureau/Site%20Agroalimentaire/agro-industrial-cocoa-processing/src/components/Footer.tsx) - Déclenchement des modales légales.
+- [`index.html`](file:///d:/Bureau/Site%20Agroalimentaire/agro-industrial-cocoa-processing/index.html) - Balise télémétrique Cloudflare sans traceurs.
+- [`src/App.tsx`](file:///d:/Bureau/Site%20Agroalimentaire/agro-industrial-cocoa-processing/src/App.tsx) - Orchestration des modales légales et du bandeau.
 
 ---
 

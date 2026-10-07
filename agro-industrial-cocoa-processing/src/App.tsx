@@ -9,8 +9,11 @@ import { QualityView } from './components/quality/QualityView';
 import { ContactRfqView } from './components/contact/ContactRfqView';
 import { CoaModal } from './components/modals/CoaModal';
 import { TdsDownloadModal } from './components/modals/TdsDownloadModal';
+import { TermsModal } from './components/modals/TermsModal';
+import { PrivacyModal } from './components/modals/PrivacyModal';
 import { NotFoundView } from './components/common/NotFoundView';
 import { MobileStickyBar } from './components/common/MobileStickyBar';
+import { CookieBanner } from './components/common/CookieBanner';
 import { COCOA_PRODUCTS } from './data/products';
 import { PROCESSING_BATCHES_DATA } from './data/pipelineData';
 import { CocoaProduct, ProcessingBatch } from './types';
@@ -119,6 +122,9 @@ export default function App() {
 
   const [tdsModalOpen, setTdsModalOpen] = useState<boolean>(false);
   const [tdsProduct, setTdsProduct] = useState<CocoaProduct | null>(null);
+
+  const [termsModalOpen, setTermsModalOpen] = useState<boolean>(false);
+  const [privacyModalOpen, setPrivacyModalOpen] = useState<boolean>(false);
 
   // Sync route on popstate (browser back/forward button)
   useEffect(() => {
@@ -298,7 +304,11 @@ export default function App() {
       </main>
 
       {/* 3. Corporate Agro-Industrial Footer */}
-      <Footer onNavigate={navigateTo} />
+      <Footer
+        onNavigate={navigateTo}
+        onOpenTerms={() => setTermsModalOpen(true)}
+        onOpenPrivacy={() => setPrivacyModalOpen(true)}
+      />
 
       {/* 4. Official Certificate of Analysis (CoA) Modal */}
       <CoaModal
@@ -315,7 +325,22 @@ export default function App() {
         product={tdsProduct}
       />
 
-      {/* 6. Barre d'action fixe sur smartphone (< 768px) */}
+      {/* 6. Conditions Générales de Vente B2B Modal */}
+      <TermsModal
+        isOpen={termsModalOpen}
+        onClose={() => setTermsModalOpen(false)}
+      />
+
+      {/* 7. Politique de Confidentialité Modal */}
+      <PrivacyModal
+        isOpen={privacyModalOpen}
+        onClose={() => setPrivacyModalOpen(false)}
+      />
+
+      {/* 8. Bandeau discret de gestion des cookies avec choix explicite */}
+      <CookieBanner onOpenPrivacy={() => setPrivacyModalOpen(true)} />
+
+      {/* 9. Barre d'action fixe sur smartphone (< 768px) */}
       <MobileStickyBar
         onOpenRfq={() => navigateTo('contact')}
         rfqItemsCount={selectedRfqProductIds.length}
