@@ -95,6 +95,7 @@ export interface CocoaDerivative {
 
 export interface PipelineStep {
   stepNumber: string;
+  unitCode?: string;
   title: string;
   english: string;
   description: string;

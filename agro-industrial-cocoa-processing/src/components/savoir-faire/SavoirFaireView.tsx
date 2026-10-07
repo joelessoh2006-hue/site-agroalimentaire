@@ -2,18 +2,10 @@ import React, { useState } from 'react';
 import { INDUSTRIAL_PIPELINE_6_STEPS, PROCESSING_BATCHES_DATA, ESG_EUDR_METRICS } from '../../data/pipelineData';
 import { ProcessingBatch } from '../../types';
 import {
-  Factory,
   Globe2,
   ShieldCheck,
   CheckCircle2,
-  Flame,
-  Cog,
-  Layers,
-  Sparkles,
-  Package,
-  Calendar,
   FileSpreadsheet,
-  ArrowRight,
   MapPin,
   Satellite
 } from 'lucide-react';
@@ -22,6 +14,15 @@ interface SavoirFaireViewProps {
   onOpenCoaForBatch: (batch: ProcessingBatch) => void;
   onNavigate: (view: string) => void;
 }
+
+const UNIT_CODES: Record<string, string> = {
+  '01': 'REC-01',
+  '02': 'TOR-02',
+  '03': 'MOY-03',
+  '04': 'PRS-04',
+  '05': 'ALC-05',
+  '06': 'EMB-06',
+};
 
 export const SavoirFaireView: React.FC<SavoirFaireViewProps> = ({
   onOpenCoaForBatch,
@@ -32,18 +33,6 @@ export const SavoirFaireView: React.FC<SavoirFaireViewProps> = ({
 
   const activeStep = INDUSTRIAL_PIPELINE_6_STEPS[activeStepIndex];
   const selectedBatch = PROCESSING_BATCHES_DATA.find((b) => b.lotCode === selectedLotCode) || PROCESSING_BATCHES_DATA[0];
-
-  const getStepIcon = (idx: number) => {
-    switch (idx) {
-      case 0: return <Factory className="w-5 h-5 text-[#C29958]" />;
-      case 1: return <Flame className="w-5 h-5 text-[#C29958]" />;
-      case 2: return <Cog className="w-5 h-5 text-[#C29958]" />;
-      case 3: return <Layers className="w-5 h-5 text-[#C29958]" />;
-      case 4: return <Sparkles className="w-5 h-5 text-[#C29958]" />;
-      case 5: return <Package className="w-5 h-5 text-[#C29958]" />;
-      default: return <Cog className="w-5 h-5 text-[#C29958]" />;
-    }
-  };
 
   return (
     <div className="space-y-16">
@@ -93,6 +82,7 @@ export const SavoirFaireView: React.FC<SavoirFaireViewProps> = ({
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2">
           {INDUSTRIAL_PIPELINE_6_STEPS.map((step, idx) => {
             const isActive = idx === activeStepIndex;
+            const unitCode = step.unitCode || UNIT_CODES[step.stepNumber] || `UN-0${idx + 1}`;
             return (
               <button
                 key={step.stepNumber}
@@ -104,17 +94,19 @@ export const SavoirFaireView: React.FC<SavoirFaireViewProps> = ({
                 }`}
               >
                 <div className="flex items-center justify-between w-full">
-                  <span className={`font-mono text-xs font-bold ${isActive ? 'text-[#C29958]' : 'text-[#817470]'}`}>
-                    {step.stepNumber}
+                  <span className={`font-mono text-xs font-bold ${isActive ? 'text-[#C29958]' : 'text-[#78716C]'}`}>
+                    {step.stepNumber} · {unitCode}
                   </span>
-                  {getStepIcon(idx)}
+                  <span className={`font-mono text-xs ${isActive ? 'text-[#C29958]' : 'text-[#78716C]'}`}>
+                    {step.capacityPerHour}
+                  </span>
                 </div>
-                <div>
+                <div className="mt-2">
                   <span className={`font-display text-xs font-bold block truncate ${isActive ? 'text-[#FFFFFF]' : 'text-[#221510]'}`}>
                     {step.title.split(',')[0]}
                   </span>
-                  <span className={`text-[10px] block truncate ${isActive ? 'text-[#E4DDD3]/70' : 'text-[#5D5753]'}`}>
-                    {step.capacityPerHour}
+                  <span className={`text-[10px] block truncate ${isActive ? 'text-[#E4DDD3]/70' : 'text-[#78716C]'}`}>
+                    {step.english}
                   </span>
                 </div>
               </button>
@@ -128,7 +120,7 @@ export const SavoirFaireView: React.FC<SavoirFaireViewProps> = ({
             <div className="space-y-2 max-w-2xl">
               <div className="flex items-center gap-2">
                 <span className="font-mono text-xs text-[#C29958] font-bold">
-                  ÉTAPE {activeStep.stepNumber} / 06
+                  {activeStep.stepNumber} · {activeStep.unitCode || UNIT_CODES[activeStep.stepNumber]} · ÉTAPE {activeStep.stepNumber} / 06
                 </span>
                 <span className="text-xs text-[#5D5753]">·</span>
                 <span className="font-mono text-xs text-[#5D5753] uppercase">{activeStep.english}</span>

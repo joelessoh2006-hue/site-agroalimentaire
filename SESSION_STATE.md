@@ -41,6 +41,11 @@
   - **Panier RFQ à zéro par défaut (`src/App.tsx`) :** Suppression des 2 produits représentatifs préchargés en dur. Initialisation de `selectedRfqProductIds` à tableau vide `[]` ou rechargé dynamiquement depuis `localStorage.getItem('b2b_rfq_basket')` si l'utilisateur a fait des sélections préalables.
   - **Masquage du badge de devis :** Le badge dans le `Header` et la barre mobile ne s'affiche plus lorsque le panier est vide (`rfqItemsCount > 0`).
   - **Formulaire de contact B2B (`src/components/contact/ContactRfqView.tsx`) :** Suppression des valeurs pré-cochées en dur (pays, secteur, volume, incoterm, port). Ajout d'options de choix neutres (`"Sélectionnez..."`) et ajout du sélecteur explicite de pays avec validation obligatoire.
+- **Phase 7 Épuration Technique des 6 Étapes de Fabrication (`SavoirFaireView.tsx`) :**
+  - **Suppression des icônes décoratives génériques :** Retrait de `Factory`, `Flame`, `Cog`, `Layers`, `Sparkles` et `Package` en haut à droite des 6 cartes d'étape.
+  - **Affichage du débit volumique en JetBrains Mono :** Positionnement du débit volumique (`15.0 T/h`, etc.) en haut à droite en police `font-mono text-xs text-[#78716C]` (ou laiton `#C29958` quand l'étape est active).
+  - **Trigrammes industriels d'unité normalisés :** Association en haut à gauche du numéro et du code machine officiel (`01 · REC-01`, `02 · TOR-02`, `03 · MOY-03`, `04 · PRS-04`, `05 · ALC-05`, `06 · EMB-06`).
+  - **Maintien de l'interaction dynamique :** Préservation du fond sombre `#221510` et des accents laiton `#C29958` pour l'étape active.
 
 ### B. Modélisation Exhaustive des Données Métier
 - **9 Dérivés de Cacao Purs modélisés :**

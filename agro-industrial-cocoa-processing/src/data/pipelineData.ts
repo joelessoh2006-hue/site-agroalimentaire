@@ -3,6 +3,7 @@ import { PipelineStep, ProcessingBatch } from '../types';
 export const INDUSTRIAL_PIPELINE_6_STEPS: PipelineStep[] = [
   {
     stepNumber: '01',
+    unitCode: 'REC-01',
     title: 'Sourcing, Réception & Nettoyage Densimétrique',
     english: 'Bean Reception, Destoning & Air Classification',
     description: 'Contrôle à quai de l\'hygrométrie des sacs en toile de jute (taux cible < 7.5%). Séparation densimétrique par table gravimétrique, épierrage à cyclone et passage sous barreau magnétique néodyme haute puissance pour éliminer tout corps étranger avant stockage en silos tempérés.',
@@ -18,6 +19,7 @@ export const INDUSTRIAL_PIPELINE_6_STEPS: PipelineStep[] = [
   },
   {
     stepNumber: '02',
+    unitCode: 'TOR-02',
     title: 'Décoquillage & Torréfaction Continue Convective',
     english: 'Winnowing & Continuous Convective Roasting',
     description: 'Craquage délicat des fèves sous rouleaux cannelés pour libérer les éclats (nibs) sans concassage excessif. Séparation aéraulique précise des coques résiduelles (< 1.5% de coque résiduelle). Torréfaction en tambour rotatif à air chaud indirect modulé, développant les précurseurs d\'arômes sans pyrolyse thermique.',
@@ -33,6 +35,7 @@ export const INDUSTRIAL_PIPELINE_6_STEPS: PipelineStep[] = [
   },
   {
     stepNumber: '03',
+    unitCode: 'MOY-03',
     title: 'Broyage Fin & Affinage de la Masse de Cacao',
     english: 'Fine Milling & Ball Mill Liquor Refining',
     description: 'Prébroyage des éclats par broyeur à marteaux percutants pour liquéfier le beurre de cacao contenu dans les cellules végétales. Affinage secondaire au broyeur à billes en céramique d\'alumine d\'ultra-haute dureté pour microniser les particules solides de cacao sous le seuil sensoriel de détection (< 20 microns).',
@@ -48,6 +51,7 @@ export const INDUSTRIAL_PIPELINE_6_STEPS: PipelineStep[] = [
   },
   {
     stepNumber: '04',
+    unitCode: 'PRS-04',
     title: 'Pressage Hydraulique Haute Pression (450 Bar)',
     english: 'High-Pressure Hydraulic Cake & Butter Separation',
     description: 'Distribution de la masse chaude dans les pots de presses horizontales hydrauliques géantes. Compression progressive jusqu\'à 450 bars pour extraire le beurre de cacao limpide. Séparation de la phase liquide (beurre de cacao pur) et de la phase solide compacte (disques de tourteaux « Troutrou »).',
@@ -63,6 +67,7 @@ export const INDUSTRIAL_PIPELINE_6_STEPS: PipelineStep[] = [
   },
   {
     stepNumber: '05',
+    unitCode: 'ALC-05',
     title: 'Alcalinisation Dutch & Micronisation Poudre',
     english: 'Dutch Alkalization & Alpine Micronized Milling',
     description: 'Pour les poudres alcalinisées, immersion des tourteaux dans une solution aqueuse de régulateurs de pH alimentaires (carbonate de potassium K₂CO₃) sous pression de vapeur contrôlée pour intensifier la couleur et neutraliser l\'acidité. Après séchage, le tourteau est pulvérisé dans des broyeurs cryogéniques sous jet d\'air classificateur Alpine.',
@@ -78,6 +83,7 @@ export const INDUSTRIAL_PIPELINE_6_STEPS: PipelineStep[] = [
   },
   {
     stepNumber: '06',
+    unitCode: 'EMB-06',
     title: 'Conditionnement Aseptique & Expédition Maritime',
     english: 'Aseptic Industrial Packaging & Maritime Containerization',
     description: 'Conditionnement automatisé en salle blanche sous filtration HEPA. Ensachage des poudres en sacs kraft hermétiques avec soudure étanche, moulage du beurre et de la masse en cartons de 25 kg avec liner polyéthylène vierge ou fûts thermolaqués. Palettisation robotisée avec houssage étirable complet et scellé de sécurité numéroté pour expédition FCL.',
