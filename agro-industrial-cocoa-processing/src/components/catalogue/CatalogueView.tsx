@@ -289,7 +289,20 @@ export const CatalogueView: React.FC<CatalogueViewProps> = ({
                 key={product.id}
                 className="bg-[#FFFFFF] rounded-[10px] border border-[#E4DDD3] overflow-hidden flex flex-col justify-between hover:border-[#C29958] hover:shadow-[0px_8px_24px_rgba(34,21,16,0.06)] transition-all duration-200 group"
               >
-                <div>
+                {/* Zone cliquable principale : redirige vers les détails du produit */}
+                <div
+                  onClick={() => onSelectProduct(product.id)}
+                  className="cursor-pointer flex-1 flex flex-col justify-between"
+                  role="button"
+                  tabIndex={0}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault();
+                      onSelectProduct(product.id);
+                    }
+                  }}
+                  aria-label={`Voir la fiche détaillée de ${product.name}`}
+                >
                   {/* Visual Header with Badges */}
                   <div className="relative h-48 sm:h-52 w-full bg-[#F1EDE7] overflow-hidden border-b border-[#E4DDD3]">
                     <ProductImage
@@ -301,7 +314,7 @@ export const CatalogueView: React.FC<CatalogueViewProps> = ({
                     />
 
                     {/* Sector badges overlay */}
-                    <div className="absolute top-3 right-3 flex items-center gap-1.5">
+                    <div className="absolute top-3 right-3 flex items-center gap-1.5 pointer-events-none">
                       {product.industry.map((ind) => (
                         <span
                           key={ind}
@@ -336,8 +349,7 @@ export const CatalogueView: React.FC<CatalogueViewProps> = ({
                     {/* Title & Description */}
                     <div>
                       <h3
-                        onClick={() => onSelectProduct(product.id)}
-                        className="font-display text-lg font-bold text-[#221510] leading-snug group-hover:text-[#4A2C21] transition-colors cursor-pointer"
+                        className="font-display text-lg font-bold text-[#221510] leading-snug group-hover:text-[#4A2C21] transition-colors"
                       >
                         {product.name}
                       </h3>
@@ -376,8 +388,11 @@ export const CatalogueView: React.FC<CatalogueViewProps> = ({
                   </div>
                 </div>
 
-                {/* Actions: View Details, TDS Modal, Add to RFQ */}
-                <div className="p-5 sm:p-6 pt-0 border-t border-[#E4DDD3] grid grid-cols-3 gap-2 mt-2 pt-3">
+                {/* Actions: View Details, TDS Modal, Add to RFQ (Zone isolée de clic) */}
+                <div
+                  onClick={(e) => e.stopPropagation()}
+                  className="p-5 sm:p-6 pt-0 border-t border-[#E4DDD3] grid grid-cols-3 gap-2 mt-2 pt-3"
+                >
                   <button
                     onClick={() => onSelectProduct(product.id)}
                     className="py-2 px-1 text-center text-xs font-display font-semibold uppercase tracking-wider text-[#221510] bg-[#FAF7F2] border border-[#E4DDD3] rounded-[6px] hover:border-[#C29958] hover:bg-[#FFFFFF] transition-colors inline-flex items-center justify-center gap-1 cursor-pointer"
