@@ -1,8 +1,74 @@
 import type { Plugin } from 'vite';
+import { z } from 'zod';
 import { processRfqSubmission, getAllLeads, getLeadById, updateLeadStatus } from './rfqHandler';
 import { isAuthorizedAdminRequest } from './auth';
 import { rateLimiter, getClientIp, RATE_LIMIT_RULES } from './rateLimiter';
 import { applySecurityHeaders } from './securityHeaders';
+
+// Schémas de validation Zod stricts pour les entrées de l'API
+const pluginLeadsQuerySchema = z.object({
+  limit: z.coerce.number().int().min(1).max(100).default(50),
+  offset: z.coerce.number().int().min(0).default(0),
+});
+const pluginLeadIdSchema = z.string().trim().regex(/^[a-zA-Z0-9_\-]+$/);
+const pluginLeadStatusSchema = z.enum(['nouveau', 'contacté', 'devis_envoyé', 'échantillon_expédié', 'clôturé']);
+const pluginDocSlugSchema = z.string().trim().regex(/^[a-z0-9\-]+$/i);
+const pluginDocLotSchema = z.string().trim().regex(/^[a-zA-Z0-9\-]+$/);
+
+/**
+ * Lit le flux HTTP entrant avec un plafond strict de 100 Ko,
+ * gestion d'erreur réseau et détachement garanti des écouteurs d'événements (.off).
+ */
+function readJsonBodySafe<T = any>(req: any, maxBytes: number = 102400): Promise<T> {
+  return new Promise((resolve, reject) => {
+    let totalBytes = 0;
+    const chunks: Buffer[] = [];
+
+    const onData = (chunk: any) => {
+      const buffer = typeof chunk === 'string' ? Buffer.from(chunk) : chunk;
+      totalBytes += buffer.length;
+      if (totalBytes > maxBytes) {
+        cleanup();
+        req.destroy();
+        reject(new Error('Payload trop volumineux'));
+        return;
+      }
+      chunks.push(buffer);
+    };
+
+    const onEnd = () => {
+      cleanup();
+      try {
+        const bodyStr = Buffer.concat(chunks).toString('utf-8');
+        const parsed = bodyStr ? JSON.parse(bodyStr) : {};
+        resolve(parsed as T);
+      } catch {
+        reject(new Error('JSON invalide'));
+      }
+    };
+
+    const onError = (err: any) => {
+      cleanup();
+      reject(err);
+    };
+
+    const cleanup = () => {
+      if (typeof req.off === 'function') {
+        req.off('data', onData);
+        req.off('end', onEnd);
+        req.off('error', onError);
+      } else if (typeof req.removeListener === 'function') {
+        req.removeListener('data', onData);
+        req.removeListener('end', onEnd);
+        req.removeListener('error', onError);
+      }
+    };
+
+    req.on('data', onData);
+    req.on('end', onEnd);
+    req.on('error', onError);
+  });
+}
 
 /**
  * Plugin Vite pour servir les routes API (/api/rfq, /api/contact, /api/leads, /api/docs) directement
@@ -43,33 +109,23 @@ export function rfqApiPlugin(): Plugin {
             return;
           }
 
-          const chunks: Buffer[] = [];
-          
-          req.on('data', (chunk) => {
-            chunks.push(typeof chunk === 'string' ? Buffer.from(chunk) : chunk);
-          });
+          try {
+            const parsedBody = await readJsonBodySafe(req, 102400);
+            const result = await processRfqSubmission(parsedBody, clientIp);
 
-          req.on('end', async () => {
-            try {
-              const bodyStr = Buffer.concat(chunks).toString('utf-8');
-              const parsedBody = bodyStr ? JSON.parse(bodyStr) : {};
-              const result = await processRfqSubmission(parsedBody, clientIp);
-
-              res.statusCode = result.statusCode;
-              res.setHeader('Content-Type', 'application/json');
-              res.end(JSON.stringify(result.body));
-            } catch (err) {
-              res.statusCode = 400;
-              res.setHeader('Content-Type', 'application/json');
-              res.end(
-                JSON.stringify({
-                  success: false,
-                  message: 'Erreur lors de la lecture du payload JSON envoyé.',
-                  error: err instanceof Error ? err.message : String(err),
-                })
-              );
-            }
-          });
+            res.statusCode = result.statusCode;
+            res.setHeader('Content-Type', 'application/json');
+            res.end(JSON.stringify(result.body));
+          } catch {
+            res.statusCode = 400;
+            res.setHeader('Content-Type', 'application/json');
+            res.end(
+              JSON.stringify({
+                success: false,
+                message: 'Erreur lors de la lecture des données transmises.',
+              })
+            );
+          }
           return;
         }
 
@@ -118,13 +174,22 @@ export function rfqApiPlugin(): Plugin {
 
         // 3. Consultation des leads enregistrés (GET /api/leads) [Protégé]
         if (req.method === 'GET' && url === '/api/leads') {
-          const leads = getAllLeads();
+          const parsedUrl = new URL(req.url || '', 'http://localhost');
+          const queryParams = {
+            limit: parsedUrl.searchParams.get('limit') || undefined,
+            offset: parsedUrl.searchParams.get('offset') || undefined,
+          };
+          const parsedQuery = pluginLeadsQuerySchema.safeParse(queryParams);
+          const { limit, offset } = parsedQuery.success ? parsedQuery.data : { limit: 50, offset: 0 };
+          const leads = getAllLeads(limit, offset);
           res.statusCode = 200;
           res.setHeader('Content-Type', 'application/json');
           res.end(
             JSON.stringify({
               success: true,
               total: leads.length,
+              limit,
+              offset,
               leads,
             })
           );
@@ -133,8 +198,15 @@ export function rfqApiPlugin(): Plugin {
 
         // 3. Consultation d'un lead individuel (GET /api/leads/:id)
         if (req.method === 'GET' && url.startsWith('/api/leads/')) {
-          const leadId = url.replace('/api/leads/', '');
-          const lead = getLeadById(leadId);
+          const rawId = url.replace('/api/leads/', '').trim();
+          const parsedId = pluginLeadIdSchema.safeParse(rawId);
+          if (!parsedId.success) {
+            res.statusCode = 400;
+            res.setHeader('Content-Type', 'application/json');
+            res.end(JSON.stringify({ success: false, message: 'Identifiant de prospect invalide.' }));
+            return;
+          }
+          const lead = getLeadById(parsedId.data);
           if (!lead) {
             res.statusCode = 404;
             res.setHeader('Content-Type', 'application/json');
@@ -150,50 +222,56 @@ export function rfqApiPlugin(): Plugin {
         // 4. Mise à jour de statut d'un lead (PATCH ou POST /api/leads/:id/status)
         if ((req.method === 'PATCH' || req.method === 'POST') && url.startsWith('/api/leads/') && url.endsWith('/status')) {
           const parts = url.split('/');
-          const leadId = parts[3]; // /api/leads/<id>/status
-          const chunks: Buffer[] = [];
+          const rawId = parts[3]?.trim();
+          const parsedId = pluginLeadIdSchema.safeParse(rawId);
+          if (!parsedId.success) {
+            res.statusCode = 400;
+            res.setHeader('Content-Type', 'application/json');
+            res.end(JSON.stringify({ success: false, message: 'Identifiant de prospect invalide.' }));
+            return;
+          }
 
-          req.on('data', (chunk) => {
-            chunks.push(typeof chunk === 'string' ? Buffer.from(chunk) : chunk);
-          });
-
-          req.on('end', () => {
-            try {
-              const bodyStr = Buffer.concat(chunks).toString('utf-8');
-              const { status } = JSON.parse(bodyStr || '{}');
-              const updated = updateLeadStatus(leadId, status);
-              if (!updated) {
-                res.statusCode = 400;
-                res.setHeader('Content-Type', 'application/json');
-                res.end(
-                  JSON.stringify({
-                    success: false,
-                    message:
-                      'Statut invalide ou prospect introuvable. Valeurs autorisées: nouveau, contacté, devis_envoyé, échantillon_expédié, clôturé.',
-                  })
-                );
-                return;
-              }
-              res.statusCode = 200;
-              res.setHeader('Content-Type', 'application/json');
-              res.end(
-                JSON.stringify({
-                  success: true,
-                  message: `Statut mis à jour avec succès : ${status}`,
-                })
-              );
-            } catch (parseErr) {
+          try {
+            const body = await readJsonBodySafe<{ status?: string }>(req, 102400);
+            const parsedStatus = pluginLeadStatusSchema.safeParse(body?.status);
+            if (!parsedStatus.success) {
               res.statusCode = 400;
               res.setHeader('Content-Type', 'application/json');
               res.end(
                 JSON.stringify({
                   success: false,
-                  message: 'Payload JSON invalide.',
-                  error: parseErr instanceof Error ? parseErr.message : String(parseErr),
+                  message:
+                    'Statut invalide ou prospect introuvable. Valeurs autorisées: nouveau, contacté, devis_envoyé, échantillon_expédié, clôturé.',
                 })
               );
+              return;
             }
-          });
+            const status = parsedStatus.data;
+            const updated = updateLeadStatus(parsedId.data, status);
+            if (!updated) {
+              res.statusCode = 404;
+              res.setHeader('Content-Type', 'application/json');
+              res.end(JSON.stringify({ success: false, message: 'Prospect introuvable.' }));
+              return;
+            }
+            res.statusCode = 200;
+            res.setHeader('Content-Type', 'application/json');
+            res.end(
+              JSON.stringify({
+                success: true,
+                message: `Statut mis à jour avec succès : ${status}`,
+              })
+            );
+          } catch {
+            res.statusCode = 400;
+            res.setHeader('Content-Type', 'application/json');
+            res.end(
+              JSON.stringify({
+                success: false,
+                message: 'Format de requête invalide.',
+              })
+            );
+          }
           return;
         }
 
@@ -237,7 +315,14 @@ export function rfqApiPlugin(): Plugin {
 
           if (url.startsWith('/api/docs/tds/')) {
             const rawParam = url.replace('/api/docs/tds/', '').trim();
-            let matchedSlug = rawParam;
+            const parsedSlug = pluginDocSlugSchema.safeParse(rawParam);
+            if (!parsedSlug.success) {
+              res.statusCode = 400;
+              res.setHeader('Content-Type', 'application/json');
+              res.end(JSON.stringify({ success: false, message: 'Format de slug invalide.' }));
+              return;
+            }
+            let matchedSlug = parsedSlug.data;
 
             // Tentative de résolution directe
             if (!fs.existsSync(path.resolve(publicDocsDir, 'tds', `TDS_${matchedSlug}.pdf`))) {
@@ -257,7 +342,15 @@ export function rfqApiPlugin(): Plugin {
             relativeFilePath = path.join('tds', `TDS_${matchedSlug}.pdf`);
             downloadFilename = `TDS_${matchedSlug}_AgroIndustrial_2026.pdf`;
           } else if (url.startsWith('/api/docs/coa/')) {
-            const lot = url.replace('/api/docs/coa/', '');
+            const rawLot = url.replace('/api/docs/coa/', '').trim();
+            const parsedLot = pluginDocLotSchema.safeParse(rawLot);
+            if (!parsedLot.success) {
+              res.statusCode = 400;
+              res.setHeader('Content-Type', 'application/json');
+              res.end(JSON.stringify({ success: false, message: 'Format de numéro de lot invalide.' }));
+              return;
+            }
+            const lot = parsedLot.data;
             let coaFile = `COA_${lot}.pdf`;
             if (!fs.existsSync(path.resolve(publicDocsDir, 'coa', coaFile))) {
               coaFile = 'COA_LOT-COC-2026-STANDARD.pdf';

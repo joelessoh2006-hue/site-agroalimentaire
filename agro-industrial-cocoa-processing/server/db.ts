@@ -183,13 +183,17 @@ export async function saveLeadToDatabase(record: B2BLeadRecord): Promise<void> {
 }
 
 /**
- * Récupère tous les prospects enregistrés
+ * Récupère les prospects enregistrés avec pagination sécurisée (anti-DDoS / inondation)
  */
-export function getAllLeads(): B2BLeadRecord[] {
+export function getAllLeads(limit: number = 50, offset: number = 0): B2BLeadRecord[] {
+  // Plafond strict : 100 enregistrements au maximum par page
+  const safeLimit = Math.min(Math.max(1, Math.floor(Number(limit) || 50)), 100);
+  const safeOffset = Math.max(0, Math.floor(Number(offset) || 0));
+
   if (db) {
     try {
-      const stmt = db.prepare('SELECT * FROM leads ORDER BY created_at DESC');
-      return stmt.all() as B2BLeadRecord[];
+      const stmt = db.prepare('SELECT * FROM leads ORDER BY created_at DESC LIMIT ? OFFSET ?');
+      return stmt.all(safeLimit, safeOffset) as B2BLeadRecord[];
     } catch (err) {
       console.error('[SQLite DB] Erreur de lecture des leads:', err);
     }
@@ -198,7 +202,8 @@ export function getAllLeads(): B2BLeadRecord[] {
   // Fallback JSON si SQLite indisponible
   if (fs.existsSync(JSON_BACKUP_PATH)) {
     try {
-      return JSON.parse(fs.readFileSync(JSON_BACKUP_PATH, 'utf-8'));
+      const all: B2BLeadRecord[] = JSON.parse(fs.readFileSync(JSON_BACKUP_PATH, 'utf-8'));
+      return all.slice(safeOffset, safeOffset + safeLimit);
     } catch {
       return [];
     }

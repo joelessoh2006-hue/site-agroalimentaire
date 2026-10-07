@@ -50,7 +50,6 @@ export async function verifyTurnstileToken(
   if (!token || typeof token !== 'string' || token.trim().length === 0) {
     // Si en dev sans token particulier (permet les tests automatisés internes ou curl)
     if (process.env.NODE_ENV !== 'production' && !process.env.TURNSTILE_SECRET_KEY) {
-      console.log('[Turnstile] ⚠️ Mode dev local sans clé de production : token absent toléré pour tests');
       return { success: true };
     }
 
