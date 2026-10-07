@@ -51,6 +51,10 @@
   - **Tableau télégraphique à 3 colonnes :** Remplacement des longs paragraphes et encadrés narratifs de l'étape active par un tableau compact Input / Output / CCP avec maintien des cadrans Température et Débit en JetBrains Mono.
   - **Bloc EUDR minéral clair :** Passage sur fond clair `#FAF7F2` bordé `#E4DDD3`, élimination des 3 longs pavés narratifs et conservation exclusive du titre, du CTA et des 4 KPIs majeurs en JetBrains Mono.
   - **Bande de métriques compacte et rectiligne :** Fiche de lot simplifiée avec métriques analytiques LIMS (Fermentation, Cadmium, Calibre, Sceau sanitaire) sous forme d'une ligne technique avec diviseurs fins.
+- **Phase 9 Barre de Contrôle Segmentée Continue sans Troncature (`SavoirFaireView.tsx`) :**
+  - **Barre industrielle monobloc :** Remplacement de la grille de cartes par un ruban de contrôle continu `divide-x divide-[#E4DDD3] grid grid-cols-6` encapsulé dans un conteneur `rounded-lg border border-[#E4DDD3] bg-white`.
+  - **Élimination complète des troncatures :** Raccourcissement précis des 6 libellés ("Réception Fèves", "Torréfaction", "Broyage & Affinage", "Pressage", "Alcalinisation", "Conditionnement") et suppression des sous-titres anglais superflus.
+  - **Style actif feutré & accent cuivré :** Fond doux `#FAF7F2` avec liseré supérieur cuivré de 2px (`border-[#C29958]`), titre en noir d'encre dense `#1C1917` et métriques en laiton `#9C7336`.
 
 ### B. Modélisation Exhaustive des Données Métier
 - **9 Dérivés de Cacao Purs modélisés :**

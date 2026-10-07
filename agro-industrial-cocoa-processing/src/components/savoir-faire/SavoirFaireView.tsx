@@ -17,6 +17,15 @@ const UNIT_CODES: Record<string, string> = {
   '06': 'EMB-06',
 };
 
+const SHORT_STEP_TITLES: Record<string, string> = {
+  '01': 'Réception Fèves',
+  '02': 'Torréfaction',
+  '03': 'Broyage & Affinage',
+  '04': 'Pressage',
+  '05': 'Alcalinisation',
+  '06': 'Conditionnement',
+};
+
 const STEP_FLOW_SPECS: Record<string, { input: string; output: string; ccp: string }> = {
   '01': {
     input: 'Fèves brutes en sacs de jute (humidité < 7.5%, parcelles GPS vérifiées)',
@@ -85,7 +94,7 @@ export const SavoirFaireView: React.FC<SavoirFaireViewProps> = ({
         </div>
       </div>
 
-      {/* 2. Pipeline Industriel en 6 Étapes (Interactif) */}
+      {/* 2. Pipeline Industriel en 6 Étapes (Barre segmentée continue) */}
       <section className="space-y-6">
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-2 border-b border-[#E4DDD3]/60 pb-3">
           <div>
@@ -101,40 +110,40 @@ export const SavoirFaireView: React.FC<SavoirFaireViewProps> = ({
           </span>
         </div>
 
-        {/* 6 Step Navigation Ribbon */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2">
-          {INDUSTRIAL_PIPELINE_6_STEPS.map((step, idx) => {
-            const isActive = idx === activeStepIndex;
-            const unitCode = step.unitCode || UNIT_CODES[step.stepNumber] || `UN-0${idx + 1}`;
-            return (
-              <button
-                key={step.stepNumber}
-                onClick={() => setActiveStepIndex(idx)}
-                className={`p-3 text-left rounded-[6px] border transition-colors cursor-pointer flex flex-col justify-between min-h-[92px] ${
-                  isActive
-                    ? 'bg-[#221510] text-[#FFFFFF] border-[#221510]'
-                    : 'bg-[#FFFFFF] text-[#4A2C21] border-[#E4DDD3] hover:border-[#C29958] hover:bg-[#F8F4EE]'
-                }`}
-              >
-                <div className="flex items-center justify-between w-full">
-                  <span className={`font-mono text-xs font-bold ${isActive ? 'text-[#C29958]' : 'text-[#78716C]'}`}>
-                    {step.stepNumber} · {unitCode}
-                  </span>
-                  <span className={`font-mono text-xs ${isActive ? 'text-[#C29958]' : 'text-[#78716C]'}`}>
-                    {step.capacityPerHour}
-                  </span>
-                </div>
-                <div className="mt-2">
-                  <span className={`font-display text-xs font-bold block truncate ${isActive ? 'text-[#FFFFFF]' : 'text-[#221510]'}`}>
-                    {step.title.split(',')[0]}
-                  </span>
-                  <span className={`text-[10px] block truncate ${isActive ? 'text-[#E4DDD3]/70' : 'text-[#78716C]'}`}>
-                    {step.english}
-                  </span>
-                </div>
-              </button>
-            );
-          })}
+        {/* 6 Step Continuous Segmented Control Bar */}
+        <div className="border border-[#E4DDD3] rounded-lg bg-white overflow-hidden overflow-x-auto">
+          <div className="divide-x divide-[#E4DDD3] grid grid-cols-6 min-w-[680px] lg:min-w-0">
+            {INDUSTRIAL_PIPELINE_6_STEPS.map((step, idx) => {
+              const isActive = idx === activeStepIndex;
+              const unitCode = step.unitCode || UNIT_CODES[step.stepNumber] || `UN-0${idx + 1}`;
+              const shortTitle = SHORT_STEP_TITLES[step.stepNumber] || step.title;
+              return (
+                <button
+                  key={step.stepNumber}
+                  onClick={() => setActiveStepIndex(idx)}
+                  className={`p-3 sm:p-3.5 text-left transition-colors cursor-pointer flex flex-col justify-between border-t-2 relative ${
+                    isActive
+                      ? 'bg-[#FAF7F2] border-[#C29958]'
+                      : 'bg-white border-transparent hover:bg-[#FAF7F2]/60'
+                  }`}
+                >
+                  <div className="flex items-center justify-between w-full">
+                    <span className={`font-mono text-xs ${isActive ? 'text-[#9C7336] font-bold' : 'text-[#78716C]'}`}>
+                      {step.stepNumber} · {unitCode}
+                    </span>
+                    <span className={`font-mono text-xs ${isActive ? 'text-[#9C7336] font-medium' : 'text-[#78716C]'}`}>
+                      {step.capacityPerHour}
+                    </span>
+                  </div>
+                  <div className="mt-2.5">
+                    <span className={`font-display text-xs sm:text-sm block whitespace-nowrap ${isActive ? 'text-[#1C1917] font-semibold' : 'text-[#221510]'}`}>
+                      {shortTitle}
+                    </span>
+                  </div>
+                </button>
+              );
+            })}
+          </div>
         </div>
 
         {/* Active Step Deep Dive Card */}
