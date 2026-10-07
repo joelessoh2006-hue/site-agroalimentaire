@@ -287,7 +287,7 @@ export const CatalogueView: React.FC<CatalogueViewProps> = ({
             return (
               <article
                 key={product.id}
-                className="bg-[#FFFFFF] rounded-[10px] border border-[#E4DDD3] overflow-hidden flex flex-col justify-between hover:border-[#C29958] hover:shadow-[0px_8px_24px_rgba(34,21,16,0.06)] transition-all duration-200 group"
+                className="bg-[#FFFFFF] rounded-[2px] border border-[#E4DDD3] overflow-hidden flex flex-col justify-between hover:border-[#C29958] transition-colors group"
               >
                 {/* Zone cliquable principale : redirige vers les détails du produit */}
                 <div
@@ -310,7 +310,6 @@ export const CatalogueView: React.FC<CatalogueViewProps> = ({
                       alt={product.name}
                       productName={product.name}
                       category={product.category}
-                      className="group-hover:scale-105"
                     />
 
                     {/* Sector badges overlay */}
@@ -318,10 +317,10 @@ export const CatalogueView: React.FC<CatalogueViewProps> = ({
                       {product.industry.map((ind) => (
                         <span
                           key={ind}
-                          className={`text-[10px] font-mono font-bold uppercase tracking-wider px-2 py-0.5 rounded-[4px] shadow-xs backdrop-blur-xs ${
+                          className={`text-[10px] font-mono font-bold uppercase tracking-wider px-2 py-0.5 rounded-[2px] ${
                             ind === 'cosmetique'
-                              ? 'bg-[#221510]/85 text-[#C29958] border border-[#C29958]/40'
-                              : 'bg-[#F8F4EE]/90 text-[#221510] border border-[#E4DDD3]'
+                              ? 'bg-[#221510] text-[#C29958] border border-[#C29958]/40'
+                              : 'bg-[#F8F4EE] text-[#221510] border border-[#E4DDD3]'
                           }`}
                         >
                           {ind === 'cosmetique' ? 'Cosmétique' : 'Agroalimentaire'}
@@ -395,7 +394,7 @@ export const CatalogueView: React.FC<CatalogueViewProps> = ({
                 >
                   <button
                     onClick={() => onSelectProduct(product.id)}
-                    className="py-2 px-1 text-center text-xs font-display font-semibold uppercase tracking-wider text-[#221510] bg-[#FAF7F2] border border-[#E4DDD3] rounded-[6px] hover:border-[#C29958] hover:bg-[#FFFFFF] transition-colors inline-flex items-center justify-center gap-1 cursor-pointer"
+                    className="py-2 px-1 text-center text-xs font-display font-semibold uppercase tracking-wider text-[#221510] bg-[#FAF7F2] border border-[#E4DDD3] rounded-[2px] hover:border-[#C29958] hover:bg-[#FFFFFF] transition-colors inline-flex items-center justify-center gap-1 cursor-pointer"
                     title="Voir la fiche détaillée du produit"
                   >
                     <Eye className="w-3.5 h-3.5 text-[#C29958]" />
@@ -404,7 +403,7 @@ export const CatalogueView: React.FC<CatalogueViewProps> = ({
 
                   <button
                     onClick={() => onOpenTdsModal(product)}
-                    className="py-2 px-1 text-center text-xs font-display font-semibold uppercase tracking-wider text-[#221510] bg-[#FFFFFF] border border-[#E4DDD3] rounded-[6px] hover:border-[#C29958] hover:bg-[#FAF7F2] transition-colors inline-flex items-center justify-center gap-1 cursor-pointer"
+                    className="py-2 px-1 text-center text-xs font-display font-semibold uppercase tracking-wider text-[#221510] bg-[#FFFFFF] border border-[#E4DDD3] rounded-[2px] hover:border-[#C29958] hover:bg-[#FAF7F2] transition-colors inline-flex items-center justify-center gap-1 cursor-pointer"
                     title="Télécharger la fiche technique TDS certifiée"
                   >
                     <FileText className="w-3.5 h-3.5 text-[#C29958]" />
@@ -413,10 +412,10 @@ export const CatalogueView: React.FC<CatalogueViewProps> = ({
 
                   <button
                     onClick={() => onToggleRfq(product)}
-                    className={`py-2 px-1 text-center text-xs font-display font-semibold uppercase tracking-wider rounded-[6px] transition-colors inline-flex items-center justify-center gap-1 cursor-pointer ${
+                    className={`py-2 px-1 text-center text-xs font-display font-semibold uppercase tracking-wider rounded-[2px] transition-colors inline-flex items-center justify-center gap-1 cursor-pointer border ${
                       isAdded
-                        ? 'bg-[#2E5A36] text-[#FFFFFF]'
-                        : 'bg-[#C29958] text-[#221510] hover:bg-[#b08745]'
+                        ? 'bg-[#2E5A36] text-[#FFFFFF] border-[#2E5A36]'
+                        : 'bg-[#C29958] text-[#221510] hover:bg-[#b08745] border-[#b08745]'
                     }`}
                   >
                     {isAdded ? (
@@ -438,8 +437,8 @@ export const CatalogueView: React.FC<CatalogueViewProps> = ({
         </div>
       ) : (
         /* Empty State */
-        <div className="bg-[#FFFFFF] border border-[#E4DDD3] rounded-[10px] p-12 text-center space-y-4 max-w-lg mx-auto shadow-xs">
-          <div className="w-12 h-12 bg-[#F8F4EE] text-[#C29958] rounded-full flex items-center justify-center mx-auto">
+        <div className="bg-[#FFFFFF] border border-[#E4DDD3] rounded-[2px] p-12 text-center space-y-4 max-w-lg mx-auto">
+          <div className="w-12 h-12 bg-[#F8F4EE] text-[#C29958] rounded-[2px] border border-[#E4DDD3] flex items-center justify-center mx-auto">
             <Filter className="w-6 h-6" />
           </div>
           <h3 className="font-display text-lg font-bold text-[#221510]">

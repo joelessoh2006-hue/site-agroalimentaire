@@ -142,9 +142,9 @@ export const ContactRfqView: React.FC<ContactRfqViewProps> = ({
 
   if (submittedRef) {
     return (
-      <div className="max-w-3xl mx-auto bg-[#FFFFFF] border border-[#E4DDD3] rounded-[12px] p-8 sm:p-12 text-center space-y-6 shadow-md animate-in fade-in duration-200">
-        <div className="w-16 h-16 bg-[#2E5A36]/10 text-[#2E5A36] rounded-full flex items-center justify-center mx-auto">
-          <CheckCircle2 className="w-10 h-10" />
+      <div className="max-w-3xl mx-auto bg-[#FFFFFF] border border-[#E4DDD3] rounded-[2px] p-8 sm:p-12 text-center space-y-6">
+        <div className="w-14 h-14 bg-[#2E5A36]/10 text-[#2E5A36] rounded-[2px] border border-[#2E5A36]/30 flex items-center justify-center mx-auto">
+          <CheckCircle2 className="w-8 h-8" />
         </div>
 
         <div className="space-y-2">
@@ -159,7 +159,7 @@ export const ContactRfqView: React.FC<ContactRfqViewProps> = ({
           </p>
         </div>
 
-        <div className="bg-[#F8F4EE] border border-[#E4DDD3] rounded-[8px] p-5 text-left font-mono text-xs space-y-2.5 max-w-xl mx-auto">
+        <div className="bg-[#F8F4EE] border border-[#E4DDD3] rounded-[2px] p-5 text-left font-mono text-xs space-y-2.5 max-w-xl mx-auto">
           <div className="flex justify-between border-b border-[#E4DDD3] pb-2 text-sm">
             <span className="text-[#5D5753]">RÉFÉRENCE UNIQUE DE DOSSIER :</span>
             <strong className="text-[#221510] font-bold">{submittedRef}</strong>
@@ -204,7 +204,7 @@ export const ContactRfqView: React.FC<ContactRfqViewProps> = ({
         <div className="pt-2 flex justify-center gap-4">
           <button
             onClick={handleReset}
-            className="px-6 py-2.5 text-xs font-display font-semibold uppercase tracking-wider text-[#221510] bg-[#C29958] rounded-[6px] hover:bg-[#b08745] transition-colors cursor-pointer"
+            className="px-6 py-2.5 text-xs font-display font-semibold uppercase tracking-wider text-[#221510] bg-[#C29958] rounded-[2px] hover:bg-[#b08745] transition-colors cursor-pointer border border-[#b08745]"
           >
             Nouvelle Demande
           </button>
@@ -231,7 +231,7 @@ export const ContactRfqView: React.FC<ContactRfqViewProps> = ({
             </p>
           </div>
 
-          <div className="flex items-center gap-2 text-xs font-mono text-[#2E5A36] bg-[#2E5A36]/10 px-3 py-1.5 rounded-[6px] border border-[#2E5A36]/30 font-bold">
+          <div className="flex items-center gap-2 text-xs font-mono text-[#2E5A36] bg-[#2E5A36]/10 px-3 py-1.5 rounded-[2px] border border-[#2E5A36]/30 font-bold">
             <Clock className="w-3.5 h-3.5" />
             <span>RÉPONSE COMMERCIALE GARANTIE SOUS 24-48H</span>
           </div>
@@ -240,7 +240,7 @@ export const ContactRfqView: React.FC<ContactRfqViewProps> = ({
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
         {/* Left Form (8 cols) */}
-        <div className="lg:col-span-8 bg-[#FFFFFF] border border-[#E4DDD3] rounded-[10px] p-6 sm:p-8 space-y-8 shadow-sm">
+        <div className="lg:col-span-8 bg-[#FFFFFF] border border-[#E4DDD3] rounded-[2px] p-6 sm:p-8 space-y-8">
           <form onSubmit={handleSubmit} className="space-y-8">
             {/* Honeypot hidden input */}
             <div className="hidden" aria-hidden="true">
@@ -258,7 +258,7 @@ export const ContactRfqView: React.FC<ContactRfqViewProps> = ({
             {errorMessage && (
               <div
                 role="alert"
-                className="p-4 bg-red-50 border border-red-200 rounded-[8px] flex items-start gap-3 text-red-800 animate-in fade-in duration-150"
+                className="p-4 bg-red-50 border border-red-200 rounded-[2px] flex items-start gap-3 text-red-800"
               >
                 <AlertCircle className="w-5 h-5 text-red-600 shrink-0 mt-0.5" />
                 <div className="space-y-1 text-xs">
@@ -285,7 +285,7 @@ export const ContactRfqView: React.FC<ContactRfqViewProps> = ({
                 <button
                   type="button"
                   onClick={() => setRequestType('quote')}
-                  className={`p-3 text-left rounded-[6px] border text-xs font-display font-semibold uppercase tracking-wider transition-all cursor-pointer ${
+                  className={`p-3 text-left rounded-[2px] border text-xs font-display font-semibold uppercase tracking-wider transition-colors cursor-pointer ${
                     requestType === 'quote'
                       ? 'bg-[#221510] text-[#FFFFFF] border-[#221510]'
                       : 'bg-[#FAF7F2] text-[#4A2C21] border-[#E4DDD3] hover:border-[#C29958]'
@@ -300,7 +300,7 @@ export const ContactRfqView: React.FC<ContactRfqViewProps> = ({
                 <button
                   type="button"
                   onClick={() => setRequestType('sample')}
-                  className={`p-3 text-left rounded-[6px] border text-xs font-display font-semibold uppercase tracking-wider transition-all cursor-pointer ${
+                  className={`p-3 text-left rounded-[2px] border text-xs font-display font-semibold uppercase tracking-wider transition-colors cursor-pointer ${
                     requestType === 'sample'
                       ? 'bg-[#221510] text-[#FFFFFF] border-[#221510]'
                       : 'bg-[#FAF7F2] text-[#4A2C21] border-[#E4DDD3] hover:border-[#C29958]'
@@ -315,7 +315,7 @@ export const ContactRfqView: React.FC<ContactRfqViewProps> = ({
                 <button
                   type="button"
                   onClick={() => setRequestType('contract')}
-                  className={`p-3 text-left rounded-[6px] border text-xs font-display font-semibold uppercase tracking-wider transition-all cursor-pointer ${
+                  className={`p-3 text-left rounded-[2px] border text-xs font-display font-semibold uppercase tracking-wider transition-colors cursor-pointer ${
                     requestType === 'contract'
                       ? 'bg-[#221510] text-[#FFFFFF] border-[#221510]'
                       : 'bg-[#FAF7F2] text-[#4A2C21] border-[#E4DDD3] hover:border-[#C29958]'
@@ -347,10 +347,10 @@ export const ContactRfqView: React.FC<ContactRfqViewProps> = ({
                   {selectedProducts.map((p) => (
                     <div
                       key={p.id}
-                      className="flex items-center justify-between p-3 bg-[#FAF7F2] border border-[#E4DDD3] rounded-[6px] text-xs"
+                      className="flex items-center justify-between p-3 bg-[#FAF7F2] border border-[#E4DDD3] rounded-[2px] text-xs"
                     >
                       <div className="flex items-center gap-2">
-                        <span className="w-2 h-2 rounded-full bg-[#C29958]" />
+                        <span className="w-1.5 h-1.5 rounded-[2px] bg-[#C29958]" />
                         <span className="font-bold text-[#221510]">{p.name}</span>
                         <span className="font-mono text-[10px] text-[#5D5753]">({p.category.toUpperCase()})</span>
                       </div>
@@ -366,7 +366,7 @@ export const ContactRfqView: React.FC<ContactRfqViewProps> = ({
                   ))}
                 </div>
               ) : (
-                <div className="p-4 bg-[#F8F4EE] border border-dashed border-[#E4DDD3] rounded-[6px] text-center text-xs text-[#5D5753]">
+                <div className="p-4 bg-[#F8F4EE] border border-dashed border-[#E4DDD3] rounded-[2px] text-center text-xs text-[#5D5753]">
                   Aucun produit sélectionné pour le moment. Choisissez parmi les ingrédients ci-dessous :
                 </div>
               )}
@@ -379,7 +379,7 @@ export const ContactRfqView: React.FC<ContactRfqViewProps> = ({
                       key={p.id}
                       type="button"
                       onClick={() => onAddProductToRfq(p)}
-                      className="px-2.5 py-1 text-[11px] font-sans bg-[#FFFFFF] border border-[#E4DDD3] hover:border-[#C29958] rounded-[4px] text-[#4A2C21] inline-flex items-center gap-1 transition-colors cursor-pointer"
+                      className="px-2.5 py-1 text-[11px] font-sans bg-[#FFFFFF] border border-[#E4DDD3] hover:border-[#C29958] rounded-[2px] text-[#4A2C21] inline-flex items-center gap-1 transition-colors cursor-pointer"
                     >
                       <Plus className="w-3 h-3 text-[#C29958]" />
                       <span>{p.name.split('(')[0]}</span>
@@ -404,7 +404,7 @@ export const ContactRfqView: React.FC<ContactRfqViewProps> = ({
                     <select
                       value={sampleSize}
                       onChange={(e) => setSampleSize(e.target.value as any)}
-                      className="w-full p-2 text-xs bg-[#FAF7F2] border border-[#E4DDD3] rounded-[6px] focus:outline-none focus:border-[#C29958]"
+                      className="w-full p-2 text-xs bg-[#FAF7F2] border border-[#E4DDD3] rounded-[2px] focus:outline-none focus:border-[#C29958]"
                     >
                       <option value="250g">250 g (Pilote chromatographique / R&D)</option>
                       <option value="500g">500 g (Essais de formulation & texture)</option>
@@ -421,7 +421,7 @@ export const ContactRfqView: React.FC<ContactRfqViewProps> = ({
                       placeholder="Ex: 50 Tonnes Métriques (2 Conteneurs 40ft)"
                       value={targetVolume}
                       onChange={(e) => setTargetVolume(e.target.value)}
-                      className="w-full p-2 text-xs bg-[#FAF7F2] border border-[#E4DDD3] rounded-[6px] focus:outline-none focus:border-[#C29958]"
+                      className="w-full p-2 text-xs bg-[#FAF7F2] border border-[#E4DDD3] rounded-[2px] focus:outline-none focus:border-[#C29958]"
                     />
                   </div>
                 )}
@@ -433,7 +433,7 @@ export const ContactRfqView: React.FC<ContactRfqViewProps> = ({
                   <select
                     value={incoterm}
                     onChange={(e) => setIncoterm(e.target.value)}
-                    className="w-full p-2 text-xs bg-[#FAF7F2] border border-[#E4DDD3] rounded-[6px] focus:outline-none focus:border-[#C29958]"
+                    className="w-full p-2 text-xs bg-[#FAF7F2] border border-[#E4DDD3] rounded-[2px] focus:outline-none focus:border-[#C29958]"
                   >
                     <option value="CIF Port du Havre (France)">CIF Port du Havre (France)</option>
                     <option value="CIF Port de Rotterdam (Pays-Bas)">CIF Port de Rotterdam (Pays-Bas)</option>
@@ -455,7 +455,7 @@ export const ContactRfqView: React.FC<ContactRfqViewProps> = ({
                   placeholder="Ex: Le Havre, France ou Hambourg, Allemagne"
                   value={destinationPort}
                   onChange={(e) => setDestinationPort(e.target.value)}
-                  className="w-full p-2 text-xs bg-[#FAF7F2] border border-[#E4DDD3] rounded-[6px] focus:outline-none focus:border-[#C29958]"
+                  className="w-full p-2 text-xs bg-[#FAF7F2] border border-[#E4DDD3] rounded-[2px] focus:outline-none focus:border-[#C29958]"
                 />
               </div>
             </div>
@@ -479,7 +479,7 @@ export const ContactRfqView: React.FC<ContactRfqViewProps> = ({
                       placeholder="Nom officiel de votre entreprise"
                       value={companyName}
                       onChange={(e) => setCompanyName(e.target.value)}
-                      className="w-full pl-9 pr-3 py-2 text-xs bg-[#FAF7F2] border border-[#E4DDD3] rounded-[6px] focus:outline-none focus:border-[#C29958] focus:bg-[#FFFFFF]"
+                      className="w-full pl-9 pr-3 py-2 text-xs bg-[#FAF7F2] border border-[#E4DDD3] rounded-[2px] focus:outline-none focus:border-[#C29958] focus:bg-[#FFFFFF]"
                     />
                   </div>
                 </div>
@@ -493,7 +493,7 @@ export const ContactRfqView: React.FC<ContactRfqViewProps> = ({
                     placeholder="FR12345678901 ou Registration Number"
                     value={vatNumber}
                     onChange={(e) => setVatNumber(e.target.value)}
-                    className="w-full px-3 py-2 text-xs bg-[#FAF7F2] border border-[#E4DDD3] rounded-[6px] focus:outline-none focus:border-[#C29958] focus:bg-[#FFFFFF]"
+                    className="w-full px-3 py-2 text-xs bg-[#FAF7F2] border border-[#E4DDD3] rounded-[2px] focus:outline-none focus:border-[#C29958] focus:bg-[#FFFFFF]"
                   />
                 </div>
 
@@ -509,7 +509,7 @@ export const ContactRfqView: React.FC<ContactRfqViewProps> = ({
                       placeholder="Prénom et Nom du contact"
                       value={contactName}
                       onChange={(e) => setContactName(e.target.value)}
-                      className="w-full pl-9 pr-3 py-2 text-xs bg-[#FAF7F2] border border-[#E4DDD3] rounded-[6px] focus:outline-none focus:border-[#C29958] focus:bg-[#FFFFFF]"
+                      className="w-full pl-9 pr-3 py-2 text-xs bg-[#FAF7F2] border border-[#E4DDD3] rounded-[2px] focus:outline-none focus:border-[#C29958] focus:bg-[#FFFFFF]"
                     />
                   </div>
                 </div>
@@ -526,7 +526,7 @@ export const ContactRfqView: React.FC<ContactRfqViewProps> = ({
                       placeholder="contact@votre-entreprise.com"
                       value={contactEmail}
                       onChange={(e) => setContactEmail(e.target.value)}
-                      className={`w-full pl-9 pr-3 py-2 text-xs bg-[#FAF7F2] border rounded-[6px] focus:outline-none focus:bg-[#FFFFFF] ${
+                      className={`w-full pl-9 pr-3 py-2 text-xs bg-[#FAF7F2] border rounded-[2px] focus:outline-none focus:bg-[#FFFFFF] ${
                         fieldErrors['contactEmail']
                           ? 'border-red-500 focus:border-red-600'
                           : 'border-[#E4DDD3] focus:border-[#C29958]'
@@ -551,7 +551,7 @@ export const ContactRfqView: React.FC<ContactRfqViewProps> = ({
                       placeholder="+33 1 23 45 67 89"
                       value={contactPhone}
                       onChange={(e) => setContactPhone(e.target.value)}
-                      className="w-full pl-9 pr-3 py-2 text-xs bg-[#FAF7F2] border border-[#E4DDD3] rounded-[6px] focus:outline-none focus:border-[#C29958] focus:bg-[#FFFFFF]"
+                      className="w-full pl-9 pr-3 py-2 text-xs bg-[#FAF7F2] border border-[#E4DDD3] rounded-[2px] focus:outline-none focus:border-[#C29958] focus:bg-[#FFFFFF]"
                     />
                   </div>
                 </div>
@@ -563,7 +563,7 @@ export const ContactRfqView: React.FC<ContactRfqViewProps> = ({
                   <select
                     value={industrySector}
                     onChange={(e) => setIndustrySector(e.target.value)}
-                    className="w-full p-2 text-xs bg-[#FAF7F2] border border-[#E4DDD3] rounded-[6px] focus:outline-none focus:border-[#C29958]"
+                    className="w-full p-2 text-xs bg-[#FAF7F2] border border-[#E4DDD3] rounded-[2px] focus:outline-none focus:border-[#C29958]"
                   >
                     <option value="Chocolaterie Industrielle">Chocolaterie Industrielle</option>
                     <option value="Biscuiterie & Pâtisserie">Biscuiterie & Pâtisserie Industrielle</option>
@@ -575,7 +575,7 @@ export const ContactRfqView: React.FC<ContactRfqViewProps> = ({
               </div>
 
               {isFreeEmailDomain && (
-                <div className="flex items-start gap-2 p-3 bg-[#FAF7F2] border border-[#E4DDD3] rounded-[6px] text-xs text-[#A0522D]">
+                <div className="flex items-start gap-2 p-3 bg-[#FAF7F2] border border-[#E4DDD3] rounded-[2px] text-xs text-[#A0522D]">
                   <AlertCircle className="w-4 h-4 shrink-0 mt-0.5" />
                   <span>
                     Remarque : L'utilisation d'une adresse de messagerie d'entreprise (domaine propre) permet d'accélérer l'attribution prioritaire d'un numéro de dossier et l'envoi d'échantillons laboratoire.
@@ -592,7 +592,7 @@ export const ContactRfqView: React.FC<ContactRfqViewProps> = ({
                   placeholder="Précisez ici vos critères particuliers (taux de pH précis, tolérance cadmium renforcée, cadencement mensuel, etc.)"
                   value={projectDescription}
                   onChange={(e) => setProjectDescription(e.target.value)}
-                  className="w-full p-2.5 text-xs bg-[#FAF7F2] border border-[#E4DDD3] rounded-[6px] focus:outline-none focus:border-[#C29958] focus:bg-[#FFFFFF]"
+                  className="w-full p-2.5 text-xs bg-[#FAF7F2] border border-[#E4DDD3] rounded-[2px] focus:outline-none focus:border-[#C29958] focus:bg-[#FFFFFF]"
                 />
               </div>
             </div>
@@ -618,7 +618,7 @@ export const ContactRfqView: React.FC<ContactRfqViewProps> = ({
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full py-3.5 px-6 text-xs font-display font-bold uppercase tracking-wider text-[#221510] bg-[#C29958] rounded-[8px] hover:bg-[#b08745] disabled:opacity-50 transition-all cursor-pointer flex items-center justify-center gap-2 shadow-sm"
+                className="w-full py-3.5 px-6 text-xs font-display font-bold uppercase tracking-wider text-[#221510] bg-[#C29958] rounded-[2px] hover:bg-[#b08745] disabled:opacity-50 transition-colors cursor-pointer flex items-center justify-center gap-2 border border-[#b08745]"
               >
                 <Send className="w-4 h-4" />
                 <span>
@@ -632,7 +632,7 @@ export const ContactRfqView: React.FC<ContactRfqViewProps> = ({
         {/* Right Contact Details (4 cols) */}
         <div className="lg:col-span-4 space-y-6">
           {/* Usine Principale */}
-          <div className="bg-[#FFFFFF] border border-[#E4DDD3] rounded-[10px] p-6 space-y-3 shadow-xs">
+          <div className="bg-[#FFFFFF] border border-[#E4DDD3] rounded-[2px] p-6 space-y-3">
             <div className="flex items-center gap-2 text-xs font-mono text-[#C29958] font-bold">
               <MapPin className="w-4 h-4" />
               <span>SITE DE PRODUCTION PRINCIPAL</span>
@@ -651,7 +651,7 @@ export const ContactRfqView: React.FC<ContactRfqViewProps> = ({
           </div>
 
           {/* Hub Export Europe */}
-          <div className="bg-[#FFFFFF] border border-[#E4DDD3] rounded-[10px] p-6 space-y-3 shadow-xs">
+          <div className="bg-[#FFFFFF] border border-[#E4DDD3] rounded-[2px] p-6 space-y-3">
             <div className="flex items-center gap-2 text-xs font-mono text-[#C29958] font-bold">
               <Truck className="w-4 h-4" />
               <span>HUB LOGISTIQUE EUROPE</span>
@@ -665,7 +665,7 @@ export const ContactRfqView: React.FC<ContactRfqViewProps> = ({
           </div>
 
           {/* Bureaux Export & Trading */}
-          <div className="bg-[#221510] text-[#F8F4EE] border border-[#4A2C21] rounded-[10px] p-6 space-y-4">
+          <div className="bg-[#221510] text-[#F8F4EE] border border-[#4A2C21] rounded-[2px] p-6 space-y-4">
             <div className="flex items-center gap-2 text-xs font-mono text-[#C29958] font-bold">
               <Building className="w-4 h-4" />
               <span>DESK EXPORT COMMERCIAL</span>

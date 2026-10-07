@@ -16,7 +16,7 @@ export const PrivacyModal: React.FC<PrivacyModalProps> = ({ isOpen, onClose }) =
       aria-labelledby="privacy-modal-title"
       className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm"
     >
-      <div className="bg-[#FFFFFF] text-[#221510] w-full max-w-3xl max-h-[85vh] rounded-[10px] shadow-2xl flex flex-col border border-[#d8cfc4]">
+      <div className="bg-[#FFFFFF] text-[#221510] w-full max-w-3xl max-h-[85vh] rounded-[2px] flex flex-col border border-[#d8cfc4]">
         {/* En-tête */}
         <div className="flex items-center justify-between px-6 py-4 border-b border-[#e5ded6] bg-[#f9f6f0]">
           <div className="flex items-center gap-3">
@@ -28,7 +28,7 @@ export const PrivacyModal: React.FC<PrivacyModalProps> = ({ isOpen, onClose }) =
           <button
             onClick={onClose}
             aria-label="Fermer"
-            className="p-1 text-[#5c4033] hover:text-[#221510] transition-colors rounded"
+            className="p-1 text-[#5c4033] hover:text-[#221510] transition-colors rounded-[2px]"
           >
             <X className="w-5 h-5" />
           </button>
@@ -91,7 +91,7 @@ export const PrivacyModal: React.FC<PrivacyModalProps> = ({ isOpen, onClose }) =
             <p>
               Pour exercer ces droits, vous pouvez adresser votre demande par courrier électronique à notre délégué à la protection des données :
             </p>
-            <p className="font-mono text-xs bg-[#f9f6f0] p-2.5 rounded border border-[#e5ded6] text-[#221510]">
+            <p className="font-mono text-xs bg-[#f9f6f0] p-2.5 rounded-[2px] border border-[#e5ded6] text-[#221510]">
               Courriel : dpo@agro-cocoa-processing.com<br />
               Adresse postale : Agro-Industrial Cocoa Processing Group, Direction Juridique, Port Autonome de San Pedro, Côte d'Ivoire.
             </p>
@@ -102,7 +102,7 @@ export const PrivacyModal: React.FC<PrivacyModalProps> = ({ isOpen, onClose }) =
         <div className="px-6 py-4 border-t border-[#e5ded6] bg-[#f9f6f0] flex justify-end">
           <button
             onClick={onClose}
-            className="px-5 py-2.5 bg-[#221510] hover:bg-[#3c251c] text-[#F8F4EE] text-xs font-semibold rounded transition-colors"
+            className="px-5 py-2.5 bg-[#221510] hover:bg-[#3c251c] text-[#F8F4EE] text-xs font-semibold rounded-[2px] transition-colors"
           >
             Fermer le document
           </button>

@@ -10,9 +10,10 @@
 
 ### A. Audit & Reconstruction de la Base de Code
 - **Résolution des conflits de paquets :** Résolution des dépendances Vite 8 / Tailwind CSS v4 / React 19 et compilation TypeScript à zéro erreur (`tsc --noEmit`).
-- **Design System Industriel Premium :** Intégration fidèle de la charte graphique :
-  - Palette : `#221510` (Roasted Noir), `#4A2C21` (Cocoa Core), `#F8F4EE` (Cream Substrate), `#C29958` (Harvest Bronze), `#2E5A36` (Certified Green).
-  - Typographie : Space Grotesk (titres), Hanken Grotesk (corps de texte), JetBrains Mono (données de labo et métriques de lots).
+- **Phase 1 Refactoring Design (Élimination des marqueurs génériques) :**
+  - **Typographie éditoriale & technique :** Remplacement de Space Grotesk par `Fraunces` pour les titres éditoriaux de caractère, couplée à `IBM Plex Sans` pour le corps technique et `JetBrains Mono` pour les valeurs de laboratoire et de contrôle LIMS.
+  - **Géométrie industrielle stricte :** Élimination de toutes les ombres portées diffuses (`shadow-md`, `shadow-xl`, `shadow-2xl`, etc.). Remplacement par des bordures rectilignes de 1px (`#E4DDD3` ou `#4A2C21`) et un chanfrein sobre de 2px (`rounded-[2px]`).
+  - **Micro-interactions sobres :** Suppression des effets de lévitation (`hover:-translate-y-*`, `hover:scale-*`, `group-hover:scale-105`) au profit de transitions directes de contraste (`transition-colors`).
 
 ### B. Modélisation Exhaustive des Données Métier
 - **9 Dérivés de Cacao Purs modélisés :**

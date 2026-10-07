@@ -11,7 +11,6 @@ import {
   CheckCircle2,
   Calendar,
   Layers,
-  Sparkles,
   ArrowRight,
   ExternalLink
 } from 'lucide-react';
@@ -67,10 +66,10 @@ export const ProductDetailView: React.FC<ProductDetailViewProps> = ({
       </nav>
 
       {/* 2. Main Product Hero & Media Presentation */}
-      <section className="bg-[#FFFFFF] border border-[#E4DDD3] rounded-[12px] p-6 sm:p-8 lg:p-10 shadow-sm grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
+      <section className="bg-[#FFFFFF] border border-[#E4DDD3] rounded-[2px] p-6 sm:p-8 lg:p-10 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
         {/* Left: Product Images with Zoom */}
         <div className="lg:col-span-5 space-y-4">
-          <div className="relative aspect-4/3 rounded-[8px] overflow-hidden bg-[#F1EDE7] border border-[#E4DDD3]">
+          <div className="relative aspect-4/3 rounded-[2px] overflow-hidden bg-[#F1EDE7] border border-[#E4DDD3]">
             <ProductImage
               src={product.image_url}
               alt={product.name}
@@ -81,7 +80,7 @@ export const ProductDetailView: React.FC<ProductDetailViewProps> = ({
               {product.industry.map((ind) => (
                 <span
                   key={ind}
-                  className="text-[10px] font-mono font-bold uppercase tracking-wider px-2.5 py-1 rounded-[4px] bg-[#221510]/85 text-[#C29958] backdrop-blur-xs shadow-xs"
+                  className="text-[10px] font-mono font-bold uppercase tracking-wider px-2.5 py-1 rounded-[2px] bg-[#221510]/85 text-[#C29958] backdrop-blur-xs border border-[#4A2C21]"
                 >
                   {ind === 'cosmetique' ? 'Cosmétique' : 'Agroalimentaire'}
                 </span>
@@ -91,7 +90,7 @@ export const ProductDetailView: React.FC<ProductDetailViewProps> = ({
 
           {/* Secondary macro texture */}
           <div className="grid grid-cols-2 gap-3">
-            <div className="aspect-16/10 rounded-[6px] overflow-hidden bg-[#F1EDE7] border border-[#E4DDD3]">
+            <div className="aspect-16/10 rounded-[2px] overflow-hidden bg-[#F1EDE7] border border-[#E4DDD3]">
               <ProductImage
                 src={product.macro_image_url}
                 alt={`${product.name} macro texture`}
@@ -99,7 +98,7 @@ export const ProductDetailView: React.FC<ProductDetailViewProps> = ({
                 category={product.category}
               />
             </div>
-            <div className="p-3 bg-[#FAF7F2] rounded-[6px] border border-[#E4DDD3] flex flex-col justify-center text-[11px] font-mono text-[#5D5753] space-y-1">
+            <div className="p-3 bg-[#FAF7F2] rounded-[2px] border border-[#E4DDD3] flex flex-col justify-center text-[11px] font-mono text-[#5D5753] space-y-1">
               <span className="text-[#221510] font-bold">Réf. Lot Usine :</span>
               <span>LOT-QC-2026-FSSC</span>
               <span className="text-[#2E5A36] font-semibold text-[10px]">Libéré après contrôle ICP-MS</span>
@@ -133,7 +132,7 @@ export const ProductDetailView: React.FC<ProductDetailViewProps> = ({
             {product.description}
           </p>
 
-          <div className="bg-[#F8F4EE] rounded-[8px] p-4 border border-[#E4DDD3] grid grid-cols-2 sm:grid-cols-3 gap-4 font-mono text-xs">
+          <div className="bg-[#F8F4EE] rounded-[2px] p-4 border border-[#E4DDD3] grid grid-cols-2 sm:grid-cols-3 gap-4 font-mono text-xs">
             <div>
               <span className="text-[#5D5753] block text-[10px]">QUANTITÉ MINIMUM (MOQ)</span>
               <strong className="text-[#221510] font-bold">{product.moq}</strong>
@@ -167,10 +166,10 @@ export const ProductDetailView: React.FC<ProductDetailViewProps> = ({
           <div className="pt-4 flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
             <button
               onClick={() => onToggleRfq(product)}
-              className={`py-3 px-6 text-xs font-display font-bold uppercase tracking-wider rounded-[8px] transition-all flex items-center justify-center gap-2 cursor-pointer shadow-sm ${
+              className={`py-3 px-6 text-xs font-display font-bold uppercase tracking-wider rounded-[2px] transition-colors flex items-center justify-center gap-2 cursor-pointer border ${
                 isAddedToRfq
-                  ? 'bg-[#2E5A36] text-[#FFFFFF]'
-                  : 'bg-[#C29958] text-[#221510] hover:bg-[#b08745]'
+                  ? 'bg-[#2E5A36] text-[#FFFFFF] border-[#2E5A36]'
+                  : 'bg-[#C29958] text-[#221510] border-[#b08745] hover:bg-[#b08745]'
               }`}
             >
               {isAddedToRfq ? (
@@ -188,7 +187,7 @@ export const ProductDetailView: React.FC<ProductDetailViewProps> = ({
 
             <button
               onClick={() => onOpenTdsModal(product)}
-              className="py-3 px-5 text-xs font-display font-semibold uppercase tracking-wider text-[#221510] bg-[#FFFFFF] border border-[#E4DDD3] rounded-[8px] hover:border-[#C29958] hover:bg-[#FAF7F2] transition-colors flex items-center justify-center gap-2 cursor-pointer"
+              className="py-3 px-5 text-xs font-display font-semibold uppercase tracking-wider text-[#221510] bg-[#FFFFFF] border border-[#E4DDD3] rounded-[2px] hover:border-[#C29958] hover:bg-[#FAF7F2] transition-colors flex items-center justify-center gap-2 cursor-pointer"
             >
               <FileText className="w-4 h-4 text-[#C29958]" />
               <span>Télécharger la Fiche Technique (TDS)</span>
@@ -198,7 +197,7 @@ export const ProductDetailView: React.FC<ProductDetailViewProps> = ({
       </section>
 
       {/* 3. Onglets Techniques Normalisés */}
-      <section className="bg-[#FFFFFF] border border-[#E4DDD3] rounded-[12px] p-6 sm:p-8 space-y-6 shadow-sm">
+      <section className="bg-[#FFFFFF] border border-[#E4DDD3] rounded-[2px] p-6 sm:p-8 space-y-6">
         {/* Tab switcher */}
         <div className="flex border-b border-[#E4DDD3] gap-4 overflow-x-auto text-xs font-display font-bold uppercase tracking-wider">
           <button
@@ -339,8 +338,8 @@ export const ProductDetailView: React.FC<ProductDetailViewProps> = ({
             </div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               {product.packaging.map((pack, idx) => (
-                <div key={idx} className="bg-[#FAF7F2] border border-[#E4DDD3] rounded-[8px] p-4 space-y-2">
-                  <div className="w-8 h-8 rounded-[6px] bg-[#221510] text-[#C29958] flex items-center justify-center">
+                <div key={idx} className="bg-[#FAF7F2] border border-[#E4DDD3] rounded-[2px] p-4 space-y-2">
+                  <div className="w-8 h-8 rounded-[2px] bg-[#221510] text-[#C29958] flex items-center justify-center">
                     <Package className="w-4 h-4" />
                   </div>
                   <h4 className="font-display text-xs font-bold text-[#221510] uppercase">
@@ -368,7 +367,7 @@ export const ProductDetailView: React.FC<ProductDetailViewProps> = ({
               </h4>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                 {product.applications.map((app, i) => (
-                  <div key={i} className="flex items-center gap-2 p-2.5 bg-[#FAF7F2] rounded-[6px] border border-[#E4DDD3] text-xs">
+                  <div key={i} className="flex items-center gap-2 p-2.5 bg-[#FAF7F2] rounded-[2px] border border-[#E4DDD3] text-xs">
                     <CheckCircle2 className="w-3.5 h-3.5 text-[#2E5A36] shrink-0" />
                     <span className="font-medium text-[#221510]">{app}</span>
                   </div>
@@ -384,7 +383,7 @@ export const ProductDetailView: React.FC<ProductDetailViewProps> = ({
                 {product.certifications.map((cert) => (
                   <span
                     key={cert}
-                    className="px-3 py-1 bg-[#F8F4EE] border border-[#E4DDD3] rounded-[6px] text-xs font-mono font-semibold text-[#221510]"
+                    className="px-3 py-1 bg-[#F8F4EE] border border-[#E4DDD3] rounded-[2px] text-xs font-mono font-semibold text-[#221510]"
                   >
                     {cert}
                   </span>
@@ -415,7 +414,7 @@ export const ProductDetailView: React.FC<ProductDetailViewProps> = ({
             <div
               key={rel.id}
               onClick={() => onSelectProduct(rel.id)}
-              className="bg-[#FFFFFF] border border-[#E4DDD3] rounded-[8px] p-4 hover:border-[#C29958] transition-all cursor-pointer space-y-2 group"
+              className="bg-[#FFFFFF] border border-[#E4DDD3] rounded-[2px] p-4 hover:border-[#C29958] transition-colors cursor-pointer space-y-2 group"
             >
               <div className="flex items-center justify-between text-[10px] font-mono text-[#5D5753]">
                 <span>{rel.category.toUpperCase()}</span>

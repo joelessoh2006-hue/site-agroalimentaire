@@ -157,7 +157,7 @@ export const Footer: React.FC<FooterProps> = ({
             <div className="pt-3">
               <button
                 onClick={() => onNavigate('contact')}
-                className="w-full py-2.5 px-3 text-xs font-display font-semibold uppercase tracking-wider bg-[#4A2C21] text-[#F8F4EE] border border-[#C29958]/40 rounded-[8px] hover:bg-[#C29958] hover:text-[#221510] transition-colors cursor-pointer"
+                className="w-full py-2.5 px-3 text-xs font-display font-semibold uppercase tracking-wider bg-[#4A2C21] text-[#F8F4EE] border border-[#C29958]/40 rounded-[2px] hover:bg-[#C29958] hover:text-[#221510] transition-colors cursor-pointer"
               >
                 Portail Cotation RFQ & Échantillons
               </button>

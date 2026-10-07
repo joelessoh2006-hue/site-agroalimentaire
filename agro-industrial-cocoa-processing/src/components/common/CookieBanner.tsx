@@ -35,7 +35,7 @@ export const CookieBanner: React.FC<CookieBannerProps> = ({ onOpenPrivacy }) => 
   return (
     <aside
       aria-label="Gestion des cookies"
-      className="fixed bottom-20 md:bottom-4 left-4 right-4 md:left-auto md:right-4 md:max-w-md z-50 bg-[#221510] text-[#F8F4EE] border border-[#4A2C21] rounded-[8px] p-4 shadow-xl"
+      className="fixed bottom-20 md:bottom-4 left-4 right-4 md:left-auto md:right-4 md:max-w-md z-50 bg-[#221510] text-[#F8F4EE] border border-[#4A2C21] rounded-[2px] p-4"
     >
       <div className="flex items-start gap-3">
         <Cookie className="w-5 h-5 text-[#C29958] shrink-0 mt-0.5" />
@@ -59,14 +59,14 @@ export const CookieBanner: React.FC<CookieBannerProps> = ({ onOpenPrivacy }) => 
         <button
           type="button"
           onClick={() => handleDecision('refused')}
-          className="px-3 py-1.5 text-xs text-[#E4DDD3]/80 hover:text-white bg-transparent hover:bg-[#3c251c] rounded transition-colors"
+          className="px-3 py-1.5 text-xs text-[#E4DDD3]/80 hover:text-white bg-transparent hover:bg-[#3c251c] rounded-[2px] transition-colors"
         >
           Refuser
         </button>
         <button
           type="button"
           onClick={() => handleDecision('accepted')}
-          className="px-4 py-1.5 text-xs font-semibold bg-[#C29958] hover:bg-[#a88243] text-[#221510] rounded transition-colors"
+          className="px-4 py-1.5 text-xs font-semibold bg-[#C29958] hover:bg-[#a88243] text-[#221510] rounded-[2px] border border-[#a88243] transition-colors"
         >
           Accepter
         </button>

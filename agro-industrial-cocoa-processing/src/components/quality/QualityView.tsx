@@ -44,7 +44,7 @@ export const QualityView: React.FC<QualityViewProps> = ({
           <div className="flex items-center gap-3">
             <button
               onClick={onOpenCoa}
-              className="px-4 py-2.5 text-xs font-display font-bold uppercase tracking-wider text-[#221510] bg-[#C29958] rounded-[6px] hover:bg-[#b08745] transition-colors inline-flex items-center gap-2 cursor-pointer shadow-sm"
+              className="px-4 py-2.5 text-xs font-display font-bold uppercase tracking-wider text-[#221510] bg-[#C29958] rounded-[2px] hover:bg-[#b08745] transition-colors inline-flex items-center gap-2 cursor-pointer border border-[#b08745]"
             >
               <FileSpreadsheet className="w-4 h-4" />
               <span>Visionneuse Certificat CoA</span>
@@ -73,11 +73,11 @@ export const QualityView: React.FC<QualityViewProps> = ({
           {QUALITY_CERTIFICATIONS.map((cert) => (
             <div
               key={cert.id}
-              className="bg-[#FFFFFF] border border-[#E4DDD3] rounded-[10px] p-5 space-y-3 flex flex-col justify-between hover:border-[#C29958] transition-all shadow-xs"
+              className="bg-[#FFFFFF] border border-[#E4DDD3] rounded-[2px] p-5 space-y-3 flex flex-col justify-between hover:border-[#C29958] transition-colors"
             >
               <div className="space-y-2.5">
                 <div className="flex items-center justify-between">
-                  <span className="text-[10px] font-mono font-bold uppercase tracking-wider px-2 py-0.5 rounded-[4px] bg-[#F8F4EE] text-[#4A2C21] border border-[#E4DDD3]">
+                  <span className="text-[10px] font-mono font-bold uppercase tracking-wider px-2 py-0.5 rounded-[2px] bg-[#F8F4EE] text-[#4A2C21] border border-[#E4DDD3]">
                     {cert.category.toUpperCase()}
                   </span>
                   <span className="font-mono text-[10px] text-[#2E5A36] font-bold">ACTIF</span>
@@ -101,7 +101,7 @@ export const QualityView: React.FC<QualityViewProps> = ({
                 <div className="text-[#5D5753]">
                   Réf. Certificat : <strong className="text-[#221510]">{cert.code}</strong>
                 </div>
-                <div className="bg-[#FAF7F2] p-2 rounded-[4px] border border-[#E4DDD3]/50 text-[#4A2C21] font-sans italic text-[11px]">
+                <div className="bg-[#FAF7F2] p-2 rounded-[2px] border border-[#E4DDD3]/50 text-[#4A2C21] font-sans italic text-[11px]">
                   « {cert.authorizedClaim} »
                 </div>
               </div>
@@ -126,7 +126,7 @@ export const QualityView: React.FC<QualityViewProps> = ({
           </p>
         </div>
 
-        <div className="bg-[#FFFFFF] border border-[#E4DDD3] rounded-[10px] overflow-hidden shadow-sm">
+        <div className="bg-[#FFFFFF] border border-[#E4DDD3] rounded-[2px] overflow-hidden">
           <div className="overflow-x-auto">
             <table className="w-full text-left text-xs">
               <thead>
@@ -158,7 +158,7 @@ export const QualityView: React.FC<QualityViewProps> = ({
                       {protocol.internalFactoryThreshold}
                     </td>
                     <td className="py-3 px-4 text-center">
-                      <span className="px-2 py-0.5 rounded-[4px] bg-[#2E5A36]/10 text-[#2E5A36] text-[10px] font-bold">
+                      <span className="px-2 py-0.5 rounded-[2px] bg-[#2E5A36]/10 text-[#2E5A36] text-[10px] font-bold border border-[#2E5A36]/20">
                         ISO 17025
                       </span>
                     </td>
@@ -171,7 +171,7 @@ export const QualityView: React.FC<QualityViewProps> = ({
       </section>
 
       {/* 4. Procédure de Libération des Lots & Sécurité Sanitaire */}
-      <section className="bg-[#221510] text-[#F8F4EE] rounded-[12px] border border-[#4A2C21] p-8 sm:p-10 space-y-6">
+      <section className="bg-[#221510] text-[#F8F4EE] rounded-[2px] border border-[#4A2C21] p-8 sm:p-10 space-y-6">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 border-b border-[#4A2C21]/80 pb-6">
           <div className="space-y-2">
             <div className="flex items-center gap-2 text-xs font-mono text-[#C29958] uppercase">
@@ -189,7 +189,7 @@ export const QualityView: React.FC<QualityViewProps> = ({
           <div className="shrink-0 flex items-center gap-3">
             <button
               onClick={onOpenCoa}
-              className="px-5 py-2.5 text-xs font-display font-semibold uppercase tracking-wider text-[#221510] bg-[#C29958] rounded-[6px] hover:bg-[#b08745] transition-colors cursor-pointer"
+              className="px-5 py-2.5 text-xs font-display font-semibold uppercase tracking-wider text-[#221510] bg-[#C29958] rounded-[2px] hover:bg-[#b08745] transition-colors cursor-pointer"
             >
               Consulter un Modèle de CoA
             </button>
