@@ -1,9 +1,9 @@
 @import "tailwindcss";
 
 @theme {
-  --font-display: 'Fraunces', Georgia, serif;
-  --font-title: 'Fraunces', Georgia, serif;
-  --font-body: 'IBM Plex Sans', system-ui, sans-serif;
+  --font-display: 'Source Sans 3', system-ui, -apple-system, sans-serif;
+  --font-title: 'Source Sans 3', system-ui, -apple-system, sans-serif;
+  --font-body: 'Source Sans 3', system-ui, -apple-system, sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
 
   --color-roasted-noir: #221510;
@@ -17,17 +17,18 @@
 }
 
 body {
-  font-family: 'IBM Plex Sans', system-ui, sans-serif;
+  font-family: 'Source Sans 3', system-ui, -apple-system, sans-serif;
   background-color: #fdf9f3;
   color: #1c1c18;
 }
 
 .font-display, .font-title {
-  font-family: 'Fraunces', Georgia, serif;
+  font-family: 'Source Sans 3', system-ui, -apple-system, sans-serif;
+  letter-spacing: -0.01em;
 }
 
 .font-body {
-  font-family: 'IBM Plex Sans', system-ui, sans-serif;
+  font-family: 'Source Sans 3', system-ui, -apple-system, sans-serif;
 }
 
 .font-mono {

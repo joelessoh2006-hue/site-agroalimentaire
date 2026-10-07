@@ -143,19 +143,20 @@ export const ProductCard: React.FC<ProductCardProps> = ({
             </div>
           </div>
 
-          {/* Technical Specifications with Dotted Industrial Leaders */}
-          <div className="pt-3 border-t border-[#E4DDD3] space-y-1.5 font-mono text-xs">
-            {Object.entries(product.specs).slice(0, 4).map(([key, val]) => (
-              <div key={key} className="flex items-center justify-between">
-                <span className="text-[#5D5753] whitespace-nowrap text-[11px]">
-                  {formatSpecKey(key)}
-                </span>
-                <span className="flex-1 border-b border-dotted border-[#E4DDD3] mx-2 self-end mb-1" />
-                <span className="font-semibold text-[#221510] text-[11px] text-right truncate max-w-[55%] tabular-nums">
-                  {String(val)}
-                </span>
-              </div>
-            ))}
+          {/* 2 Spécifications Clés Standard Barry Callebaut */}
+          <div className="pt-2 border-t border-[#E4DDD3]">
+            <div className="grid grid-cols-2 gap-2 p-2.5 bg-[#FAF7F2] border border-[#E4DDD3] rounded-[2px] font-mono text-xs">
+              {Object.entries(product.specs).slice(0, 2).map(([key, val]) => (
+                <div key={key} className="space-y-0.5">
+                  <span className="text-[10px] text-[#5D5753] block truncate uppercase">
+                    {formatSpecKey(key)}
+                  </span>
+                  <span className="font-bold text-[#221510] block truncate">
+                    {String(val)}
+                  </span>
+                </div>
+              ))}
+            </div>
           </div>
 
           {/* Packaging Strip */}
@@ -173,11 +174,11 @@ export const ProductCard: React.FC<ProductCardProps> = ({
         </div>
       </div>
 
-      {/* Card Action Buttons (Design System Spec) */}
+      {/* Card Action Buttons style Barry Callebaut */}
       <div className="p-5 sm:p-6 pt-0 border-t border-[#E4DDD3] grid grid-cols-2 gap-2 mt-4 pt-4">
         <button
           onClick={() => onOpenSpecs(product)}
-          className="w-full py-2 px-2 text-center text-xs font-display font-semibold uppercase tracking-wider text-[#221510] bg-[#FFFFFF] border border-[#E4DDD3] rounded-[2px] hover:border-[#C29958] hover:bg-[#FAF7F2] transition-colors inline-flex items-center justify-center gap-1.5 cursor-pointer"
+          className="w-full py-2.5 px-3 text-center text-xs font-display font-bold uppercase tracking-wider text-[#221510] bg-[#FFFFFF] border border-[#E4DDD3] rounded-[2px] hover:border-[#221510] hover:bg-[#FAF7F2] transition-colors inline-flex items-center justify-center gap-1.5 cursor-pointer"
         >
           <FileText className="w-3.5 h-3.5 text-[#C29958]" />
           <span>Fiche CoA</span>
@@ -185,7 +186,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
 
         <button
           onClick={() => onToggleRfq(product)}
-          className={`w-full py-2 px-2 text-center text-xs font-display font-semibold uppercase tracking-wider rounded-[2px] transition-colors inline-flex items-center justify-center gap-1 cursor-pointer border ${
+          className={`w-full py-2.5 px-3 text-center text-xs font-display font-bold uppercase tracking-wider rounded-[2px] transition-colors inline-flex items-center justify-center gap-1.5 cursor-pointer border ${
             isAddedToRfq
               ? 'bg-[#2E5A36] text-[#FFFFFF] border-[#2E5A36]'
               : 'bg-[#C29958] text-[#221510] hover:bg-[#b08745] border-[#b08745]'
@@ -199,7 +200,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
           ) : (
             <>
               <Plus className="w-3.5 h-3.5" />
-              <span>Ajouter RFQ</span>
+              <span>Devis RFQ</span>
             </>
           )}
         </button>

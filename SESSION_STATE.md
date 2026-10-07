@@ -18,7 +18,10 @@
   - **Hero industriel :** Titre affirmé décrivant le métier exact de l'usine, suppression de la grille de points en arrière-plan, suppression du badge pilule pulsant au profit d'un indicateur technique sobre.
   - **Suppression de la grille Bento :** Remplacement des blocs asymétriques décoratifs par une structure équilibrée en 3 piliers industriels (Traçabilité EUDR 2023/1115, Laboratoire ISO 17025, Logistique maritime & conditionnements).
   - **Indicateurs d'usine vérifiables :** Métriques réelles (85 000 t/an broyage San Pedro, 450 bars pressage mécanique PPP, &lt; 75 µm finesse alpine, &lt; 0.050 ppm seuil ICP-MS cadmium).
-  - **Harmonisation globale :** Remplacement de tous les badges pilules, arrondis et zooms de cartes par des chanfreins 2px et transitions directes de couleur.
+- **Phase 3 Alignement Design B2B Standard Barry Callebaut :**
+  - **Typographie néo-grotesque éditoriale :** Adoption de `Source Sans 3` pour les titres et le corps de texte avec titrage dense et franc, couplée à `JetBrains Mono` pour les données chiffrées de laboratoire.
+  - **Boutons et CTA industriels :** Rectangles nets avec chanfrein 2px, aplats de couleur pleins (laiton mat `#C29958`, chocolat `#221510`, vert homologation `#2E5A36`), sans ombre portée, bascule franche de contraste au survol.
+  - **Fiches produits standard Barry Callebaut :** Conteneur blanc pur sur fond écru léger, séparation par bordure fine 1px, image nette sans zoom, badge de segment sobre, tableau succinct de 2 spécifications clés (matière grasse et pH/finesse/fusion), et boutons directs de téléchargement TDS et devis RFQ.
 
 ### B. Modélisation Exhaustive des Données Métier
 - **9 Dérivés de Cacao Purs modélisés :**

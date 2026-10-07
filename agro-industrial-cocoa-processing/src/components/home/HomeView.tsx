@@ -419,13 +419,30 @@ export const HomeView: React.FC<HomeViewProps> = ({
                     </div>
                   </div>
 
-                  <div className="p-5 space-y-2">
-                    <span className="font-mono text-[10px] text-[#5D5753] block">
-                      MOQ : {product.moq}
-                    </span>
-                    <h3 className="font-display text-base font-bold text-[#221510] group-hover:text-[#4A2C21] transition-colors leading-snug">
-                      {product.name}
-                    </h3>
+                  <div className="p-5 space-y-3">
+                    <div>
+                      <span className="font-mono text-[10px] text-[#5D5753] block">
+                        MOQ : {product.moq.split('(')[0]}
+                      </span>
+                      <h3 className="font-display text-base font-bold text-[#221510] group-hover:text-[#4A2C21] transition-colors leading-snug">
+                        {product.name}
+                      </h3>
+                    </div>
+
+                    {/* 2 Spécifications Clés Standard Barry Callebaut */}
+                    <div className="grid grid-cols-2 gap-2 p-2 bg-[#FAF7F2] border border-[#E4DDD3] rounded-[2px] font-mono text-xs">
+                      {Object.entries(product.specs).slice(0, 2).map(([key, val]) => (
+                        <div key={key} className="space-y-0.5">
+                          <span className="text-[10px] text-[#5D5753] block truncate uppercase">
+                            {key.replace(/_/g, ' ')}
+                          </span>
+                          <span className="font-bold text-[#221510] block truncate">
+                            {String(val)}
+                          </span>
+                        </div>
+                      ))}
+                    </div>
+
                     <p className="font-body text-xs text-[#5D5753] line-clamp-2">
                       {product.description}
                     </p>
@@ -435,19 +452,19 @@ export const HomeView: React.FC<HomeViewProps> = ({
                 <div className="p-5 pt-0 border-t border-[#E4DDD3]/60 grid grid-cols-2 gap-2 mt-2 pt-3">
                   <button
                     onClick={() => onNavigate('produit', product.id)}
-                    className="w-full py-1.5 px-2 text-center text-xs font-display font-semibold uppercase tracking-wider text-[#221510] bg-[#F8F4EE] border border-[#E4DDD3] rounded-[2px] hover:border-[#C29958] transition-colors cursor-pointer"
+                    className="w-full py-2.5 px-2 text-center text-xs font-display font-bold uppercase tracking-wider text-[#221510] bg-[#FFFFFF] border border-[#E4DDD3] rounded-[2px] hover:border-[#221510] hover:bg-[#FAF7F2] transition-colors cursor-pointer"
                   >
                     Fiche Produit
                   </button>
                   <button
                     onClick={() => onToggleRfq(product)}
-                    className={`w-full py-1.5 px-2 text-center text-xs font-display font-semibold uppercase tracking-wider rounded-[2px] transition-colors cursor-pointer border ${
+                    className={`w-full py-2.5 px-2 text-center text-xs font-display font-bold uppercase tracking-wider rounded-[2px] transition-colors cursor-pointer border ${
                       isAdded
                         ? 'bg-[#2E5A36] text-[#FFFFFF] border-[#2E5A36]'
                         : 'bg-[#C29958] text-[#221510] border-[#b08745] hover:bg-[#b08745]'
                     }`}
                   >
-                    {isAdded ? 'Ajouté ✓' : '+ RFQ'}
+                    {isAdded ? 'Ajouté ✓' : 'Devis RFQ'}
                   </button>
                 </div>
               </div>
