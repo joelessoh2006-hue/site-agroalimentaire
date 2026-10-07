@@ -29,6 +29,14 @@
   - **Boîtes d'icônes techniques (`w-10 h-10`, `w-12 h-12`, `w-8 h-8`) :** Passage à `rounded-[6px]`.
   - **Badges, puces et étiquettes techniques :** Passage à `rounded-[4px]`.
   - **Couverture exhaustive :** 100% des composants mis à jour (`Header`, `HomeView`, `CatalogueView`, `ProductCard`, `ProductDetailView`, `SavoirFaireView`, `QualityView`, `ContactRfqView`, `Footer`, `TermsModal`, `PrivacyModal`, `TdsDownloadModal`, `CoaModal`, `MobileStickyBar`, `CookieBanner`, `NotFoundView`). Zero régression, zéro `rounded-[2px]` restant, build vérifié.
+- **Phase 5 Audit de Sécurité Automatisé Herozion & Remédiation OWASP (Score 100/100, Grade A) :**
+  - **Diagnostic initial Herozion (`npx herozion scan`) :** Score initial de 43/100 (Grade D, 13 vulnérabilités détectées sur 53 fichiers : fuite mémoire Node.js EventEmitter, exposition d'erreur interne, absence de pagination SQL, absence de schémas Zod sur routes API, journalisation sensible).
+  - **Remédiation complète :**
+    - `server/apiPlugin.ts` : Helper `readJsonBodySafe` avec plafond strict de 100 Ko, gestion d'erreur réseau, `req.destroy()` et détachement garanti des écouteurs (`req.off()`). Remplacement des fuites d'erreur technique par des messages génériques. Validation Zod de l'ensemble des routes (`leads`, `status`, `tds`, `coa`).
+    - `server/db.ts` : Pagination systématique sur `getAllLeads(limit, offset)` avec `LIMIT ? OFFSET ?` (plafond maximal de 100).
+    - `server/index.ts` : Schémas Zod stricts pour tous les paramètres d'URL (`id`, `slug`, `lot`) et de query string (`inline`, `limit`, `offset`), avec regex bloquant les tentatives de Path Traversal (`^[a-z0-9\-]+$`).
+    - `server/turnstile.ts` : Suppression des logs sensibles contenant des mots-clés d'authentification.
+  - **Résultat final certifié par Herozion :** **Score 100 / 100 (Grade A, Mention « Excellent »)**, **0 vulnérabilité restante**, compilation TypeScript sans erreur (`tsc --noEmit`), build Vite réussi.
 
 ### B. Modélisation Exhaustive des Données Métier
 - **9 Dérivés de Cacao Purs modélisés :**
