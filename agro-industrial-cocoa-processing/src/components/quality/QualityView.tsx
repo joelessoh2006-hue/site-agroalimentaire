@@ -1,16 +1,6 @@
 import React from 'react';
 import { QUALITY_CERTIFICATIONS, LAB_ASSAY_PROTOCOLS } from '../../data/qualityData';
-import {
-  ShieldCheck,
-  CheckCircle2,
-  Award,
-  FlaskConical,
-  FileSpreadsheet,
-  FileCheck,
-  Globe2,
-  ArrowRight,
-  ExternalLink
-} from 'lucide-react';
+import { FileSpreadsheet } from 'lucide-react';
 
 interface QualityViewProps {
   onOpenCoa: () => void;
@@ -175,7 +165,9 @@ export const QualityView: React.FC<QualityViewProps> = ({
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 border-b border-[#4A2C21]/80 pb-6">
           <div className="space-y-2">
             <div className="flex items-center gap-2 text-xs font-mono text-[#C29958] uppercase">
-              <ShieldCheck className="w-4 h-4" />
+              <span className="bg-[#4A2C21] px-1.5 py-0.5 rounded-[3px] text-[10px] text-[#C29958] font-bold border border-[#C29958]/30">
+                QA · LIMS 24/7
+              </span>
               <span>GOUVERNANCE POSITIVE RELEASE</span>
             </div>
             <h3 className="font-display text-2xl font-bold text-[#FFFFFF]">

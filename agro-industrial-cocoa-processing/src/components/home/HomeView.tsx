@@ -3,13 +3,7 @@ import { CocoaProduct } from '../../types';
 import { COCOA_PRODUCTS } from '../../data/products';
 import {
   ArrowRight,
-  ShieldCheck,
   CheckCircle2,
-  Factory,
-  Layers,
-  FlaskConical,
-  Globe2,
-  PackageCheck,
   ExternalLink,
   Send
 } from 'lucide-react';
@@ -131,13 +125,15 @@ export const HomeView: React.FC<HomeViewProps> = ({
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {/* Segment 1: Chocolaterie */}
           <div className="bg-[#FFFFFF] border border-[#E4DDD3] rounded-[8px] p-6 space-y-4 hover:border-[#C29958] transition-colors group">
-            <div className="w-10 h-10 rounded-[6px] bg-[#221510] text-[#C29958] flex items-center justify-center">
-              <Factory className="w-5 h-5" />
+            <div className="flex items-center justify-between border-b border-[#E4DDD3]/60 pb-3">
+              <span className="font-mono text-xs font-bold text-[#9C7336] bg-[#FAF7F2] border border-[#E4DDD3] px-2.5 py-1 rounded-[4px] tracking-wider">
+                SEG · 01 / CHO
+              </span>
+              <span className="font-mono text-[10px] text-[#78716C]">
+                PPP · LIQ · POW
+              </span>
             </div>
             <div>
-              <span className="font-mono text-[10px] font-bold text-[#C29958] uppercase tracking-wider block">
-                SEGMENT 01
-              </span>
               <h3 className="font-display text-lg font-bold text-[#221510] group-hover:text-[#4A2C21] transition-colors mt-0.5">
                 Chocolaterie Fine & Industrielle
               </h3>
@@ -172,13 +168,15 @@ export const HomeView: React.FC<HomeViewProps> = ({
 
           {/* Segment 2: Biscuiterie & Glacerie */}
           <div className="bg-[#FFFFFF] border border-[#E4DDD3] rounded-[8px] p-6 space-y-4 hover:border-[#C29958] transition-colors group">
-            <div className="w-10 h-10 rounded-[6px] bg-[#4A2C21] text-[#C29958] flex items-center justify-center">
-              <Layers className="w-5 h-5" />
+            <div className="flex items-center justify-between border-b border-[#E4DDD3]/60 pb-3">
+              <span className="font-mono text-xs font-bold text-[#9C7336] bg-[#FAF7F2] border border-[#E4DDD3] px-2.5 py-1 rounded-[4px] tracking-wider">
+                SEG · 02 / BIS
+              </span>
+              <span className="font-mono text-[10px] text-[#78716C]">
+                ALK 10-12 · KIB
+              </span>
             </div>
             <div>
-              <span className="font-mono text-[10px] font-bold text-[#C29958] uppercase tracking-wider block">
-                SEGMENT 02
-              </span>
               <h3 className="font-display text-lg font-bold text-[#221510] group-hover:text-[#4A2C21] transition-colors mt-0.5">
                 Biscuiterie, Confiserie & Glacerie
               </h3>
@@ -213,13 +211,15 @@ export const HomeView: React.FC<HomeViewProps> = ({
 
           {/* Segment 3: Cosmétique & Dermopharmacie */}
           <div className="bg-[#FFFFFF] border border-[#E4DDD3] rounded-[8px] p-6 space-y-4 hover:border-[#C29958] transition-colors group">
-            <div className="w-10 h-10 rounded-[6px] bg-[#2E5A36] text-[#FFFFFF] flex items-center justify-center">
-              <FlaskConical className="w-5 h-5" />
+            <div className="flex items-center justify-between border-b border-[#E4DDD3]/60 pb-3">
+              <span className="font-mono text-xs font-bold text-[#2E5A36] bg-[#2E5A36]/10 border border-[#2E5A36]/30 px-2.5 py-1 rounded-[4px] tracking-wider">
+                INCI / COSMOS
+              </span>
+              <span className="font-mono text-[10px] text-[#78716C]">
+                CAS 8002-31-1
+              </span>
             </div>
             <div>
-              <span className="font-mono text-[10px] font-bold text-[#C29958] uppercase tracking-wider block">
-                SEGMENT 03
-              </span>
               <h3 className="font-display text-lg font-bold text-[#221510] group-hover:text-[#4A2C21] transition-colors mt-0.5">
                 Cosmétique & Dermopharmacie
               </h3>
@@ -275,8 +275,13 @@ export const HomeView: React.FC<HomeViewProps> = ({
           {/* Pilier 1 : Traçabilité EUDR */}
           <div className="bg-[#FFFFFF] border border-[#E4DDD3] rounded-[8px] p-6 sm:p-7 flex flex-col justify-between space-y-5">
             <div className="space-y-3">
-              <div className="w-10 h-10 rounded-[6px] bg-[#2E5A36] text-[#FFFFFF] flex items-center justify-center">
-                <Globe2 className="w-5 h-5" />
+              <div className="flex items-center justify-between border-b border-[#E4DDD3] pb-2">
+                <span className="font-mono text-xs font-bold text-[#2E5A36] bg-[#EBF5ED] px-2 py-0.5 rounded-[4px] border border-[#C5E1CB]">
+                  EU 2023/1115
+                </span>
+                <span className="font-mono text-[10px] text-[#78716C]">
+                  REG · TRACE
+                </span>
               </div>
               <div>
                 <span className="text-[10px] font-mono text-[#2E5A36] font-bold uppercase tracking-wider block">
@@ -310,8 +315,13 @@ export const HomeView: React.FC<HomeViewProps> = ({
           {/* Pilier 2 : Laboratoire ISO 17025 */}
           <div className="bg-[#FFFFFF] border border-[#E4DDD3] rounded-[8px] p-6 sm:p-7 flex flex-col justify-between space-y-5">
             <div className="space-y-3">
-              <div className="w-10 h-10 rounded-[6px] bg-[#221510] text-[#C29958] flex items-center justify-center">
-                <FlaskConical className="w-5 h-5" />
+              <div className="flex items-center justify-between border-b border-[#E4DDD3] pb-2">
+                <span className="font-mono text-xs font-bold text-[#221510] bg-[#FAF7F2] px-2 py-0.5 rounded-[4px] border border-[#E4DDD3]">
+                  ISO/IEC 17025
+                </span>
+                <span className="font-mono text-[10px] text-[#78716C]">
+                  LAB · ICP-MS
+                </span>
               </div>
               <div>
                 <span className="text-[10px] font-mono text-[#C29958] font-bold uppercase tracking-wider block">
@@ -345,8 +355,13 @@ export const HomeView: React.FC<HomeViewProps> = ({
           {/* Pilier 3 : Conditionnements & Logistique */}
           <div className="bg-[#FFFFFF] border border-[#E4DDD3] rounded-[8px] p-6 sm:p-7 flex flex-col justify-between space-y-5">
             <div className="space-y-3">
-              <div className="w-10 h-10 rounded-[6px] bg-[#4A2C21] text-[#C29958] flex items-center justify-center">
-                <PackageCheck className="w-5 h-5" />
+              <div className="flex items-center justify-between border-b border-[#E4DDD3] pb-2">
+                <span className="font-mono text-xs font-bold text-[#4A2C21] bg-[#FAF7F2] px-2 py-0.5 rounded-[4px] border border-[#E4DDD3]">
+                  FCL · SAN PEDRO
+                </span>
+                <span className="font-mono text-[10px] text-[#78716C]">
+                  LOG · 24T/CIT
+                </span>
               </div>
               <div>
                 <span className="text-[10px] font-mono text-[#C29958] font-bold uppercase tracking-wider block">
@@ -476,8 +491,8 @@ export const HomeView: React.FC<HomeViewProps> = ({
       {/* 5. Appel à l'Action B2B Industriel */}
       <section className="bg-[#FAF7F2] border border-[#E4DDD3] rounded-[8px] p-8 sm:p-12 text-center space-y-6">
         <div className="max-w-2xl mx-auto space-y-3">
-          <div className="w-12 h-12 bg-[#221510] text-[#C29958] rounded-[6px] border border-[#4A2C21] flex items-center justify-center mx-auto mb-2">
-            <ShieldCheck className="w-6 h-6" />
+          <div className="inline-flex items-center justify-center font-mono text-xs font-bold text-[#C29958] bg-[#221510] px-3.5 py-1.5 rounded-[4px] border border-[#4A2C21] tracking-wider mb-2">
+            AUDIT QA · SLA 48H
           </div>
           <h2 className="font-display text-2xl sm:text-3xl font-bold text-[#221510]">
             Homologation d'Ingrédients dans vos Lignes de Production

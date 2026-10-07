@@ -1,6 +1,6 @@
 import React from 'react';
 import { CocoaDerivative, ProcessingBatch, CocoaProduct } from '../types';
-import { ShieldCheck, Printer, X, Download, CheckCircle2 } from 'lucide-react';
+import { Printer, X, Download, CheckCircle2 } from 'lucide-react';
 
 interface CoaModalProps {
   isOpen: boolean;
@@ -36,8 +36,10 @@ export const CoaModal: React.FC<CoaModalProps> = ({
       <div className="relative w-full max-w-3xl max-h-[90vh] overflow-y-auto bg-[#FFFFFF] border border-[#E4DDD3] rounded-[8px] p-6 sm:p-10 space-y-8">
         {/* Top controls */}
         <div className="flex items-center justify-between border-b border-[#E4DDD3] pb-4">
-          <div className="flex items-center gap-2 font-mono text-xs text-[#C29958] font-bold">
-            <ShieldCheck className="w-4 h-4" />
+          <div className="flex items-center gap-2 font-mono text-xs text-[#221510] font-bold">
+            <span className="bg-[#FAF7F2] text-[#C29958] px-2 py-0.5 rounded-[4px] border border-[#E4DDD3] text-[10px]">
+              LAB · ISO 17025
+            </span>
             <span>CERTIFICAT OFFICIEL D'ANALYSE DE CONTRÔLE (CoA)</span>
           </div>
 

@@ -1,5 +1,4 @@
 import React from 'react';
-import { ShieldCheck, Award, Globe, Building2, MapPin, Phone, Mail } from 'lucide-react';
 
 interface FooterProps {
   onNavigate: (view: string, productId?: string) => void;
@@ -24,14 +23,18 @@ export const Footer: React.FC<FooterProps> = ({
             <p className="font-body text-xs text-[#E4DDD3]/80 leading-relaxed">
               Unité industrielle de première et seconde transformation du cacao. Fournisseur B2B de dérivés purs certifiés FSSC 22000 et conformes au règlement européen zéro déforestation (EUDR 2023/1115).
             </p>
-            <div className="pt-2 text-[11px] font-mono text-[#C29958] space-y-1">
+            <div className="pt-2 text-[11px] font-mono text-[#C29958] space-y-1.5">
               <div className="flex items-center gap-2">
-                <Building2 className="w-3.5 h-3.5 shrink-0" />
-                <span>Usine : Port Autonome de San Pedro, Côte d'Ivoire</span>
+                <span className="text-[10px] bg-[#4A2C21] px-1.5 py-0.5 rounded-[3px] border border-[#C29958]/30 font-bold shrink-0">
+                  FAC · SP
+                </span>
+                <span>Port Autonome de San Pedro, Côte d'Ivoire</span>
               </div>
               <div className="flex items-center gap-2">
-                <MapPin className="w-3.5 h-3.5 shrink-0" />
-                <span>Hub Europe : Terminal Océanique, Le Havre (France)</span>
+                <span className="text-[10px] bg-[#4A2C21] px-1.5 py-0.5 rounded-[3px] border border-[#C29958]/30 font-bold shrink-0">
+                  HUB · LH
+                </span>
+                <span>Terminal Océanique, Le Havre (France)</span>
               </div>
             </div>
           </div>
@@ -140,17 +143,23 @@ export const Footer: React.FC<FooterProps> = ({
             <h4 className="font-display text-xs font-bold uppercase tracking-wider text-[#C29958]">
               Certifications & RFQ
             </h4>
-            <div className="space-y-1.5 text-xs text-[#E4DDD3]/75">
+            <div className="space-y-2 text-xs text-[#E4DDD3]/75">
               <div className="flex items-center gap-2">
-                <ShieldCheck className="w-3.5 h-3.5 text-[#C29958]" />
-                <span>FSSC 22000 Ver. 6.0 & ISO 9001</span>
+                <span className="text-[10px] font-mono bg-[#4A2C21] text-[#C29958] px-1.5 py-0.5 rounded-[3px] border border-[#C29958]/30 font-bold shrink-0">
+                  FSSC 22000
+                </span>
+                <span>GFSI Ver. 6.0 & ISO 9001</span>
               </div>
               <div className="flex items-center gap-2">
-                <Award className="w-3.5 h-3.5 text-[#C29958]" />
+                <span className="text-[10px] font-mono bg-[#4A2C21] text-[#C29958] px-1.5 py-0.5 rounded-[3px] border border-[#C29958]/30 font-bold shrink-0">
+                  SUSTAINABLE
+                </span>
                 <span>Rainforest Alliance & Fairtrade</span>
               </div>
               <div className="flex items-center gap-2">
-                <Globe className="w-3.5 h-3.5 text-[#C29958]" />
+                <span className="text-[10px] font-mono bg-[#4A2C21] text-[#C29958] px-1.5 py-0.5 rounded-[3px] border border-[#C29958]/30 font-bold shrink-0">
+                  RELIGIOUS
+                </span>
                 <span>Halal & Casher Parve Certifié</span>
               </div>
             </div>

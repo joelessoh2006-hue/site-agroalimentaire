@@ -4,20 +4,9 @@ import { COCOA_PRODUCTS } from '../../data/products';
 import {
   Send,
   CheckCircle2,
-  Building,
-  Mail,
-  User,
-  Phone,
-  Globe,
-  Truck,
-  Box,
   Trash2,
   Plus,
-  AlertCircle,
-  Clock,
-  MapPin,
-  ShieldCheck,
-  FileText
+  AlertCircle
 } from 'lucide-react';
 
 import { TurnstileWidget } from '../common/TurnstileWidget';
@@ -241,8 +230,7 @@ export const ContactRfqView: React.FC<ContactRfqViewProps> = ({
             </p>
           </div>
 
-          <div className="flex items-center gap-2 text-xs font-mono text-[#2E5A36] bg-[#2E5A36]/10 px-3 py-1.5 rounded-[4px] border border-[#2E5A36]/30 font-bold">
-            <Clock className="w-3.5 h-3.5" />
+          <div className="flex items-center text-xs font-mono text-[#2E5A36] bg-[#2E5A36]/10 px-3 py-1.5 rounded-[4px] border border-[#2E5A36]/30 font-bold">
             <span>RÉPONSE COMMERCIALE GARANTIE SOUS 24-48H</span>
           </div>
         </div>
@@ -483,17 +471,14 @@ export const ContactRfqView: React.FC<ContactRfqViewProps> = ({
                   <label className="block text-xs font-display font-semibold uppercase text-[#4A2C21] mb-1">
                     Raison Sociale / Société <span className="text-red-600">*</span>
                   </label>
-                  <div className="relative">
-                    <Building className="w-4 h-4 text-[#5D5753] absolute left-3 top-2.5" />
-                    <input
-                      type="text"
-                      required
-                      placeholder="Nom officiel de votre entreprise"
-                      value={companyName}
-                      onChange={(e) => setCompanyName(e.target.value)}
-                      className="w-full pl-9 pr-3 py-2 text-xs bg-[#FAF7F2] border border-[#E4DDD3] rounded-[6px] focus:outline-none focus:border-[#C29958] focus:bg-[#FFFFFF]"
-                    />
-                  </div>
+                  <input
+                    type="text"
+                    required
+                    placeholder="Nom officiel de votre entreprise"
+                    value={companyName}
+                    onChange={(e) => setCompanyName(e.target.value)}
+                    className="w-full px-3 py-2 text-xs bg-[#FAF7F2] border border-[#E4DDD3] rounded-[6px] focus:outline-none focus:border-[#C29958] focus:bg-[#FFFFFF]"
+                  />
                 </div>
 
                 <div>
@@ -513,38 +498,32 @@ export const ContactRfqView: React.FC<ContactRfqViewProps> = ({
                   <label className="block text-xs font-display font-semibold uppercase text-[#4A2C21] mb-1">
                     Nom & Fonction du Responsable <span className="text-red-600">*</span>
                   </label>
-                  <div className="relative">
-                    <User className="w-4 h-4 text-[#5D5753] absolute left-3 top-2.5" />
-                    <input
-                      type="text"
-                      required
-                      placeholder="Prénom et Nom du contact"
-                      value={contactName}
-                      onChange={(e) => setContactName(e.target.value)}
-                      className="w-full pl-9 pr-3 py-2 text-xs bg-[#FAF7F2] border border-[#E4DDD3] rounded-[6px] focus:outline-none focus:border-[#C29958] focus:bg-[#FFFFFF]"
-                    />
-                  </div>
+                  <input
+                    type="text"
+                    required
+                    placeholder="Prénom et Nom du contact"
+                    value={contactName}
+                    onChange={(e) => setContactName(e.target.value)}
+                    className="w-full px-3 py-2 text-xs bg-[#FAF7F2] border border-[#E4DDD3] rounded-[6px] focus:outline-none focus:border-[#C29958] focus:bg-[#FFFFFF]"
+                  />
                 </div>
 
                 <div>
                   <label className="block text-xs font-display font-semibold uppercase text-[#4A2C21] mb-1">
                     E-mail Professionnel d'Entreprise <span className="text-red-600">*</span>
                   </label>
-                  <div className="relative">
-                    <Mail className="w-4 h-4 text-[#5D5753] absolute left-3 top-2.5" />
-                    <input
-                      type="email"
-                      required
-                      placeholder="contact@votre-entreprise.com"
-                      value={contactEmail}
-                      onChange={(e) => setContactEmail(e.target.value)}
-                      className={`w-full pl-9 pr-3 py-2 text-xs bg-[#FAF7F2] border rounded-[6px] focus:outline-none focus:bg-[#FFFFFF] ${
-                        fieldErrors['contactEmail']
-                          ? 'border-red-500 focus:border-red-600'
-                          : 'border-[#E4DDD3] focus:border-[#C29958]'
-                      }`}
-                    />
-                  </div>
+                  <input
+                    type="email"
+                    required
+                    placeholder="contact@votre-entreprise.com"
+                    value={contactEmail}
+                    onChange={(e) => setContactEmail(e.target.value)}
+                    className={`w-full px-3 py-2 text-xs bg-[#FAF7F2] border rounded-[6px] focus:outline-none focus:bg-[#FFFFFF] ${
+                      fieldErrors['contactEmail']
+                        ? 'border-red-500 focus:border-red-600'
+                        : 'border-[#E4DDD3] focus:border-[#C29958]'
+                    }`}
+                  />
                   {fieldErrors['contactEmail'] && (
                     <span className="text-[11px] text-red-600 block mt-1 font-medium">
                       {fieldErrors['contactEmail']}
@@ -556,46 +535,40 @@ export const ContactRfqView: React.FC<ContactRfqViewProps> = ({
                   <label className="block text-xs font-display font-semibold uppercase text-[#4A2C21] mb-1">
                     Téléphone (avec indicatif international) :
                   </label>
-                  <div className="relative">
-                    <Phone className="w-4 h-4 text-[#5D5753] absolute left-3 top-2.5" />
-                    <input
-                      type="tel"
-                      placeholder="+33 1 23 45 67 89"
-                      value={contactPhone}
-                      onChange={(e) => setContactPhone(e.target.value)}
-                      className="w-full pl-9 pr-3 py-2 text-xs bg-[#FAF7F2] border border-[#E4DDD3] rounded-[6px] focus:outline-none focus:border-[#C29958] focus:bg-[#FFFFFF]"
-                    />
-                  </div>
+                  <input
+                    type="tel"
+                    placeholder="+33 1 23 45 67 89"
+                    value={contactPhone}
+                    onChange={(e) => setContactPhone(e.target.value)}
+                    className="w-full px-3 py-2 text-xs bg-[#FAF7F2] border border-[#E4DDD3] rounded-[6px] focus:outline-none focus:border-[#C29958] focus:bg-[#FFFFFF]"
+                  />
                 </div>
 
                 <div>
                   <label className="block text-xs font-display font-semibold uppercase text-[#4A2C21] mb-1">
                     Pays du Siège / Usine <span className="text-red-600">*</span>
                   </label>
-                  <div className="relative">
-                    <Globe className="w-4 h-4 text-[#5D5753] absolute left-3 top-2.5" />
-                    <select
-                      required
-                      value={country}
-                      onChange={(e) => setCountry(e.target.value)}
-                      className="w-full pl-9 pr-3 py-2 text-xs bg-[#FAF7F2] border border-[#E4DDD3] rounded-[6px] focus:outline-none focus:border-[#C29958] focus:bg-[#FFFFFF]"
-                    >
-                      <option value="">Sélectionnez un pays...</option>
-                      <option value="FR">France</option>
-                      <option value="BE">Belgique</option>
-                      <option value="CH">Suisse</option>
-                      <option value="DE">Allemagne</option>
-                      <option value="NL">Pays-Bas</option>
-                      <option value="IT">Italie</option>
-                      <option value="ES">Espagne</option>
-                      <option value="GB">Royaume-Uni</option>
-                      <option value="US">États-Unis</option>
-                      <option value="CA">Canada</option>
-                      <option value="CI">Côte d'Ivoire</option>
-                      <option value="GH">Ghana</option>
-                      <option value="OTHER">Autre pays</option>
-                    </select>
-                  </div>
+                  <select
+                    required
+                    value={country}
+                    onChange={(e) => setCountry(e.target.value)}
+                    className="w-full px-3 py-2 text-xs bg-[#FAF7F2] border border-[#E4DDD3] rounded-[6px] focus:outline-none focus:border-[#C29958] focus:bg-[#FFFFFF]"
+                  >
+                    <option value="">Sélectionnez un pays...</option>
+                    <option value="FR">France</option>
+                    <option value="BE">Belgique</option>
+                    <option value="CH">Suisse</option>
+                    <option value="DE">Allemagne</option>
+                    <option value="NL">Pays-Bas</option>
+                    <option value="IT">Italie</option>
+                    <option value="ES">Espagne</option>
+                    <option value="GB">Royaume-Uni</option>
+                    <option value="US">États-Unis</option>
+                    <option value="CA">Canada</option>
+                    <option value="CI">Côte d'Ivoire</option>
+                    <option value="GH">Ghana</option>
+                    <option value="OTHER">Autre pays</option>
+                  </select>
                 </div>
 
                 <div>
@@ -676,9 +649,11 @@ export const ContactRfqView: React.FC<ContactRfqViewProps> = ({
         <div className="lg:col-span-4 space-y-6">
           {/* Usine Principale */}
           <div className="bg-[#FFFFFF] border border-[#E4DDD3] rounded-[8px] p-6 space-y-3">
-            <div className="flex items-center gap-2 text-xs font-mono text-[#C29958] font-bold">
-              <MapPin className="w-4 h-4" />
-              <span>SITE DE PRODUCTION PRINCIPAL</span>
+            <div className="flex items-center justify-between border-b border-[#E4DDD3] pb-2 text-xs font-mono">
+              <span className="text-[#C29958] font-bold">SITE DE PRODUCTION PRINCIPAL</span>
+              <span className="text-[10px] text-[#78716C] bg-[#FAF7F2] px-1.5 py-0.5 rounded-[3px] border border-[#E4DDD3]">
+                LOC · FAC-01
+              </span>
             </div>
             <h3 className="font-display text-base font-bold text-[#221510]">
               Usine Industrielle de San Pedro
@@ -695,9 +670,11 @@ export const ContactRfqView: React.FC<ContactRfqViewProps> = ({
 
           {/* Hub Export Europe */}
           <div className="bg-[#FFFFFF] border border-[#E4DDD3] rounded-[8px] p-6 space-y-3">
-            <div className="flex items-center gap-2 text-xs font-mono text-[#C29958] font-bold">
-              <Truck className="w-4 h-4" />
-              <span>HUB LOGISTIQUE EUROPE</span>
+            <div className="flex items-center justify-between border-b border-[#E4DDD3] pb-2 text-xs font-mono">
+              <span className="text-[#C29958] font-bold">HUB LOGISTIQUE EUROPE</span>
+              <span className="text-[10px] text-[#78716C] bg-[#FAF7F2] px-1.5 py-0.5 rounded-[3px] border border-[#E4DDD3]">
+                LOG · HUB-EUR
+              </span>
             </div>
             <h3 className="font-display text-base font-bold text-[#221510]">
               Entrepôt Avancé Le Havre
@@ -709,9 +686,11 @@ export const ContactRfqView: React.FC<ContactRfqViewProps> = ({
 
           {/* Bureaux Export & Trading */}
           <div className="bg-[#221510] text-[#F8F4EE] border border-[#4A2C21] rounded-[8px] p-6 space-y-4">
-            <div className="flex items-center gap-2 text-xs font-mono text-[#C29958] font-bold">
-              <Building className="w-4 h-4" />
-              <span>DESK EXPORT COMMERCIAL</span>
+            <div className="flex items-center justify-between border-b border-[#4A2C21] pb-2 text-xs font-mono">
+              <span className="text-[#C29958] font-bold">DESK EXPORT COMMERCIAL</span>
+              <span className="text-[10px] text-[#C29958]/80 bg-[#4A2C21]/60 px-1.5 py-0.5 rounded-[3px] border border-[#4A2C21]">
+                HQ · SALES
+              </span>
             </div>
             <div className="space-y-2 text-xs">
               <div>

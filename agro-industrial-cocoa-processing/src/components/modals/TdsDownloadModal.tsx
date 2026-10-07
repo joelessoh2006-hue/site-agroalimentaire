@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { CocoaProduct } from '../../types';
-import { X, Download, ShieldCheck, FileText, CheckCircle2, Building, Mail, User, AlertCircle } from 'lucide-react';
+import { X, Download, FileText, CheckCircle2, AlertCircle } from 'lucide-react';
 
 interface TdsDownloadModalProps {
   isOpen: boolean;
@@ -108,8 +108,10 @@ export const TdsDownloadModal: React.FC<TdsDownloadModalProps> = ({
           {!isSubmitted ? (
             <form onSubmit={handleSubmit} className="space-y-4">
               <div className="bg-[#F8F4EE] border border-[#E4DDD3] rounded-[6px] p-3 text-xs text-[#4A2C21] space-y-1">
-                <div className="flex items-center gap-1.5 font-bold text-[#221510]">
-                  <ShieldCheck className="w-4 h-4 text-[#2E5A36]" />
+                <div className="flex items-center gap-2 font-bold text-[#221510]">
+                  <span className="font-mono text-[10px] bg-[#2E5A36]/10 text-[#2E5A36] px-1.5 py-0.5 rounded-[3px] border border-[#2E5A36]/30 font-bold">
+                    QA · B2B PRO
+                  </span>
                   <span>Accès Réservé aux Professionnels & Formulateurs R&D</span>
                 </div>
                 <p className="text-[11px] text-[#5D5753] leading-relaxed">
@@ -133,51 +135,42 @@ export const TdsDownloadModal: React.FC<TdsDownloadModalProps> = ({
                 <label className="block text-xs font-display font-semibold uppercase tracking-wider text-[#4A2C21] mb-1">
                   Société / Raison Sociale <span className="text-red-600">*</span>
                 </label>
-                <div className="relative">
-                  <Building className="w-4 h-4 text-[#5D5753] absolute left-3 top-2.5" />
-                  <input
-                    type="text"
-                    required
-                    placeholder="Ex: Chocolaterie Artisanale de Paris SAS"
-                    value={company}
-                    onChange={(e) => setCompany(e.target.value)}
-                    className="w-full pl-9 pr-3 py-2 text-xs bg-[#FFFFFF] border border-[#E4DDD3] rounded-[6px] focus:outline-none focus:border-[#C29958]"
-                  />
-                </div>
+                <input
+                  type="text"
+                  required
+                  placeholder="Ex: Chocolaterie Artisanale de Paris SAS"
+                  value={company}
+                  onChange={(e) => setCompany(e.target.value)}
+                  className="w-full px-3 py-2 text-xs bg-[#FFFFFF] border border-[#E4DDD3] rounded-[6px] focus:outline-none focus:border-[#C29958]"
+                />
               </div>
 
               <div>
                 <label className="block text-xs font-display font-semibold uppercase tracking-wider text-[#4A2C21] mb-1">
                   Nom & Fonction du Contact <span className="text-red-600">*</span>
                 </label>
-                <div className="relative">
-                  <User className="w-4 h-4 text-[#5D5753] absolute left-3 top-2.5" />
-                  <input
-                    type="text"
-                    required
-                    placeholder="Ex: Jean Dupont, Responsable R&D / Achats"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    className="w-full pl-9 pr-3 py-2 text-xs bg-[#FFFFFF] border border-[#E4DDD3] rounded-[6px] focus:outline-none focus:border-[#C29958]"
-                  />
-                </div>
+                <input
+                  type="text"
+                  required
+                  placeholder="Ex: Jean Dupont, Responsable R&D / Achats"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  className="w-full px-3 py-2 text-xs bg-[#FFFFFF] border border-[#E4DDD3] rounded-[6px] focus:outline-none focus:border-[#C29958]"
+                />
               </div>
 
               <div>
                 <label className="block text-xs font-display font-semibold uppercase tracking-wider text-[#4A2C21] mb-1">
                   E-mail Professionnel <span className="text-red-600">*</span>
                 </label>
-                <div className="relative">
-                  <Mail className="w-4 h-4 text-[#5D5753] absolute left-3 top-2.5" />
-                  <input
-                    type="email"
-                    required
-                    placeholder="jean.dupont@entreprise.com"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    className="w-full pl-9 pr-3 py-2 text-xs bg-[#FFFFFF] border border-[#E4DDD3] rounded-[6px] focus:outline-none focus:border-[#C29958]"
-                  />
-                </div>
+                <input
+                  type="email"
+                  required
+                  placeholder="jean.dupont@entreprise.com"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="w-full px-3 py-2 text-xs bg-[#FFFFFF] border border-[#E4DDD3] rounded-[6px] focus:outline-none focus:border-[#C29958]"
+                />
                 {isFreeEmailDomain && (
                   <div className="flex items-start gap-1.5 mt-1.5 text-[11px] text-[#A0522D] bg-[#F8F4EE] p-2 rounded-[4px] border border-[#E4DDD3]">
                     <AlertCircle className="w-3.5 h-3.5 shrink-0 mt-0.5" />

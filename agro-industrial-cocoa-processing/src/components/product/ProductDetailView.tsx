@@ -6,13 +6,7 @@ import {
   FileText,
   Plus,
   Check,
-  Package,
-  ShieldCheck,
-  CheckCircle2,
-  Calendar,
-  Layers,
-  ArrowRight,
-  ExternalLink
+  CheckCircle2
 } from 'lucide-react';
 import { ProductImage } from '../common/ProductImage';
 
@@ -339,8 +333,13 @@ export const ProductDetailView: React.FC<ProductDetailViewProps> = ({
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               {product.packaging.map((pack, idx) => (
                 <div key={idx} className="bg-[#FAF7F2] border border-[#E4DDD3] rounded-[6px] p-4 space-y-2">
-                  <div className="w-8 h-8 rounded-[6px] bg-[#221510] text-[#C29958] flex items-center justify-center">
-                    <Package className="w-4 h-4" />
+                  <div className="flex items-center justify-between border-b border-[#E4DDD3] pb-1.5">
+                    <span className="font-mono text-[10px] font-bold text-[#C29958] bg-[#221510] px-2 py-0.5 rounded-[3px]">
+                      PKG · 0{idx + 1}
+                    </span>
+                    <span className="font-mono text-[10px] text-[#78716C]">
+                      {pack.netWeightKg} KG NET
+                    </span>
                   </div>
                   <h4 className="font-display text-xs font-bold text-[#221510] uppercase">
                     Format {idx + 1}
@@ -402,10 +401,10 @@ export const ProductDetailView: React.FC<ProductDetailViewProps> = ({
           </h3>
           <button
             onClick={onBack}
-            className="text-xs font-display font-semibold uppercase text-[#C29958] hover:text-[#221510] inline-flex items-center gap-1 cursor-pointer"
+            className="text-xs font-display font-semibold uppercase text-[#C29958] hover:text-[#221510] inline-flex items-center gap-1.5 cursor-pointer"
           >
             <span>Voir tout le catalogue</span>
-            <ArrowRight className="w-3.5 h-3.5" />
+            <span aria-hidden="true">→</span>
           </button>
         </div>
 

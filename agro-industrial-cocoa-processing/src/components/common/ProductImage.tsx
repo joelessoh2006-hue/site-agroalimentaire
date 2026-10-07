@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { Sparkles, Layers, Box } from 'lucide-react';
 
 interface ProductImageProps {
   src: string;
@@ -9,6 +8,8 @@ interface ProductImageProps {
   productName?: string;
   category?: string;
   aspectRatio?: string;
+  sku?: string;
+  packagingFormat?: string;
 }
 
 export const ProductImage: React.FC<ProductImageProps> = ({
@@ -18,17 +19,48 @@ export const ProductImage: React.FC<ProductImageProps> = ({
   containerClassName = '',
   productName,
   category,
+  sku,
+  packagingFormat,
 }) => {
   const [imageLoaded, setImageLoaded] = useState(false);
   const [hasError, setHasError] = useState(false);
 
+  const derivedSku = (() => {
+    if (sku) return sku;
+    const n = (productName || alt || '').toLowerCase();
+    if (n.includes('naturel') && category === 'beurres') return 'SKU · BUT-PPP-NAT';
+    if (n.includes('désodorisé') || n.includes('desodorise')) return 'SKU · BUT-PPP-DEO';
+    if (n.includes('cosmétique') || n.includes('cosmetique')) return 'SKU · BUT-COS-ORG';
+    if (n.includes('naturelle') && category === 'poudres') return 'SKU · POW-NAT-1012';
+    if (n.includes('noir') || n.includes('black')) return 'SKU · POW-BLK-1012';
+    if (n.includes('rouge') || n.includes('red')) return 'SKU · POW-RED-2022';
+    if (n.includes('alcalinisée') || n.includes('alcalinisee')) return 'SKU · POW-ALK-1012';
+    if (n.includes('liquor') || n.includes('masse')) return 'SKU · LIQ-RAW-PURE';
+    if (n.includes('tourteau') || n.includes('kibbled')) return 'SKU · CAK-KIB-EXP';
+    if (category === 'beurres') return 'SKU · BUT-PPP-25K';
+    if (category === 'poudres') return 'SKU · POW-ALK-25K';
+    if (category === 'masses') return 'SKU · LIQ-REF-25K';
+    return 'SKU · IND-RAW-EXP';
+  })();
+
+  const derivedPackaging = (() => {
+    if (packagingFormat) return packagingFormat;
+    const n = (productName || alt || '').toLowerCase();
+    if (n.includes('fût') || n.includes('fut')) return 'Fût métallique 190 kg · Liner étanche';
+    if (n.includes('citerne')) return 'Citerne liquide inox 316L (24 t à 45°C)';
+    if (category === 'beurres') return 'Carton export 25 kg · Liner PE bleu';
+    if (category === 'poudres') return 'Sac kraft multi-plis 25 kg hermétique';
+    if (category === 'masses') return 'Carton 25 kg bloc · Palette 1 000 kg';
+    return 'Conditionnement industriel export 25 kg';
+  })();
+
   return (
-    <div className={`relative w-full h-full bg-[#F1EDE7] overflow-hidden ${containerClassName}`}>
+    <div className={`relative w-full h-full bg-[#FAF7F2] overflow-hidden ${containerClassName}`}>
       {!hasError ? (
         <>
           {/* Skeleton Pulse */}
           {!imageLoaded && (
-            <div className="absolute inset-0 bg-[#EFE9E1] animate-pulse flex items-center justify-center">
+            <div className="absolute inset-0 bg-[#F1EDE7] animate-pulse flex items-center justify-center">
               <span className="font-mono text-[10px] text-[#8C827A] tracking-wider uppercase">
                 Chargement visuel...
               </span>
@@ -42,29 +74,43 @@ export const ProductImage: React.FC<ProductImageProps> = ({
             referrerPolicy="no-referrer"
             onLoad={() => setImageLoaded(true)}
             onError={() => setHasError(true)}
-            className={`w-full h-full object-cover transition-all duration-500 ease-out ${
+            className={`w-full h-full object-cover transition-all duration-300 ease-out ${
               imageLoaded ? 'opacity-100' : 'opacity-0'
             } ${className}`}
           />
         </>
       ) : (
-        /* Zero-Broken-Image Branded Industrial Fallback */
-        <div className="w-full h-full flex flex-col items-center justify-center p-4 bg-gradient-to-br from-[#F8F4EE] via-[#EFE8DE] to-[#E4DDD3] text-[#4A2C21] text-center select-none">
-          <div className="w-12 h-12 rounded-[8px] bg-[#4A2C21]/10 flex items-center justify-center mb-2.5 shadow-xs border border-[#4A2C21]/10">
-            {category === 'beurres' ? (
-              <Sparkles className="w-6 h-6 text-[#C29958]" />
-            ) : category === 'poudres' ? (
-              <Layers className="w-6 h-6 text-[#C29958]" />
-            ) : (
-              <Box className="w-6 h-6 text-[#C29958]" />
-            )}
+        /* Mire industrielle sobre : code SKU monospace & conditionnement officiel */
+        <div className="w-full h-full flex flex-col justify-between p-4 bg-[#FAF7F2] border border-[#E4DDD3] text-left select-none relative">
+          {/* Repère de calibration laboratoire en coin */}
+          <div className="flex items-center justify-between border-b border-[#E4DDD3] pb-2">
+            <span className="font-mono text-[10px] font-bold text-[#C29958] tracking-widest uppercase">
+              MIRE ÉCHANTILLON
+            </span>
+            <span className="font-mono text-[9px] text-[#78716C] tracking-tight">
+              LOT QA-CHECK
+            </span>
           </div>
-          <span className="font-display text-xs font-bold uppercase tracking-wider text-[#221510] line-clamp-1">
-            {productName || alt}
-          </span>
-          <span className="font-mono text-[9px] uppercase tracking-wider text-[#8C827A] mt-1 px-2 py-0.5 bg-white/70 rounded-[3px] border border-[#E4DDD3]">
-            {category ? `Grade ${category}` : 'Cacao Pur Certifié'}
-          </span>
+
+          {/* Identification SKU centrale */}
+          <div className="my-auto py-2 space-y-1.5">
+            <div className="inline-block font-mono text-xs font-bold text-[#221510] bg-white px-2.5 py-1 rounded-[4px] border border-[#E4DDD3]">
+              {derivedSku}
+            </div>
+            <div className="font-display text-xs font-bold text-[#221510] line-clamp-2 leading-snug">
+              {productName || alt}
+            </div>
+          </div>
+
+          {/* Conditionnement officiel & conformité */}
+          <div className="pt-2 border-t border-[#E4DDD3] space-y-0.5">
+            <span className="font-mono text-[9px] uppercase tracking-wider text-[#78716C] block">
+              Format officiel :
+            </span>
+            <span className="font-mono text-[10px] font-medium text-[#4A2C21] line-clamp-1">
+              {derivedPackaging}
+            </span>
+          </div>
         </div>
       )}
     </div>

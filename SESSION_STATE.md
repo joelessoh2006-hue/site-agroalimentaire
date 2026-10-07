@@ -55,6 +55,12 @@
   - **Barre industrielle monobloc :** Remplacement de la grille de cartes par un ruban de contrôle continu `divide-x divide-[#E4DDD3] grid grid-cols-6` encapsulé dans un conteneur `rounded-lg border border-[#E4DDD3] bg-white`.
   - **Élimination complète des troncatures :** Raccourcissement précis des 6 libellés ("Réception Fèves", "Torréfaction", "Broyage & Affinage", "Pressage", "Alcalinisation", "Conditionnement") et suppression des sous-titres anglais superflus.
   - **Style actif feutré & accent cuivré :** Fond doux `#FAF7F2` avec liseré supérieur cuivré de 2px (`border-[#C29958]`), titre en noir d'encre dense `#1C1917` et métriques en laiton `#9C7336`.
+- **Phase 10 Épuration Visuelle Globale & Suppression des Icônes Génériques :**
+  - **`HomeView.tsx` :** Remplacement des boîtes d'icônes génériques des piliers industriels et des segments de marché par des trigrammes industriels normalisés et références normatives en `JetBrains Mono` (`SEG · 01 / CHO`, `SEG · 02 / BIS`, `INCI / COSMOS`, `EU 2023/1115`, `ISO/IEC 17025`, `FCL · SAN PEDRO`, `AUDIT QA · SLA 48H`).
+  - **`ProductImage.tsx` :** Élimination de `Sparkles`, `Layers` et `Box` au profit d'une mire d'usine sobre de laboratoire affichant le code SKU en typographie monospace (`SKU · BUT-PPP-NAT`, etc.) et le conditionnement officiel.
+  - **`ContactRfqView.tsx` & `TdsDownloadModal.tsx` :** Éradication de 100% des icônes décoratives à l'intérieur des inputs (`Building`, `User`, `Mail`, `Phone`, `Globe`), suppression du padding décalé `pl-9` au profit d'un padding standard net `px-3 py-2`, et remplacement des icônes latérales par des trigrammes de localisation (`LOC · FAC-01`, `LOG · HUB-EUR`, `HQ · SALES`).
+  - **`CookieBanner.tsx` :** Retrait de l'icône de biscuit `Cookie` au profit d'un en-tête technique sobre sur la gouvernance des données et les traceurs ePrivacy / RGPD.
+  - **Interface globale (`Header`, `QualityView`, `Footer`, `CoaModal`, `ProductCard`, `ProductDetailView`) :** Conservation stricte des icônes utilitaires réelles (`Search`, `X`, `Download`, `Printer`, `Check`, `Chevron`). Zéro warning ou erreur TypeScript (`tsc --noEmit` code 0, `npm run build` réussi).
 
 ### B. Modélisation Exhaustive des Données Métier
 - **9 Dérivés de Cacao Purs modélisés :**

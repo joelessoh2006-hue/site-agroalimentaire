@@ -1,5 +1,5 @@
 import React from 'react';
-import { ShieldCheck, Send } from 'lucide-react';
+import { Send } from 'lucide-react';
 
 interface HeaderProps {
   currentView: string;
@@ -90,9 +90,8 @@ export const Header: React.FC<HeaderProps> = ({
         <div className="flex items-center gap-3">
           <button
             onClick={onOpenCoa}
-            className="hidden sm:inline-flex items-center gap-2 px-3.5 py-2 text-xs font-display font-semibold uppercase tracking-wider text-[#221510] bg-[#FFFFFF] border border-[#E4DDD3] rounded-[6px] hover:border-[#C29958] hover:bg-[#FAF7F2] transition-colors whitespace-nowrap cursor-pointer"
+            className="hidden sm:inline-flex items-center px-3.5 py-2 text-xs font-display font-semibold uppercase tracking-wider text-[#221510] bg-[#FFFFFF] border border-[#E4DDD3] rounded-[6px] hover:border-[#C29958] hover:bg-[#FAF7F2] transition-colors whitespace-nowrap cursor-pointer"
           >
-            <ShieldCheck className="w-3.5 h-3.5 text-[#C29958]" />
             <span>Certificat CoA</span>
           </button>
 

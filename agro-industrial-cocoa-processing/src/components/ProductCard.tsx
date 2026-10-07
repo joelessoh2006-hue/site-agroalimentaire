@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { CatalogProduct } from '../types';
-import { FileText, Plus, Check, Package, ShieldCheck } from 'lucide-react';
+import { FileText, Plus, Check } from 'lucide-react';
 
 interface ProductCardProps {
   product: CatalogProduct;
@@ -161,7 +161,9 @@ export const ProductCard: React.FC<ProductCardProps> = ({
 
           {/* Packaging Strip */}
           <div className="pt-2 text-[11px] text-[#5D5753] flex items-start gap-1.5">
-            <Package className="w-3.5 h-3.5 text-[#C29958] shrink-0 mt-0.5" />
+            <span className="text-[10px] font-mono bg-[#FAF7F2] text-[#4A2C21] px-1 py-0.2 rounded-[2px] border border-[#E4DDD3] font-bold shrink-0">
+              PKG
+            </span>
             <span>
               <strong className="text-[#221510]">Conditionnement :</strong>{' '}
               {typeof product.packaging === 'string'
