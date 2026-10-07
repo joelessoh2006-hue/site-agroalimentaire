@@ -149,7 +149,7 @@ export const CatalogueView: React.FC<CatalogueViewProps> = ({
       <aside
         role="search"
         aria-label="Filtres combinatoires du catalogue"
-        className="bg-[#FFFFFF] border border-[#E4DDD3] rounded-[10px] p-5 sm:p-6 space-y-6 shadow-xs"
+        className="bg-[#FFFFFF] border border-[#E4DDD3] rounded-[2px] p-5 sm:p-6 space-y-6"
       >
         {/* Search input + Reset */}
         <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4 border-b border-[#E4DDD3]/60 pb-4">
@@ -161,14 +161,14 @@ export const CatalogueView: React.FC<CatalogueViewProps> = ({
               placeholder="Rechercher par nom, INCI, point de fusion, application..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-9 pr-3 py-2 text-xs bg-[#F8F4EE] border border-[#E4DDD3] rounded-[6px] focus:outline-none focus:border-[#C29958] focus:bg-[#FFFFFF] transition-colors"
+              className="w-full pl-9 pr-3 py-2 text-xs bg-[#F8F4EE] border border-[#E4DDD3] rounded-[2px] focus:outline-none focus:border-[#C29958] focus:bg-[#FFFFFF] transition-colors"
             />
           </div>
 
           {hasActiveFilters && (
             <button
               onClick={handleResetFilters}
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-display font-semibold uppercase tracking-wider text-[#4A2C21] hover:text-[#221510] border border-[#E4DDD3] rounded-[6px] hover:bg-[#F8F4EE] transition-colors cursor-pointer self-start sm:self-auto"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-display font-semibold uppercase tracking-wider text-[#4A2C21] hover:text-[#221510] border border-[#E4DDD3] rounded-[2px] hover:bg-[#F8F4EE] transition-colors cursor-pointer self-start sm:self-auto"
             >
               <RotateCcw className="w-3.5 h-3.5" />
               <span>Réinitialiser les filtres</span>
@@ -185,13 +185,13 @@ export const CatalogueView: React.FC<CatalogueViewProps> = ({
               <span>Secteur d'Application Cible :</span>
             </legend>
 
-            <div className="inline-flex flex-wrap p-1 bg-[#F1EDE7] rounded-[8px] border border-[#E4DDD3] w-full">
+            <div className="inline-flex flex-wrap p-1 bg-[#F1EDE7] rounded-[2px] border border-[#E4DDD3] w-full">
               <button
                 type="button"
                 onClick={() => setSelectedIndustry('all')}
-                className={`flex-1 min-w-[90px] py-2 px-3 text-xs font-display font-semibold uppercase tracking-wider rounded-[6px] transition-all cursor-pointer text-center ${
+                className={`flex-1 min-w-[90px] py-2 px-3 text-xs font-display font-semibold uppercase tracking-wider rounded-[2px] transition-colors cursor-pointer text-center ${
                   selectedIndustry === 'all'
-                    ? 'bg-[#221510] text-[#FFFFFF] shadow-xs'
+                    ? 'bg-[#221510] text-[#FFFFFF]'
                     : 'text-[#4A2C21] hover:text-[#221510]'
                 }`}
               >
@@ -200,9 +200,9 @@ export const CatalogueView: React.FC<CatalogueViewProps> = ({
               <button
                 type="button"
                 onClick={() => setSelectedIndustry('alimentaire')}
-                className={`flex-1 min-w-[110px] py-2 px-3 text-xs font-display font-semibold uppercase tracking-wider rounded-[6px] transition-all cursor-pointer text-center ${
+                className={`flex-1 min-w-[110px] py-2 px-3 text-xs font-display font-semibold uppercase tracking-wider rounded-[2px] transition-colors cursor-pointer text-center ${
                   selectedIndustry === 'alimentaire'
-                    ? 'bg-[#221510] text-[#FFFFFF] shadow-xs'
+                    ? 'bg-[#221510] text-[#FFFFFF]'
                     : 'text-[#4A2C21] hover:text-[#221510]'
                 }`}
               >
@@ -211,9 +211,9 @@ export const CatalogueView: React.FC<CatalogueViewProps> = ({
               <button
                 type="button"
                 onClick={() => setSelectedIndustry('cosmetique')}
-                className={`flex-1 min-w-[110px] py-2 px-3 text-xs font-display font-semibold uppercase tracking-wider rounded-[6px] transition-all cursor-pointer text-center ${
+                className={`flex-1 min-w-[110px] py-2 px-3 text-xs font-display font-semibold uppercase tracking-wider rounded-[2px] transition-colors cursor-pointer text-center ${
                   selectedIndustry === 'cosmetique'
-                    ? 'bg-[#221510] text-[#FFFFFF] shadow-xs'
+                    ? 'bg-[#221510] text-[#FFFFFF]'
                     : 'text-[#4A2C21] hover:text-[#221510]'
                 }`}
               >
@@ -229,13 +229,13 @@ export const CatalogueView: React.FC<CatalogueViewProps> = ({
               <span>Famille de Dérivé :</span>
             </legend>
 
-            <div className="inline-flex flex-wrap p-1 bg-[#F1EDE7] rounded-[8px] border border-[#E4DDD3] w-full">
+            <div className="inline-flex flex-wrap p-1 bg-[#F1EDE7] rounded-[2px] border border-[#E4DDD3] w-full">
               <button
                 type="button"
                 onClick={() => setSelectedCategory('all')}
-                className={`flex-1 min-w-[70px] py-2 px-2.5 text-xs font-display font-semibold uppercase tracking-wider rounded-[6px] transition-all cursor-pointer text-center ${
+                className={`flex-1 min-w-[70px] py-2 px-2.5 text-xs font-display font-semibold uppercase tracking-wider rounded-[2px] transition-colors cursor-pointer text-center ${
                   selectedCategory === 'all'
-                    ? 'bg-[#221510] text-[#FFFFFF] shadow-xs'
+                    ? 'bg-[#221510] text-[#FFFFFF]'
                     : 'text-[#4A2C21] hover:text-[#221510]'
                 }`}
               >
@@ -244,9 +244,9 @@ export const CatalogueView: React.FC<CatalogueViewProps> = ({
               <button
                 type="button"
                 onClick={() => setSelectedCategory('beurres')}
-                className={`flex-1 min-w-[85px] py-2 px-2.5 text-xs font-display font-semibold uppercase tracking-wider rounded-[6px] transition-all cursor-pointer text-center ${
+                className={`flex-1 min-w-[85px] py-2 px-2.5 text-xs font-display font-semibold uppercase tracking-wider rounded-[2px] transition-colors cursor-pointer text-center ${
                   selectedCategory === 'beurres'
-                    ? 'bg-[#221510] text-[#FFFFFF] shadow-xs'
+                    ? 'bg-[#221510] text-[#FFFFFF]'
                     : 'text-[#4A2C21] hover:text-[#221510]'
                 }`}
               >
@@ -255,9 +255,9 @@ export const CatalogueView: React.FC<CatalogueViewProps> = ({
               <button
                 type="button"
                 onClick={() => setSelectedCategory('poudres')}
-                className={`flex-1 min-w-[85px] py-2 px-2.5 text-xs font-display font-semibold uppercase tracking-wider rounded-[6px] transition-all cursor-pointer text-center ${
+                className={`flex-1 min-w-[85px] py-2 px-2.5 text-xs font-display font-semibold uppercase tracking-wider rounded-[2px] transition-colors cursor-pointer text-center ${
                   selectedCategory === 'poudres'
-                    ? 'bg-[#221510] text-[#FFFFFF] shadow-xs'
+                    ? 'bg-[#221510] text-[#FFFFFF]'
                     : 'text-[#4A2C21] hover:text-[#221510]'
                 }`}
               >
@@ -266,9 +266,9 @@ export const CatalogueView: React.FC<CatalogueViewProps> = ({
               <button
                 type="button"
                 onClick={() => setSelectedCategory('masses')}
-                className={`flex-1 min-w-[95px] py-2 px-2.5 text-xs font-display font-semibold uppercase tracking-wider rounded-[6px] transition-all cursor-pointer text-center ${
+                className={`flex-1 min-w-[95px] py-2 px-2.5 text-xs font-display font-semibold uppercase tracking-wider rounded-[2px] transition-colors cursor-pointer text-center ${
                   selectedCategory === 'masses'
-                    ? 'bg-[#221510] text-[#FFFFFF] shadow-xs'
+                    ? 'bg-[#221510] text-[#FFFFFF]'
                     : 'text-[#4A2C21] hover:text-[#221510]'
                 }`}
               >
@@ -364,10 +364,10 @@ export const CatalogueView: React.FC<CatalogueViewProps> = ({
 
                     {/* 2 Spécifications Clés Standard Barry Callebaut */}
                     <div className="pt-2 border-t border-[#E4DDD3]">
-                      <div className="grid grid-cols-2 gap-2 p-2.5 bg-[#FAF7F2] border border-[#E4DDD3] rounded-[2px] font-mono text-xs">
+                      <div className="grid grid-cols-2 divide-x divide-[#E4DDD3] bg-[#FAF7F2] border border-[#E4DDD3] rounded-[2px] font-mono text-xs">
                         {Object.entries(product.specs).slice(0, 2).map(([key, val]) => (
-                          <div key={key} className="space-y-0.5">
-                            <span className="text-[10px] text-[#5D5753] block truncate uppercase">
+                          <div key={key} className="p-2.5 space-y-0.5">
+                            <span className="text-[10px] text-[#5D5753] block truncate uppercase font-sans font-semibold">
                               {key.replace(/_/g, ' ')}
                             </span>
                             <span className="font-bold text-[#221510] block truncate">

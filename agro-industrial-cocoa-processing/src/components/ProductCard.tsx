@@ -145,10 +145,10 @@ export const ProductCard: React.FC<ProductCardProps> = ({
 
           {/* 2 Spécifications Clés Standard Barry Callebaut */}
           <div className="pt-2 border-t border-[#E4DDD3]">
-            <div className="grid grid-cols-2 gap-2 p-2.5 bg-[#FAF7F2] border border-[#E4DDD3] rounded-[2px] font-mono text-xs">
+            <div className="grid grid-cols-2 divide-x divide-[#E4DDD3] bg-[#FAF7F2] border border-[#E4DDD3] rounded-[2px] font-mono text-xs">
               {Object.entries(product.specs).slice(0, 2).map(([key, val]) => (
-                <div key={key} className="space-y-0.5">
-                  <span className="text-[10px] text-[#5D5753] block truncate uppercase">
+                <div key={key} className="p-2.5 space-y-0.5">
+                  <span className="text-[10px] text-[#5D5753] block truncate uppercase font-sans font-semibold">
                     {formatSpecKey(key)}
                   </span>
                   <span className="font-bold text-[#221510] block truncate">
