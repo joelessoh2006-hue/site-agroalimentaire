@@ -1,5 +1,6 @@
 import { RfqPayloadSchema, ValidatedRfqPayload } from './validation';
 import { saveLeadToDatabase, B2BLeadRecord, getAllLeads, getLeadById, updateLeadStatus } from './db';
+import { sendRfqEmails } from './emailService';
 
 export { getAllLeads, getLeadById, updateLeadStatus };
 
@@ -34,6 +35,10 @@ export async function processRfqSubmission(
       itemsCount: number;
       createdAt: string;
       status: string;
+      emailsDispatched?: {
+        customerReceipt: boolean;
+        internalAlert: boolean;
+      };
     };
   };
 }> {
@@ -103,8 +108,21 @@ export async function processRfqSubmission(
 
   // Sauvegarde dans la base de données relationnelle SQLite + miroir JSON + Supabase (si configuré)
   await saveLeadToDatabase(leadRecord);
-
   console.log(`[API RFQ] ✅ Nouveau prospect persistant sauvegardé : ${reference} (${leadRecord.company_name})`);
+
+  // 4. Routage sécurisé des e-mails transactionnels (SMTP Fiabilisé / Resend)
+  // Règle d'or : Ne jamais perdre de prospect. Même si le fournisseur d'e-mail subit une panne,
+  // la demande est en sécurité dans la base de données.
+  let emailsDispatched = { customerReceipt: false, internalAlert: false };
+  try {
+    const emailResults = await sendRfqEmails(leadRecord);
+    emailsDispatched = {
+      customerReceipt: emailResults.customerEmail.success,
+      internalAlert: emailResults.internalAlert.success,
+    };
+  } catch (emailErr) {
+    console.error(`[API RFQ] ⚠️ Erreur lors du routage des e-mails pour le lead ${reference}:`, emailErr);
+  }
 
   return {
     statusCode: 201,
@@ -120,6 +138,7 @@ export async function processRfqSubmission(
         itemsCount: validatedData.selectedProductIds.length,
         createdAt,
         status: leadRecord.status,
+        emailsDispatched,
       },
     },
   };

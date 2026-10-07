@@ -46,6 +46,19 @@
 - **Traitement & Optimisation :** Redimensionnement et optimisation haute fidélité (interpolation bicubique haute qualité, ratio adapté aux fiches et cartes, compression JPEG qualité 92) placés dans `public/images/products/`.
 - **Remplacement dans les Données :** Mise à jour de `src/data/products.ts` pour pointer sur les assets locaux hébergés (`/images/products/*.jpg`), avec temps de réponse instantané (HTTP 200) et zéro dépendance à des CDN externes.
 
+### F. Backend RFQ, Persistance Relationnelle & Routage E-mail Fiabilisé
+- **Validation & Sanitization Zod :** Validation stricte des payloads entrants (`companyName`, `contactName`, `contactEmail` avec filtrage d'adresses jetables/temporaires, `country`, `destinationPort`, `selectedProductIds`, limitation de longueur anti-injection, honeypot anti-spam transparent).
+- **Persistance Garantie ("Zéro Perte de Prospect") :**
+  - Moteur relationnel SQLite via `better-sqlite3` avec journalisation Write-Ahead Logging (`leads.db` WAL) pour garantir la résilience et les écritures concurrentes.
+  - Miroir de secours instantané en JSON (`leads.json`) assurant une portabilité immédiate.
+  - Connecteur optionnel Supabase / PostgreSQL activable par simple variable d'environnement (`SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY`).
+  - Schéma complet avec statut de lead (`nouveau`, `contacté`, `devis_envoyé`, `qualifié`, `rejeté`) et endpoints d'administration (`GET /api/leads`, `GET /api/leads/:id`, `PATCH /api/leads/:id/status`).
+- **Routage des E-mails Transactionnels (SMTP Fiabilisé & Resend API) :**
+  - Fin du risque de spam lié au simple `mail()` non configuré : intégration de l'API moderne Resend (`RESEND_API_KEY`) et du transporteur standardisé `nodemailer` pour serveurs SMTP professionnels (Brevo / Sendinblue, Postmark, SendGrid).
+  - **E-mail A (Accusé de Réception Prospect) :** Modèle HTML élégant aux couleurs de l'usine (`#221510`, `#C29958`, `#2E5A36`), référence unique de dossier (`RFQ-2026-XXXXXX`), délai d'engagement de réponse sous 24 à 48h ouvrées, récapitulatif de la demande, rappel des garanties de conformité (FSSC 22000, EUDR traçabilité GPS) et lien direct vers le catalogue technique / fiches TDS.
+  - **E-mail B (Alerte Interne Commerciale Export) :** Dispatché instantanément à `commercial-desk@cacao-ivoire-industries.com` avec indicateur de priorité (Échantillons R&D vs Volume FCL/LCL), coordonnées complètes de l'acheteur (société, TVA, port, Incoterm, volume, IP) et boutons de contact direct.
+  - **Résilience & Fallback Local :** Si le service mail subit une interruption externe ou est en mode dev sans clés configurées, les e-mails sont archivés en HTML dans `server/sent-emails/` sans jamais faire échouer l'enregistrement du prospect.
+
 ---
 
 ## 2. Fichiers Créés et Modifiés
@@ -56,6 +69,14 @@
 - [`src/data/pipelineData.ts`](file:///d:/Bureau/Site%20Agroalimentaire/agro-industrial-cocoa-processing/src/data/pipelineData.ts) — Étapes industrielles, conformité EUDR et registre des lots.
 - [`src/data/qualityData.ts`](file:///d:/Bureau/Site%20Agroalimentaire/agro-industrial-cocoa-processing/src/data/qualityData.ts) — Certifications officielles et protocoles d'analyse laboratoire ISO 17025.
 
+### Backend, API, Base de Données & Transactional Email
+- [`server/validation.ts`](file:///d:/Bureau/Site%20Agroalimentaire/agro-industrial-cocoa-processing/server/validation.ts) — Schémas Zod, sanitization et blacklist de domaines d'e-mails jetables.
+- [`server/db.ts`](file:///d:/Bureau/Site%20Agroalimentaire/agro-industrial-cocoa-processing/server/db.ts) — Moteur de persistance SQLite (`leads.db`), gestion des statuts de leads, fallback JSON et connecteur Supabase.
+- [`server/emailService.ts`](file:///d:/Bureau/Site%20Agroalimentaire/agro-industrial-cocoa-processing/server/emailService.ts) — Générateur de templates HTML soignés et dispatcher d'e-mails via Resend API, SMTP pro (Brevo/SendGrid) et archivage dev local.
+- [`server/rfqHandler.ts`](file:///d:/Bureau/Site%20Agroalimentaire/agro-industrial-cocoa-processing/server/rfqHandler.ts) — Pipeline complet recevant les soumissions RFQ, persistant les leads et orchestrant les e-mails.
+- [`server/apiMiddleware.ts`](file:///d:/Bureau/Site%20Agroalimentaire/agro-industrial-cocoa-processing/server/apiMiddleware.ts) — Middleware d'API Vite / Node.js pour servir `/api/rfq`, `/api/contact`, `/api/leads`.
+- [`.env.example`](file:///d:/Bureau/Site%20Agroalimentaire/agro-industrial-cocoa-processing/.env.example) — Documentation complète des clés Resend, configuration SMTP et Supabase.
+
 ### Composants & Vues
 - [`src/components/common/ProductImage.tsx`](file:///d:/Bureau/Site%20Agroalimentaire/agro-industrial-cocoa-processing/src/components/common/ProductImage.tsx) — Composant d'image résilient avec skeleton et fallback.
 - [`src/components/home/HomeView.tsx`](file:///d:/Bureau/Site%20Agroalimentaire/agro-industrial-cocoa-processing/src/components/home/HomeView.tsx) — Page d'accueil B2B.
@@ -63,7 +84,7 @@
 - [`src/components/catalogue/CatalogueView.tsx`](file:///d:/Bureau/Site%20Agroalimentaire/agro-industrial-cocoa-processing/src/components/catalogue/CatalogueView.tsx) — Catalogue filtrable à facettes.
 - [`src/components/product/ProductDetailView.tsx`](file:///d:/Bureau/Site%20Agroalimentaire/agro-industrial-cocoa-processing/src/components/product/ProductDetailView.tsx) — Fiche technique détaillée par produit.
 - [`src/components/quality/QualityView.tsx`](file:///d:/Bureau/Site%20Agroalimentaire/agro-industrial-cocoa-processing/src/components/quality/QualityView.tsx) — Page Qualité, Certifications & CoA.
-- [`src/components/contact/ContactRfqView.tsx`](file:///d:/Bureau/Site%20Agroalimentaire/agro-industrial-cocoa-processing/src/components/contact/ContactRfqView.tsx) — Formulaire de cotation & échantillons B2B.
+- [`src/components/contact/ContactRfqView.tsx`](file:///d:/Bureau/Site%20Agroalimentaire/agro-industrial-cocoa-processing/src/components/contact/ContactRfqView.tsx) — Formulaire de cotation & échantillons B2B relié à l'API.
 - [`src/components/modals/TdsDownloadModal.tsx`](file:///d:/Bureau/Site%20Agroalimentaire/agro-industrial-cocoa-processing/src/components/modals/TdsDownloadModal.tsx) — Modale de téléchargement TDS avec lead-capture.
 - [`src/components/modals/CoaModal.tsx`](file:///d:/Bureau/Site%20Agroalimentaire/agro-industrial-cocoa-processing/src/components/modals/CoaModal.tsx) — Modale de consultation CoA.
 - [`src/components/Header.tsx`](file:///d:/Bureau/Site%20Agroalimentaire/agro-industrial-cocoa-processing/src/components/Header.tsx) — En-tête de navigation.
@@ -73,7 +94,7 @@
 ### Configuration & Styles
 - [`src/index.css`](file:///d:/Bureau/Site%20Agroalimentaire/agro-industrial-cocoa-processing/src/index.css) — Tokens Tailwind v4 et scrollbars personnalisées.
 - [`index.html`](file:///d:/Bureau/Site%20Agroalimentaire/agro-industrial-cocoa-processing/index.html) — Metadonnées SEO B2B et polices Google Fonts.
-- [`package.json`](file:///d:/Bureau/Site%20Agroalimentaire/agro-industrial-cocoa-processing/package.json) — Dépendances alignées et scripts de build.
+- [`package.json`](file:///d:/Bureau/Site%20Agroalimentaire/agro-industrial-cocoa-processing/package.json) — Dépendances alignées (`better-sqlite3`, `zod`, `resend`, `nodemailer`).
 
 ---
 
@@ -81,8 +102,8 @@
 
 | Priorité | Domaine | Tâche à réaliser | Description & Objectif |
 | :---: | :--- | :--- | :--- |
-| **P1** | **Internationalisation (i18n)** | Finaliser le dictionnaire bilingue FR / EN | Permettre le basculement complet de l'interface et des fiches produits en anglais pour les acheteurs internationaux (Europe, Asie, Amériques). |
-| **P2** | **Backend & API d'ingestion** | ✅ Endpoints `POST /api/rfq` & `/api/contact` opérationnels | Validation Zod stricte, filtrage des e-mails jetables, sanitization XSS, honeypot anti-bot, persistance locale `server/leads.json`, intégration Vite dev + serveur Express standalone. |
+| **P1** | **Backend, API & E-mails** | ✅ Endpoints API, Persistance SQLite/Supabase & Routage Resend/SMTP | Validés et testés avec succès (zéro perte de prospect, accusé de réception prospect & alerte commerciale générés). |
+| **P2** | **Internationalisation (i18n)** | Finaliser le dictionnaire bilingue FR / EN | Permettre le basculement complet de l'interface et des fiches produits en anglais pour les acheteurs internationaux (Europe, Asie, Amériques). |
 | **P3** | **Export PDF Officiel** | Générateur de PDF certifiés (TDS / COA) | Intégrer un générateur de documents PDF officiels (avec logo de l'usine, cachet de contrôle qualité et signature électronique) en remplacement du simple export texte. |
 | **P4** | **Performance & Audit SEO** | Audit Core Web Vitals & Accessibilité | Mesurer et optimiser les scores Lighthouse (LCP < 1.2s, CLS < 0.05, accessibilité WCAG AA, balises OpenGraph et schema.org Product/Organization). |
 | **P5** | **Préparation Déploiement** | Configuration de production | Mettre en place la configuration pour hébergement cloud (Vercel, Cloudflare Pages ou Docker) et variables d'environnement (`.env.production`). |
