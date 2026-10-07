@@ -109,11 +109,32 @@ export default function App() {
     initialRoute.productId || COCOA_PRODUCTS[0].id
   );
 
-  // RFQ Basket state (initial with 2 representative products)
-  const [selectedRfqProductIds, setSelectedRfqProductIds] = useState<string[]>([
-    'beurre-cacao-naturel-alimentaire',
-    'poudre-cacao-naturelle-alimentaire',
-  ]);
+  // Panier RFQ initialisé depuis localStorage ou vide par défaut ([])
+  const [selectedRfqProductIds, setSelectedRfqProductIds] = useState<string[]>(() => {
+    try {
+      const saved = localStorage.getItem('b2b_rfq_basket');
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (Array.isArray(parsed)) {
+          return parsed.filter(
+            (id) => typeof id === 'string' && COCOA_PRODUCTS.some((p) => p.id === id)
+          );
+        }
+      }
+    } catch {
+      // Fallback silencieux si localStorage indisponible
+    }
+    return [];
+  });
+
+  // Synchronisation continue du panier RFQ dans le localStorage
+  useEffect(() => {
+    try {
+      localStorage.setItem('b2b_rfq_basket', JSON.stringify(selectedRfqProductIds));
+    } catch {
+      // Fallback silencieux
+    }
+  }, [selectedRfqProductIds]);
 
   // Modal states
   const [coaModalOpen, setCoaModalOpen] = useState<boolean>(false);

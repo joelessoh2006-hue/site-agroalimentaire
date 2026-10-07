@@ -37,6 +37,10 @@
     - `server/index.ts` : Schémas Zod stricts pour tous les paramètres d'URL (`id`, `slug`, `lot`) et de query string (`inline`, `limit`, `offset`), avec regex bloquant les tentatives de Path Traversal (`^[a-z0-9\-]+$`).
     - `server/turnstile.ts` : Suppression des logs sensibles contenant des mots-clés d'authentification.
   - **Résultat final certifié par Herozion :** **Score 100 / 100 (Grade A, Mention « Excellent »)**, **0 vulnérabilité restante**, compilation TypeScript sans erreur (`tsc --noEmit`), build Vite réussi.
+- **Phase 6 Suppression des Données Simulées par Défaut & Persistance du Panier RFQ :**
+  - **Panier RFQ à zéro par défaut (`src/App.tsx`) :** Suppression des 2 produits représentatifs préchargés en dur. Initialisation de `selectedRfqProductIds` à tableau vide `[]` ou rechargé dynamiquement depuis `localStorage.getItem('b2b_rfq_basket')` si l'utilisateur a fait des sélections préalables.
+  - **Masquage du badge de devis :** Le badge dans le `Header` et la barre mobile ne s'affiche plus lorsque le panier est vide (`rfqItemsCount > 0`).
+  - **Formulaire de contact B2B (`src/components/contact/ContactRfqView.tsx`) :** Suppression des valeurs pré-cochées en dur (pays, secteur, volume, incoterm, port). Ajout d'options de choix neutres (`"Sélectionnez..."`) et ajout du sélecteur explicite de pays avec validation obligatoire.
 
 ### B. Modélisation Exhaustive des Données Métier
 - **9 Dérivés de Cacao Purs modélisés :**

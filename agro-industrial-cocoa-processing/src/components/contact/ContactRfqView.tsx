@@ -39,12 +39,12 @@ export const ContactRfqView: React.FC<ContactRfqViewProps> = ({
   const [contactName, setContactName] = useState('');
   const [contactEmail, setContactEmail] = useState('');
   const [contactPhone, setContactPhone] = useState('');
-  const [country, setCountry] = useState('FR');
-  const [industrySector, setIndustrySector] = useState('Chocolaterie Industrielle');
-  const [targetVolume, setTargetVolume] = useState('25 000 kg (Conteneur 20ft FCL)');
-  const [sampleSize, setSampleSize] = useState<'250g' | '500g' | '1kg'>('500g');
-  const [incoterm, setIncoterm] = useState('CIF Port du Havre (France)');
-  const [destinationPort, setDestinationPort] = useState('Le Havre, France');
+  const [country, setCountry] = useState('');
+  const [industrySector, setIndustrySector] = useState('');
+  const [targetVolume, setTargetVolume] = useState('');
+  const [sampleSize, setSampleSize] = useState<'250g' | '500g' | '1kg' | ''>('');
+  const [incoterm, setIncoterm] = useState('');
+  const [destinationPort, setDestinationPort] = useState('');
   const [projectDescription, setProjectDescription] = useState('');
   const [honeypot, setHoneypot] = useState('');
   const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
@@ -78,6 +78,16 @@ export const ContactRfqView: React.FC<ContactRfqViewProps> = ({
       return;
     }
 
+    if (!country.trim()) {
+      setErrorMessage('Veuillez sélectionner le pays de votre entreprise.');
+      return;
+    }
+
+    if (!destinationPort.trim()) {
+      setErrorMessage('Veuillez renseigner le port ou lieu de destination finale.');
+      return;
+    }
+
     setIsSubmitting(true);
 
     try {
@@ -88,11 +98,11 @@ export const ContactRfqView: React.FC<ContactRfqViewProps> = ({
         contactName: contactName.trim(),
         contactEmail: contactEmail.trim(),
         contactPhone: contactPhone.trim(),
-        country,
-        industrySector,
-        targetVolume,
-        sampleSize,
-        incoterm,
+        country: country.trim(),
+        industrySector: industrySector.trim() || undefined,
+        targetVolume: targetVolume.trim() || undefined,
+        sampleSize: sampleSize || undefined,
+        incoterm: incoterm.trim() || undefined,
         destinationPort: destinationPort.trim(),
         projectDescription: projectDescription.trim(),
         selectedProductIds: selectedProducts.map((p) => p.id),
@@ -406,6 +416,7 @@ export const ContactRfqView: React.FC<ContactRfqViewProps> = ({
                       onChange={(e) => setSampleSize(e.target.value as any)}
                       className="w-full p-2 text-xs bg-[#FAF7F2] border border-[#E4DDD3] rounded-[6px] focus:outline-none focus:border-[#C29958]"
                     >
+                      <option value="">Sélectionnez un format d'échantillon...</option>
                       <option value="250g">250 g (Pilote chromatographique / R&D)</option>
                       <option value="500g">500 g (Essais de formulation & texture)</option>
                       <option value="1kg">1 kg (Tests pilote d'atelier complets)</option>
@@ -418,7 +429,7 @@ export const ContactRfqView: React.FC<ContactRfqViewProps> = ({
                     </label>
                     <input
                       type="text"
-                      placeholder="Ex: 50 Tonnes Métriques (2 Conteneurs 40ft)"
+                      placeholder="Sélectionnez ou renseignez un volume (ex: 25 000 kg FCL)"
                       value={targetVolume}
                       onChange={(e) => setTargetVolume(e.target.value)}
                       className="w-full p-2 text-xs bg-[#FAF7F2] border border-[#E4DDD3] rounded-[6px] focus:outline-none focus:border-[#C29958]"
@@ -435,6 +446,7 @@ export const ContactRfqView: React.FC<ContactRfqViewProps> = ({
                     onChange={(e) => setIncoterm(e.target.value)}
                     className="w-full p-2 text-xs bg-[#FAF7F2] border border-[#E4DDD3] rounded-[6px] focus:outline-none focus:border-[#C29958]"
                   >
+                    <option value="">Sélectionnez un Incoterm...</option>
                     <option value="CIF Port du Havre (France)">CIF Port du Havre (France)</option>
                     <option value="CIF Port de Rotterdam (Pays-Bas)">CIF Port de Rotterdam (Pays-Bas)</option>
                     <option value="CIF Port d'Anvers (Belgique)">CIF Port d'Anvers (Belgique)</option>
@@ -452,7 +464,7 @@ export const ContactRfqView: React.FC<ContactRfqViewProps> = ({
                 </label>
                 <input
                   type="text"
-                  placeholder="Ex: Le Havre, France ou Hambourg, Allemagne"
+                  placeholder="Sélectionnez ou renseignez le port ou lieu de livraison (ex: Le Havre, France)"
                   value={destinationPort}
                   onChange={(e) => setDestinationPort(e.target.value)}
                   className="w-full p-2 text-xs bg-[#FAF7F2] border border-[#E4DDD3] rounded-[6px] focus:outline-none focus:border-[#C29958]"
@@ -558,6 +570,36 @@ export const ContactRfqView: React.FC<ContactRfqViewProps> = ({
 
                 <div>
                   <label className="block text-xs font-display font-semibold uppercase text-[#4A2C21] mb-1">
+                    Pays du Siège / Usine <span className="text-red-600">*</span>
+                  </label>
+                  <div className="relative">
+                    <Globe className="w-4 h-4 text-[#5D5753] absolute left-3 top-2.5" />
+                    <select
+                      required
+                      value={country}
+                      onChange={(e) => setCountry(e.target.value)}
+                      className="w-full pl-9 pr-3 py-2 text-xs bg-[#FAF7F2] border border-[#E4DDD3] rounded-[6px] focus:outline-none focus:border-[#C29958] focus:bg-[#FFFFFF]"
+                    >
+                      <option value="">Sélectionnez un pays...</option>
+                      <option value="FR">France</option>
+                      <option value="BE">Belgique</option>
+                      <option value="CH">Suisse</option>
+                      <option value="DE">Allemagne</option>
+                      <option value="NL">Pays-Bas</option>
+                      <option value="IT">Italie</option>
+                      <option value="ES">Espagne</option>
+                      <option value="GB">Royaume-Uni</option>
+                      <option value="US">États-Unis</option>
+                      <option value="CA">Canada</option>
+                      <option value="CI">Côte d'Ivoire</option>
+                      <option value="GH">Ghana</option>
+                      <option value="OTHER">Autre pays</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div>
+                  <label className="block text-xs font-display font-semibold uppercase text-[#4A2C21] mb-1">
                     Secteur d'Activité :
                   </label>
                   <select
@@ -565,6 +607,7 @@ export const ContactRfqView: React.FC<ContactRfqViewProps> = ({
                     onChange={(e) => setIndustrySector(e.target.value)}
                     className="w-full p-2 text-xs bg-[#FAF7F2] border border-[#E4DDD3] rounded-[6px] focus:outline-none focus:border-[#C29958]"
                   >
+                    <option value="">Sélectionnez un secteur d'activité...</option>
                     <option value="Chocolaterie Industrielle">Chocolaterie Industrielle</option>
                     <option value="Biscuiterie & Pâtisserie">Biscuiterie & Pâtisserie Industrielle</option>
                     <option value="Confiserie & Glacerie">Confiserie & Glacerie</option>
