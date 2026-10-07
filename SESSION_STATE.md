@@ -149,12 +149,19 @@
 - [`src/components/modals/CoaModal.tsx`](file:///d:/Bureau/Site%20Agroalimentaire/agro-industrial-cocoa-processing/src/components/modals/CoaModal.tsx) — Modale de consultation CoA.
 - [`src/components/Header.tsx`](file:///d:/Bureau/Site%20Agroalimentaire/agro-industrial-cocoa-processing/src/components/Header.tsx) — En-tête de navigation.
 - [`src/components/Footer.tsx`](file:///d:/Bureau/Site%20Agroalimentaire/agro-industrial-cocoa-processing/src/components/Footer.tsx) — Pied de page corporatif.
-- [`src/App.tsx`](file:///d:/Bureau/Site%20Agroalimentaire/agro-industrial-cocoa-processing/src/App.tsx) — Orchestration du routage et de l'état global RFQ.
+### G. SEO & Métadonnées Dynamiques (Lot 1)
+- **`public/robots.txt` :** Autorise l'exploration générale, interdit l'accès à `/api/`, référence le sitemap officiel.
+- **`public/sitemap.xml` :** Index canonique des 6 vues principales et des 9 fiches produits dédiées.
+- **Titres et descriptions dynamiques (`src/App.tsx`) :** Synchronisation réactive de `document.title`, `meta[name="description"]`, `og:title` et `og:description` à chaque changement de vue ou de fiche produit.
+- **Métadonnées sociales & Favicons (`index.html`) :** Balises OpenGraph et Twitter Card déclarées avec image dédiée 1200x630 (`/images/og-share.jpg`) et favicon vectoriel SVG (`/favicon.svg`).
 
-### Configuration & Styles
-- [`src/index.css`](file:///d:/Bureau/Site%20Agroalimentaire/agro-industrial-cocoa-processing/src/index.css) — Tokens Tailwind v4 et scrollbars personnalisées.
-- [`index.html`](file:///d:/Bureau/Site%20Agroalimentaire/agro-industrial-cocoa-processing/index.html) — Metadonnées SEO B2B et polices Google Fonts.
-- [`package.json`](file:///d:/Bureau/Site%20Agroalimentaire/agro-industrial-cocoa-processing/package.json) — Dépendances alignées (`better-sqlite3`, `zod`, `resend`, `nodemailer`).
+### Fichiers Créés & Modifiés Récemment
+- [`public/robots.txt`](file:///d:/Bureau/Site%20Agroalimentaire/agro-industrial-cocoa-processing/public/robots.txt) - Configuration pour les moteurs de recherche.
+- [`public/sitemap.xml`](file:///d:/Bureau/Site%20Agroalimentaire/agro-industrial-cocoa-processing/public/sitemap.xml) - Cartographie XML canonique des 15 URLs du site.
+- [`public/favicon.svg`](file:///d:/Bureau/Site%20Agroalimentaire/agro-industrial-cocoa-processing/public/favicon.svg) - Icône fève de cacao stylisée aux teintes de marque.
+- [`public/images/og-share.jpg`](file:///d:/Bureau/Site%20Agroalimentaire/agro-industrial-cocoa-processing/public/images/og-share.jpg) - Visuel OpenGraph au format 1200x630.
+- [`src/App.tsx`](file:///d:/Bureau/Site%20Agroalimentaire/agro-industrial-cocoa-processing/src/App.tsx) - Gestion dynamique des balises SEO par vue.
+- [`index.html`](file:///d:/Bureau/Site%20Agroalimentaire/agro-industrial-cocoa-processing/index.html) - Balises d'en-tête, favicons et cartes OpenGraph.
 
 ---
 

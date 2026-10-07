@@ -39,6 +39,53 @@ function parseLocation(): { view: string; productId?: string } {
   return { view: 'home' };
 }
 
+// Métadonnées SEO par page
+function getPageMeta(view: string, productId?: string): { title: string; description: string } {
+  if (view === 'savoir-faire') {
+    return {
+      title: 'Savoir-Faire & Traçabilité EUDR 2023/1115 | Agro-Industrial Cocoa',
+      description:
+        'Procédé industriel en 6 étapes : nettoyage, torréfaction, mouture, pressage 450 bars et micronisation alpine. Traçabilité polygonale GPS par lot de cacao certifié.',
+    };
+  }
+  if (view === 'catalogue') {
+    return {
+      title: 'Catalogue des Dérivés de Cacao Purs (9 Ingrédients B2B) | Agro-Industrial Cocoa',
+      description:
+        'Catalogue technique complet : beurres naturels PPP, beurres désodorisés, poudres naturelles et alcalinisées, masses pures et tourteaux de cacao pour industriels.',
+    };
+  }
+  if (view === 'produit' && productId) {
+    const product = COCOA_PRODUCTS.find((p) => p.id === productId || p.slug === productId);
+    if (product) {
+      return {
+        title: `${product.name} | Spécifications B2B & TDS`,
+        description: `Spécifications techniques industrielles pour ${product.name} : matière grasse, acidité libre FFA, microbiologie et fiches TDS/CoA téléchargeables.`,
+      };
+    }
+  }
+  if (view === 'qualite') {
+    return {
+      title: 'Qualité, Laboratoire ISO 17025 & Certifications | Agro-Industrial Cocoa',
+      description:
+        'Analyses de pointe : dosage cadmium par ICP-MS (UE 488/2014), dépistage Salmonella PCR 2x375g. Certifications FSSC 22000, Rainforest Alliance, Halal et Casher.',
+    };
+  }
+  if (view === 'contact') {
+    return {
+      title: 'Demande de Cotation B2B (RFQ) & Échantillons R&D | Agro-Industrial Cocoa',
+      description:
+        'Formulaire de cotation industrielle spot ou contrat annuel, et demande d’échantillons R&D (250g, 500g, 1kg). Réponse technique garantie sous 24 à 48 heures.',
+    };
+  }
+  // Accueil par défaut
+  return {
+    title: 'Transformation Industrielle du Cacao B2B | Agro-Industrial Cocoa Processing',
+    description:
+      'Unité industrielle intégrée à San Pedro (Côte d’Ivoire) et hub logistique au Havre. Fournisseur B2B de dérivés de cacao de haute précision certifiés FSSC 22000 et conformes EUDR.',
+  };
+}
+
 export default function App() {
   const initialRoute = parseLocation();
   const [currentView, setCurrentView] = useState<string>(initialRoute.view);
@@ -72,6 +119,30 @@ export default function App() {
     window.addEventListener('popstate', handlePopState);
     return () => window.removeEventListener('popstate', handlePopState);
   }, []);
+
+  // Sync document.title and meta description dynamically based on current route
+  useEffect(() => {
+    const meta = getPageMeta(currentView, selectedProductId);
+    document.title = meta.title;
+
+    let descTag = document.querySelector('meta[name="description"]');
+    if (!descTag) {
+      descTag = document.createElement('meta');
+      descTag.setAttribute('name', 'description');
+      document.head.appendChild(descTag);
+    }
+    descTag.setAttribute('content', meta.description);
+
+    const ogTitleTag = document.querySelector('meta[property="og:title"]');
+    if (ogTitleTag) {
+      ogTitleTag.setAttribute('content', meta.title);
+    }
+
+    const ogDescTag = document.querySelector('meta[property="og:description"]');
+    if (ogDescTag) {
+      ogDescTag.setAttribute('content', meta.description);
+    }
+  }, [currentView, selectedProductId]);
 
   // Navigation handler with URL pushState
   const navigateTo = (view: string, productId?: string) => {
