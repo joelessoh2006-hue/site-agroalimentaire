@@ -3,7 +3,7 @@ import { ShieldCheck, AlertCircle, RefreshCw } from 'lucide-react';
 
 // Clé de test publique officielle Cloudflare Turnstile (Always passes - Invisible)
 // https://developers.cloudflare.com/turnstile/troubleshooting/testing/
-export const DEFAULT_CLOUDFLARE_TEST_SITE_KEY = '1x00000000000000000000BB';
+const DEFAULT_CLOUDFLARE_TEST_SITE_KEY = '1x00000000000000000000BB';
 
 declare global {
   interface Window {
