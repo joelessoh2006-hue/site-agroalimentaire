@@ -14,8 +14,6 @@ export interface ProductCardProps {
 export const ProductCard: React.FC<ProductCardProps> = ({
   product,
   onSelectProduct,
-  onOpenTdsModal,
-  onOpenSpecs,
   onToggleRfq,
   isAddedToRfq,
 }) => {
@@ -25,68 +23,81 @@ export const ProductCard: React.FC<ProductCardProps> = ({
     }
   };
 
-  const handleTdsClick = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    if (onOpenTdsModal) {
-      onOpenTdsModal(product);
-    } else if (onOpenSpecs) {
-      onOpenSpecs(product);
-    }
-  };
-
   const handleRfqClick = (e: React.MouseEvent) => {
     e.stopPropagation();
     onToggleRfq(product);
   };
 
-  // 3 paramètres normalisés sous forme de mini-grille monospace délimitée par une bordure fine
-  const getTopThreeSpecs = () => {
+  // Format de conditionnement court et net (zéro troncature)
+  const getPackagingShort = () => {
+    if (Array.isArray(product.packaging) && product.packaging.length > 0) {
+      const raw = product.packaging[0]?.format.toLowerCase() || '';
+      if (raw.includes('carton blanc')) return 'Carton 25 kg (Liner vierge)';
+      if (raw.includes('carton')) return 'Carton export 25 kg';
+      if (raw.includes('fût') || raw.includes('fut')) return 'Fût métallique 190 kg';
+      if (raw.includes('sac')) return 'Sac kraft 25 kg';
+      if (raw.includes('seau')) return 'Seau PP 20 kg';
+      if (raw.includes('citerne')) return 'Citerne 24 t / Carton';
+    }
+    return 'Carton export 25 kg';
+  };
+
+  // Grille 2×2 style Barry Callebaut :
+  // Ligne 1 : Matière Grasse (MG) | Acidité Libre (FFA) ou pH
+  // Ligne 2 : Point de fusion ou Finesse | Format Conditionnement
+  const getGridSpecs = () => {
+    const packaging = getPackagingShort();
+
     if (product.category === 'beurres') {
       return [
-        { label: 'MG TOTALE', value: product.specs['matiere_grasse'] || '≥ 99.85%' },
-        { label: 'FFA (ACIDES)', value: product.specs['acides_gras_libres_ffa'] || '≤ 1.75%' },
-        { label: 'PT FUSION', value: product.specs['point_fusion'] || '32 - 35 °C' },
+        { label: 'Matière Grasse (MG)', value: product.specs['matiere_grasse'] || '≥ 99.85%' },
+        { label: 'Acidité Libre (FFA)', value: product.specs['acides_gras_libres_ffa'] || '≤ 1.75%' },
+        { label: 'Point de fusion', value: product.specs['point_fusion'] || '32.0 - 35.0 °C' },
+        { label: 'Conditionnement', value: packaging },
       ];
     }
+
     if (product.category === 'poudres') {
       return [
-        { label: 'MG RÉSIDUELLE', value: product.specs['matiere_grasse'] || '10 - 12%' },
-        { label: 'pH SOLUTION', value: product.specs['ph'] || '5.2 - 6.0' },
-        { label: 'FINESSE <75µ', value: product.specs['finesse_tamis_75um'] || '≥ 99.5%' },
+        { label: 'Matière Grasse (MG)', value: product.specs['matiere_grasse'] || '10 - 12%' },
+        { label: 'Potentiel Hydrogène (pH)', value: product.specs['ph'] || '5.2 - 6.0' },
+        { label: 'Finesse (< 75 µm)', value: product.specs['finesse_tamis_75um'] || '≥ 99.5%' },
+        { label: 'Conditionnement', value: packaging },
       ];
     }
+
     return [
-      { label: 'MG RÉSIDUELLE', value: product.specs['matiere_grasse'] || '52 - 54%' },
-      { label: 'HUMIDITÉ', value: product.specs['humidite'] || '≤ 1.5%' },
-      { label: 'FINESSE', value: product.specs['finesse_tamis_75um'] || '< 75 µm' },
+      { label: 'Matière Grasse (MG)', value: product.specs['matiere_grasse'] || '52 - 54%' },
+      { label: 'Humidité résiduelle', value: product.specs['humidite'] || '≤ 1.5%' },
+      { label: 'Finesse de broyage', value: product.specs['finesse_tamis_75um'] || '< 20 µm' },
+      { label: 'Conditionnement', value: packaging },
     ];
   };
 
-  const specs = getTopThreeSpecs();
+  const gridSpecs = getGridSpecs();
 
-  // Format de conditionnement en ligne d'expédition
-  const getPackagingLine = () => {
-    if (Array.isArray(product.packaging) && product.packaging.length > 0) {
-      const format = product.packaging[0]?.format || '';
-      if (format.toLowerCase().includes('carton blanc cosmétique')) return 'Carton blanc cosmétique 25 kg · Liner vierge';
-      if (format.toLowerCase().includes('carton')) return 'Carton export 25 kg · Liner PE bleu';
-      if (format.toLowerCase().includes('fût') || format.toLowerCase().includes('fut')) return 'Fût métallique 190 kg · Liner étanche';
-      if (format.toLowerCase().includes('sac')) return 'Sac kraft multi-plis 25 kg scellé';
-      if (format.toLowerCase().includes('seau')) return 'Seau hermétique PP 20 kg';
-      if (format.toLowerCase().includes('citerne')) return 'Citerne liquide inox 316L (24 t)';
-      return format;
+  // Catégorie en petites capitales discrètes
+  const getCategoryLabel = () => {
+    switch (product.category) {
+      case 'beurres':
+        return 'BEURRES DE CACAO PURS';
+      case 'poudres':
+        return 'POUDRES DE CACAO MICRONISÉES';
+      case 'masses':
+        return 'MASSES & LIQUEURS PURES';
+      default:
+        return 'DÉRIVÉS DE CACAO PURS';
     }
-    return 'Carton export 25 kg · Liner PE';
   };
 
   return (
     <article
       onClick={handleCardClick}
-      className="bg-[#FFFFFF] rounded-[8px] border border-[#E4DDD3] overflow-hidden flex flex-col justify-between hover:border-[#C29958] transition-colors group cursor-pointer"
+      className="bg-white rounded-xl border border-[#E4DDD3]/80 overflow-hidden flex flex-col justify-between hover:border-[#C29958] transition-all duration-200 group cursor-pointer shadow-xs hover:shadow-sm"
     >
       <div>
-        {/* Visual Header with Compact Monospace Badge */}
-        <div className="relative h-48 sm:h-52 w-full bg-[#FAF7F2] overflow-hidden border-b border-[#E4DDD3]">
+        {/* Visual Header with Compact Monospace Application Badge */}
+        <div className="relative h-48 sm:h-52 w-full bg-[#FAF7F2] overflow-hidden border-b border-[#E4DDD3]/40">
           <ProductImage
             src={product.image_url}
             alt={product.name}
@@ -94,12 +105,12 @@ export const ProductCard: React.FC<ProductCardProps> = ({
             category={product.category}
           />
 
-          {/* Badge technique compact en JetBrains Mono */}
-          <div className="absolute top-2.5 right-2.5 flex items-center gap-1.5 pointer-events-none">
+          {/* Badge discret du secteur d'application en JetBrains Mono text-[10px] */}
+          <div className="absolute top-3 right-3 flex items-center gap-1.5 pointer-events-none">
             {product.industry.map((ind) => (
               <span
                 key={ind}
-                className={`text-[11px] font-mono uppercase tracking-wider px-2 py-0.5 rounded-[4px] border ${
+                className={`font-mono text-[10px] uppercase tracking-wider px-2 py-0.5 rounded-[4px] border ${
                   ind === 'cosmetique'
                     ? 'bg-[#221510] text-[#C29958] border-[#4A2C21]'
                     : 'bg-[#FAF7F2] text-[#221510] border-[#E4DDD3]'
@@ -111,79 +122,52 @@ export const ProductCard: React.FC<ProductCardProps> = ({
           </div>
         </div>
 
-        {/* Content Body */}
-        <div className="p-5 space-y-3.5">
-          {/* Category Overline & MOQ */}
-          <div className="flex items-center justify-between border-b border-[#E4DDD3]/60 pb-2">
-            <span className="font-mono text-[11px] font-bold text-[#C29958] uppercase">
-              {product.category === 'beurres'
-                ? 'BEURRES DE CACAO'
-                : product.category === 'poudres'
-                ? 'POUDRES DE CACAO'
-                : 'MASSES & LIQUEURS'}
-            </span>
-            <span className="font-mono text-[10px] text-[#78716C]">
-              MOQ : {product.moq.split('(')[0].trim()}
-            </span>
-          </div>
-
-          {/* Title & Short Technical Subtitle without narrative overflow */}
+        {/* Content Body with Generous Padding */}
+        <div className="p-6 space-y-4">
+          {/* Category in muted bronze small-caps + Product Title in chocolate black */}
           <div className="space-y-1">
-            <h3 className="font-display text-base font-bold text-[#221510] leading-snug group-hover:text-[#4A2C21] transition-colors">
+            <span className="font-mono text-[10px] font-bold text-[#9C7336] uppercase tracking-wider block">
+              {getCategoryLabel()}
+            </span>
+            <h3 className="font-display text-lg font-semibold text-[#1C1917] leading-snug group-hover:text-[#4A2C21] transition-colors">
               {product.name}
             </h3>
-            <div className="text-[11px] font-mono text-[#78716C] truncate">
-              {product.subtitle || product.commercialName}
-            </div>
           </div>
 
-          {/* Mini-grille monospace délimitée de 3 spécifications physico-chimiques */}
-          <div className="pt-1">
-            <div className="grid grid-cols-3 divide-x divide-[#E4DDD3] bg-[#FAF7F2] border border-[#E4DDD3] rounded-[4px] font-mono">
-              {specs.map((item, idx) => (
-                <div key={idx} className="p-2 text-center space-y-0.5">
-                  <span className="text-[9px] text-[#78716C] block uppercase truncate font-mono">
-                    {item.label}
+          {/* Restructuration des spécifications en grille 2×2 (style Barry Callebaut) */}
+          <div className="rounded-xl bg-[#FAF7F2] p-3.5 border border-[#E4DDD3]/60">
+            <div className="grid grid-cols-2 gap-y-3 gap-x-4">
+              {gridSpecs.map((spec, idx) => (
+                <div key={idx} className="space-y-0.5">
+                  <span className="block text-[11px] text-[#78716C] leading-none">
+                    {spec.label}
                   </span>
-                  <span className="text-[11px] font-bold text-[#221510] block truncate">
-                    {item.value}
+                  <span className="block font-mono text-sm text-[#1C1917] font-semibold leading-tight">
+                    {spec.value}
                   </span>
                 </div>
               ))}
             </div>
           </div>
-
-          {/* Format de conditionnement sous forme de ligne d'expédition */}
-          <div className="pt-1 text-[11px] font-mono text-[#5D5753] flex items-center gap-1.5 truncate border-t border-[#E4DDD3]/60">
-            <span className="text-[#221510] font-bold shrink-0">EMBALLAGE :</span>
-            <span className="text-[#4A2C21] truncate font-medium">{getPackagingLine()}</span>
-          </div>
         </div>
       </div>
 
-      {/* Hiérarchisation des boutons Barry Callebaut */}
-      <div
-        onClick={(e) => e.stopPropagation()}
-        className="p-5 pt-0 border-t border-[#E4DDD3] grid grid-cols-2 gap-2 mt-2 pt-3"
-      >
-        <button
-          type="button"
-          onClick={handleTdsClick}
-          className="w-full py-2.5 px-3 text-center text-xs font-display font-semibold uppercase tracking-wider text-[#221510] bg-white border border-[#E4DDD3] hover:border-[#221510] hover:bg-[#FAF7F2] rounded-[6px] transition-colors cursor-pointer"
-        >
-          Fiche TDS
-        </button>
+      {/* Épuration du bas de carte (Call To Action sobre et équilibré) */}
+      <div className="px-6 pb-5 pt-2 flex items-center justify-between border-t border-[#E4DDD3]/40">
+        <span className="text-xs text-[#78716C] group-hover:text-[#1C1917] transition-colors font-medium">
+          Détails techniques →
+        </span>
 
         <button
           type="button"
           onClick={handleRfqClick}
-          className={`w-full py-2.5 px-3 text-center text-xs font-display font-bold uppercase tracking-wider rounded-[6px] transition-colors cursor-pointer border ${
+          className={`px-3 py-1.5 rounded-md text-xs font-medium transition-colors cursor-pointer border ${
             isAddedToRfq
               ? 'bg-[#2E5A36] text-white border-[#2E5A36]'
-              : 'bg-[#C29958] text-[#221510] hover:bg-[#b08745] border-[#b08745]'
+              : 'bg-[#221510] text-white border-[#221510] hover:bg-[#C29958] hover:border-[#C29958]'
           }`}
         >
-          {isAddedToRfq ? 'Ajouté ✓' : 'Devis RFQ'}
+          {isAddedToRfq ? 'Ajouté ✓' : '+ Devis RFQ'}
         </button>
       </div>
     </article>

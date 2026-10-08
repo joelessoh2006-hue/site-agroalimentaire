@@ -70,6 +70,13 @@
   - **Ligne d'expédition :** Format d'emballage net (`"EMBALLAGE : Carton export 25 kg · Liner PE"`).
   - **Hiérarchisation des boutons :** `"Fiche TDS"` en outline sobre (`border border-[#E4DDD3] hover:border-[#221510]`) et `"Devis RFQ"` en bouton plein laiton/chocolat (`bg-[#C29958]`).
   - **Validation & Build :** `npm run lint` (`tsc --noEmit`) code 0, `npm run build` réussi.
+- **Phase 12 Cartes Produits Aérées & Grille 2×2 Style Barry Callebaut (`ProductCard.tsx`) :**
+  - **Structure aérée et interactive :** Carte entière cliquable avec curseur pointeur et transition douce vers la vue détail du produit, suppression de l'effet de compartimentage rigide, fond blanc pur avec coins arrondis doux `rounded-xl` et marges généreuses `p-6`.
+  - **Badge secteur compact :** Badge discret du secteur d'application en police JetBrains Mono `font-mono text-[10px]` en haut à droite de l'image.
+  - **Typographie éditoriale :** Catégorie en petites capitales discrètes couleur laiton `#9C7336`, titre produit net et contrasté en noir chocolat `#1C1917` (`font-semibold text-lg`), suppression du sous-titre redondant.
+  - **Grille de spécifications 2×2 :** Conteneur doux `rounded-xl bg-[#FAF7F2] p-3.5 border border-[#E4DDD3]/60` avec grille 2 colonnes × 2 lignes (`Matière Grasse (MG)`, `FFA / pH`, `Point de fusion / Finesse`, `Conditionnement`). Libellé en très petit au-dessus (`text-[11px] text-[#78716C]`), valeur en gras en dessous (`font-mono text-sm text-[#1C1917] font-semibold`), zéro troncature.
+  - **Ligne d'action sobre en bas de carte :** Suppression des 2 gros boutons côte à côte au profit d'une ligne épurée : lien discret `"Détails techniques →"` à gauche et bouton compact `"+ Devis RFQ"` en chocolat/laiton (`px-3 py-1.5 rounded-md text-xs font-medium bg-[#221510] text-white hover:bg-[#C29958]`) à droite avec `stopPropagation`.
+  - **Contrôle & Build :** `npm run lint` (`tsc --noEmit`) code 0, `npm run build` réussi.
 
 ### B. Modélisation Exhaustive des Données Métier
 - **9 Dérivés de Cacao Purs modélisés :**
