@@ -100,6 +100,17 @@
     * `05_BACKEND_SCHEMA.md` : Modèles TypeScript stricts, schéma relationnel SQLite (`leads`), contrats d'API REST (`POST /api/rfq`, endpoints documentaires et administratifs).
     * `06_IMPLEMENTATION_PLAN.md` : Synthèse des 15 phases validées, roadmap ordonnancée (table/grille, i18n, SEO JSON-LD) et discipline de CI.
   - **Contrôle & Build :** `tsc --noEmit` code 0, `npm run build` réussi en 1.84s.
+- **Phase 17 Génération des Versions PDF Officielles d'Ingénierie (`docs/architecture/pdf/`) :**
+  - **Script d'automatisation haute fidélité (`scripts/generate-architecture-pdfs.mjs`) :** Moteur autonome de conversion Markdown vers HTML/CSS d'impression avec typographie Source Sans 3 et JetBrains Mono, tableaux normalisés bordés de 1px, cartouches institutionnels et rendu vectoriel des diagrammes Mermaid.
+  - **Exécution via Chrome Headless :** Génération isolée (`--headless=new`, `--user-data-dir`) au format A4 avec marges de 18-20 mm, en-tête et pied de page d'ingénierie.
+  - **6 Fichiers PDF d'ingénierie certifiés générés :**
+    * `01_PRD.pdf` (367 Ko)
+    * `02_APP_FLOW.pdf` (500 Ko)
+    * `03_DESIGN_SYSTEM.pdf` (422 Ko)
+    * `04_TRD.pdf` (378 Ko)
+    * `05_BACKEND_SCHEMA.pdf` (327 Ko)
+    * `06_IMPLEMENTATION_PLAN.pdf` (355 Ko)
+  - **Contrôle & Build :** `npm run lint` (`tsc --noEmit`) code 0, `npm run build` validé en 4.26s.
 
 ### B. Modélisation Exhaustive des Données Métier
 - **9 Dérivés de Cacao Purs modélisés :**
