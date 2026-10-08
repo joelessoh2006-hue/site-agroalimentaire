@@ -91,6 +91,15 @@
   - **Cartes coordonnées & hubs usine (`ContactRfqView.tsx`) :** Harmonisation de la surbrillance de bordure dorée (`hover:border-[#C29958] transition-colors group`) sur les 3 cartes latérales d'information de l'usine et des bureaux export.
   - **Cartes métriques EUDR (`SavoirFaireView.tsx`) :** Passage à `rounded-[8px]` et ajout de la transition douce `hover:border-[#C29958] transition-colors`.
   - **Contrôle & Build :** `tsc --noEmit` code 0, `npm run build` validé en 2.01s.
+- **Phase 16 Documentation d'Ingénierie Complète (`docs/architecture/`) :**
+  - **Rédaction des 6 documents maîtres d'architecture logicielle :**
+    * `01_PRD.md` : Vision produit, segments industriels B2B, traçabilité EUDR, pipeline 6 étapes et règles de gestion métier.
+    * `02_APP_FLOW.md` : Cartographie des 6 vues principales, diagrammes de séquence Mermaid (conversion RFQ, registre des lots CoA, ruban des étapes) et gestion des états globaux.
+    * `03_DESIGN_SYSTEM.md` : Charte Barry Callebaut / Bühler, tokens chromatiques minéraux, typographie JetBrains Mono obligatoire pour les données, trigrammes d'atelier et spécifications de cartes 2×2.
+    * `04_TRD.md` : Pile Jamstack React 19 / Vite / Tailwind v4, sécurité OWASP certifiée Herozion (Grade A 100/100), SQLite WAL, rate limiter et validation Zod.
+    * `05_BACKEND_SCHEMA.md` : Modèles TypeScript stricts, schéma relationnel SQLite (`leads`), contrats d'API REST (`POST /api/rfq`, endpoints documentaires et administratifs).
+    * `06_IMPLEMENTATION_PLAN.md` : Synthèse des 15 phases validées, roadmap ordonnancée (table/grille, i18n, SEO JSON-LD) et discipline de CI.
+  - **Contrôle & Build :** `tsc --noEmit` code 0, `npm run build` réussi en 1.84s.
 
 ### B. Modélisation Exhaustive des Données Métier
 - **9 Dérivés de Cacao Purs modélisés :**
