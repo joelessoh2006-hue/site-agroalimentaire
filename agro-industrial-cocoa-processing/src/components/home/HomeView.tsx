@@ -273,7 +273,7 @@ export const HomeView: React.FC<HomeViewProps> = ({
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {/* Pilier 1 : Traçabilité EUDR */}
-          <div className="bg-[#FFFFFF] border border-[#E4DDD3] rounded-[8px] p-6 sm:p-7 flex flex-col justify-between space-y-5">
+          <div className="bg-[#FFFFFF] border border-[#E4DDD3] rounded-[8px] p-6 sm:p-7 flex flex-col justify-between space-y-5 hover:border-[#C29958] transition-colors group">
             <div className="space-y-3">
               <div className="flex items-center justify-between border-b border-[#E4DDD3] pb-2">
                 <span className="font-mono text-xs font-bold text-[#2E5A36] bg-[#EBF5ED] px-2 py-0.5 rounded-[4px] border border-[#C5E1CB]">
@@ -287,7 +287,7 @@ export const HomeView: React.FC<HomeViewProps> = ({
                 <span className="text-[10px] font-mono text-[#2E5A36] font-bold uppercase tracking-wider block">
                   RÈGLEMENT UE 2023/1115
                 </span>
-                <h3 className="font-display text-lg font-bold text-[#221510] mt-0.5">
+                <h3 className="font-display text-lg font-bold text-[#221510] group-hover:text-[#4A2C21] transition-colors mt-0.5">
                   Traçabilité Polygonale GPS
                 </h3>
               </div>
@@ -313,7 +313,7 @@ export const HomeView: React.FC<HomeViewProps> = ({
           </div>
 
           {/* Pilier 2 : Laboratoire ISO 17025 */}
-          <div className="bg-[#FFFFFF] border border-[#E4DDD3] rounded-[8px] p-6 sm:p-7 flex flex-col justify-between space-y-5">
+          <div className="bg-[#FFFFFF] border border-[#E4DDD3] rounded-[8px] p-6 sm:p-7 flex flex-col justify-between space-y-5 hover:border-[#C29958] transition-colors group">
             <div className="space-y-3">
               <div className="flex items-center justify-between border-b border-[#E4DDD3] pb-2">
                 <span className="font-mono text-xs font-bold text-[#221510] bg-[#FAF7F2] px-2 py-0.5 rounded-[4px] border border-[#E4DDD3]">
@@ -327,7 +327,7 @@ export const HomeView: React.FC<HomeViewProps> = ({
                 <span className="text-[10px] font-mono text-[#C29958] font-bold uppercase tracking-wider block">
                   ACCRÉDITATION ISO 17025
                 </span>
-                <h3 className="font-display text-lg font-bold text-[#221510] mt-0.5">
+                <h3 className="font-display text-lg font-bold text-[#221510] group-hover:text-[#4A2C21] transition-colors mt-0.5">
                   Laboratoire Analytique Interne
                 </h3>
               </div>
@@ -353,7 +353,7 @@ export const HomeView: React.FC<HomeViewProps> = ({
           </div>
 
           {/* Pilier 3 : Conditionnements & Logistique */}
-          <div className="bg-[#FFFFFF] border border-[#E4DDD3] rounded-[8px] p-6 sm:p-7 flex flex-col justify-between space-y-5">
+          <div className="bg-[#FFFFFF] border border-[#E4DDD3] rounded-[8px] p-6 sm:p-7 flex flex-col justify-between space-y-5 hover:border-[#C29958] transition-colors group">
             <div className="space-y-3">
               <div className="flex items-center justify-between border-b border-[#E4DDD3] pb-2">
                 <span className="font-mono text-xs font-bold text-[#4A2C21] bg-[#FAF7F2] px-2 py-0.5 rounded-[4px] border border-[#E4DDD3]">
@@ -367,7 +367,7 @@ export const HomeView: React.FC<HomeViewProps> = ({
                 <span className="text-[10px] font-mono text-[#C29958] font-bold uppercase tracking-wider block">
                   LOGISTIQUE FCL & LCL
                 </span>
-                <h3 className="font-display text-lg font-bold text-[#221510] mt-0.5">
+                <h3 className="font-display text-lg font-bold text-[#221510] group-hover:text-[#4A2C21] transition-colors mt-0.5">
                   Formats Export & Cadencement
                 </h3>
               </div>

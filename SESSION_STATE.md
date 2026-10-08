@@ -82,6 +82,9 @@
   - **Suppression du conteneur lourd :** Remplacement de l'imposant cadre de 65px par un conteneur adaptatif discret qui ne laisse aucun espace vide et préserve l'expérience utilisateur sans friction.
   - **Mention de réassurance discrète :** Ligne sobre en bas de formulaire indiquant la protection anti-bot active et le respect de la vie privée.
   - **Contrôle & Build :** `tsc --noEmit` code 0, `npm run build` réussi (2.94s).
+- **Phase 14 Harmonisation des Effets de Survol de la Page d'Accueil (`HomeView.tsx`) :**
+  - **Alignement strict du degré de surbrillance :** Application de la même surbrillance de bordure dorée laiton (`hover:border-[#C29958] transition-colors group`) et de contraste de titre (`group-hover:text-[#4A2C21]`) sur les 3 cartes de Gouvernance Industrielle & Logistique (Traçabilité EUDR, Laboratoire ISO 17025, Logistique Export FCL), identique aux 3 Grands Segments Métier.
+  - **Contrôle & Build :** `tsc --noEmit` code 0, `npm run build` réussi (2.26s).
 
 ### B. Modélisation Exhaustive des Données Métier
 - **9 Dérivés de Cacao Purs modélisés :**
