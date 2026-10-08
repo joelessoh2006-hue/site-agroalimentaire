@@ -85,6 +85,12 @@
 - **Phase 14 Harmonisation des Effets de Survol de la Page d'Accueil (`HomeView.tsx`) :**
   - **Alignement strict du degré de surbrillance :** Application de la même surbrillance de bordure dorée laiton (`hover:border-[#C29958] transition-colors group`) et de contraste de titre (`group-hover:text-[#4A2C21]`) sur les 3 cartes de Gouvernance Industrielle & Logistique (Traçabilité EUDR, Laboratoire ISO 17025, Logistique Export FCL), identique aux 3 Grands Segments Métier.
   - **Contrôle & Build :** `tsc --noEmit` code 0, `npm run build` réussi (2.26s).
+- **Phase 15 Audit d'Uniformité Globale & Standardisation des Cartes et Micro-Interactions :**
+  - **Unification des cartes produits Accueil & Catalogue (`HomeView.tsx` & `ProductCard.tsx`) :** Remplacement de l'ancien bloc de cartes dupliqué de l'Accueil par le composant officiel `<ProductCard />`. Les cartes de l'Accueil bénéficient désormais de la grille 2×2 Barry Callebaut, du conteneur `rounded-xl`, du clic global et de la ligne d'action épurée.
+  - **Cartes de certifications (`QualityView.tsx`) :** Ajout de la classe `group` et du contraste réactif de titre (`group-hover:text-[#4A2C21] transition-colors`).
+  - **Cartes coordonnées & hubs usine (`ContactRfqView.tsx`) :** Harmonisation de la surbrillance de bordure dorée (`hover:border-[#C29958] transition-colors group`) sur les 3 cartes latérales d'information de l'usine et des bureaux export.
+  - **Cartes métriques EUDR (`SavoirFaireView.tsx`) :** Passage à `rounded-[8px]` et ajout de la transition douce `hover:border-[#C29958] transition-colors`.
+  - **Contrôle & Build :** `tsc --noEmit` code 0, `npm run build` validé en 2.01s.
 
 ### B. Modélisation Exhaustive des Données Métier
 - **9 Dérivés de Cacao Purs modélisés :**

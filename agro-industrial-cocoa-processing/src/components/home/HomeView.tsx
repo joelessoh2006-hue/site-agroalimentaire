@@ -8,6 +8,7 @@ import {
   Send
 } from 'lucide-react';
 import { ProductImage } from '../common/ProductImage';
+import { ProductCard } from '../ProductCard';
 
 interface HomeViewProps {
   onNavigate: (view: string, productId?: string) => void;
@@ -411,80 +412,16 @@ export const HomeView: React.FC<HomeViewProps> = ({
           </button>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {COCOA_PRODUCTS.slice(0, 6).map((product) => {
-            const isAdded = selectedRfqProductIds.includes(product.id);
-            return (
-              <div
-                key={product.id}
-                className="bg-[#FFFFFF] border border-[#E4DDD3] rounded-[8px] overflow-hidden flex flex-col justify-between hover:border-[#C29958] transition-colors group"
-              >
-                <div>
-                  <div className="relative h-44 w-full bg-[#F1EDE7] overflow-hidden border-b border-[#E4DDD3]">
-                    <ProductImage
-                      src={product.image_url}
-                      alt={product.name}
-                      productName={product.name}
-                      category={product.category}
-                    />
-                    <div className="absolute top-2.5 right-2.5">
-                      <span className="text-[10px] font-mono font-bold uppercase tracking-wider px-2 py-0.5 rounded-[4px] bg-[#221510]/85 text-[#C29958] border border-[#4A2C21]">
-                        {product.category.toUpperCase()}
-                      </span>
-                    </div>
-                  </div>
-
-                  <div className="p-5 space-y-3">
-                    <div>
-                      <span className="font-mono text-[10px] text-[#5D5753] block">
-                        MOQ : {product.moq.split('(')[0]}
-                      </span>
-                      <h3 className="font-display text-base font-bold text-[#221510] group-hover:text-[#4A2C21] transition-colors leading-snug">
-                        {product.name}
-                      </h3>
-                    </div>
-
-                    {/* 2 Spécifications Clés Standard Barry Callebaut */}
-                    <div className="grid grid-cols-2 divide-x divide-[#E4DDD3] bg-[#FAF7F2] border border-[#E4DDD3] rounded-[4px] font-mono text-xs">
-                      {Object.entries(product.specs).slice(0, 2).map(([key, val]) => (
-                        <div key={key} className="p-2 space-y-0.5">
-                          <span className="text-[10px] text-[#5D5753] block truncate uppercase font-sans font-semibold">
-                            {key.replace(/_/g, ' ')}
-                          </span>
-                          <span className="font-bold text-[#221510] block truncate">
-                            {String(val)}
-                          </span>
-                        </div>
-                      ))}
-                    </div>
-
-                    <p className="font-body text-xs text-[#5D5753] line-clamp-2">
-                      {product.description}
-                    </p>
-                  </div>
-                </div>
-
-                <div className="p-5 pt-0 border-t border-[#E4DDD3]/60 grid grid-cols-2 gap-2 mt-2 pt-3">
-                  <button
-                    onClick={() => onNavigate('produit', product.id)}
-                    className="w-full py-2.5 px-2 text-center text-xs font-display font-bold uppercase tracking-wider text-[#221510] bg-[#FFFFFF] border border-[#E4DDD3] rounded-[6px] hover:border-[#221510] hover:bg-[#FAF7F2] transition-colors cursor-pointer"
-                  >
-                    Fiche Produit
-                  </button>
-                  <button
-                    onClick={() => onToggleRfq(product)}
-                    className={`w-full py-2.5 px-2 text-center text-xs font-display font-bold uppercase tracking-wider rounded-[6px] transition-colors cursor-pointer border ${
-                      isAdded
-                        ? 'bg-[#2E5A36] text-[#FFFFFF] border-[#2E5A36]'
-                        : 'bg-[#C29958] text-[#221510] border-[#b08745] hover:bg-[#b08745]'
-                    }`}
-                  >
-                    {isAdded ? 'Ajouté ✓' : 'Devis RFQ'}
-                  </button>
-                </div>
-              </div>
-            );
-          })}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {COCOA_PRODUCTS.slice(0, 6).map((product) => (
+            <ProductCard
+              key={product.id}
+              product={product}
+              onSelectProduct={(productId) => onNavigate('produit', productId)}
+              onToggleRfq={onToggleRfq}
+              isAddedToRfq={selectedRfqProductIds.includes(product.id)}
+            />
+          ))}
         </div>
       </section>
 

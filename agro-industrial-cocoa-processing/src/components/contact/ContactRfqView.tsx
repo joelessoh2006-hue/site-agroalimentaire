@@ -648,14 +648,14 @@ export const ContactRfqView: React.FC<ContactRfqViewProps> = ({
         {/* Right Contact Details (4 cols) */}
         <div className="lg:col-span-4 space-y-6">
           {/* Usine Principale */}
-          <div className="bg-[#FFFFFF] border border-[#E4DDD3] rounded-[8px] p-6 space-y-3">
+          <div className="bg-[#FFFFFF] border border-[#E4DDD3] rounded-[8px] p-6 space-y-3 hover:border-[#C29958] transition-colors group">
             <div className="flex items-center justify-between border-b border-[#E4DDD3] pb-2 text-xs font-mono">
               <span className="text-[#C29958] font-bold">SITE DE PRODUCTION PRINCIPAL</span>
               <span className="text-[10px] text-[#78716C] bg-[#FAF7F2] px-1.5 py-0.5 rounded-[3px] border border-[#E4DDD3]">
                 LOC · FAC-01
               </span>
             </div>
-            <h3 className="font-display text-base font-bold text-[#221510]">
+            <h3 className="font-display text-base font-bold text-[#221510] group-hover:text-[#4A2C21] transition-colors">
               Usine Industrielle de San Pedro
             </h3>
             <p className="font-body text-xs text-[#5D5753] leading-relaxed">
@@ -669,14 +669,14 @@ export const ContactRfqView: React.FC<ContactRfqViewProps> = ({
           </div>
 
           {/* Hub Export Europe */}
-          <div className="bg-[#FFFFFF] border border-[#E4DDD3] rounded-[8px] p-6 space-y-3">
+          <div className="bg-[#FFFFFF] border border-[#E4DDD3] rounded-[8px] p-6 space-y-3 hover:border-[#C29958] transition-colors group">
             <div className="flex items-center justify-between border-b border-[#E4DDD3] pb-2 text-xs font-mono">
               <span className="text-[#C29958] font-bold">HUB LOGISTIQUE EUROPE</span>
               <span className="text-[10px] text-[#78716C] bg-[#FAF7F2] px-1.5 py-0.5 rounded-[3px] border border-[#E4DDD3]">
                 LOG · HUB-EUR
               </span>
             </div>
-            <h3 className="font-display text-base font-bold text-[#221510]">
+            <h3 className="font-display text-base font-bold text-[#221510] group-hover:text-[#4A2C21] transition-colors">
               Entrepôt Avancé Le Havre
             </h3>
             <p className="font-body text-xs text-[#5D5753] leading-relaxed">
@@ -685,7 +685,7 @@ export const ContactRfqView: React.FC<ContactRfqViewProps> = ({
           </div>
 
           {/* Bureaux Export & Trading */}
-          <div className="bg-[#221510] text-[#F8F4EE] border border-[#4A2C21] rounded-[8px] p-6 space-y-4">
+          <div className="bg-[#221510] text-[#F8F4EE] border border-[#4A2C21] rounded-[8px] p-6 space-y-4 hover:border-[#C29958] transition-colors group">
             <div className="flex items-center justify-between border-b border-[#4A2C21] pb-2 text-xs font-mono">
               <span className="text-[#C29958] font-bold">DESK EXPORT COMMERCIAL</span>
               <span className="text-[10px] text-[#C29958]/80 bg-[#4A2C21]/60 px-1.5 py-0.5 rounded-[3px] border border-[#4A2C21]">

@@ -229,25 +229,25 @@ export const SavoirFaireView: React.FC<SavoirFaireViewProps> = ({
 
         {/* Metrics Grid (4 Statistiques géantes en JetBrains Mono) */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 font-mono">
-          <div className="bg-[#FFFFFF] p-4 rounded-[6px] border border-[#E4DDD3]">
+          <div className="bg-[#FFFFFF] p-4 rounded-[8px] border border-[#E4DDD3] hover:border-[#C29958] transition-colors">
             <span className="text-xl sm:text-2xl font-bold text-[#221510]">{ESG_EUDR_METRICS.totalGeoMappedHectares}</span>
             <span className="block text-[11px] text-[#C29958] mt-1 font-sans font-semibold">Superficie Cartographiée</span>
             <span className="text-[10px] text-[#78716C] block mt-0.5">Parcelles GPS polygonales</span>
           </div>
 
-          <div className="bg-[#FFFFFF] p-4 rounded-[6px] border border-[#E4DDD3]">
+          <div className="bg-[#FFFFFF] p-4 rounded-[8px] border border-[#E4DDD3] hover:border-[#C29958] transition-colors">
             <span className="text-xl sm:text-2xl font-bold text-[#221510]">{ESG_EUDR_METRICS.polygonalPlotsVerified}</span>
             <span className="block text-[11px] text-[#C29958] mt-1 font-sans font-semibold">Parcelles Auditées</span>
             <span className="text-[10px] text-[#78716C] block mt-0.5">Contrôlées par satellites radar</span>
           </div>
 
-          <div className="bg-[#FFFFFF] p-4 rounded-[6px] border border-[#E4DDD3]">
+          <div className="bg-[#FFFFFF] p-4 rounded-[8px] border border-[#E4DDD3] hover:border-[#C29958] transition-colors">
             <span className="text-xl sm:text-2xl font-bold text-[#2E5A36] inline-block">100%</span>
             <span className="block text-[11px] text-[#2E5A36] mt-1 font-sans font-semibold">Zéro Déforestation</span>
             <span className="text-[10px] text-[#78716C] block mt-0.5">Conformité post-2020 prouvée</span>
           </div>
 
-          <div className="bg-[#FFFFFF] p-4 rounded-[6px] border border-[#E4DDD3]">
+          <div className="bg-[#FFFFFF] p-4 rounded-[8px] border border-[#E4DDD3] hover:border-[#C29958] transition-colors">
             <span className="text-xl sm:text-2xl font-bold text-[#221510]">-42% CO₂</span>
             <span className="block text-[11px] text-[#C29958] mt-1 font-sans font-semibold">Gain Carbone FCL</span>
             <span className="text-[10px] text-[#78716C] block mt-0.5">Raffinage local à la source</span>

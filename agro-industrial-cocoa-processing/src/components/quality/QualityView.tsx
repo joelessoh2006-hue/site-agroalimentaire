@@ -63,7 +63,7 @@ export const QualityView: React.FC<QualityViewProps> = ({
           {QUALITY_CERTIFICATIONS.map((cert) => (
             <div
               key={cert.id}
-              className="bg-[#FFFFFF] border border-[#E4DDD3] rounded-[8px] p-5 space-y-3 flex flex-col justify-between hover:border-[#C29958] transition-colors"
+              className="bg-[#FFFFFF] border border-[#E4DDD3] rounded-[8px] p-5 space-y-3 flex flex-col justify-between hover:border-[#C29958] transition-colors group"
             >
               <div className="space-y-2.5">
                 <div className="flex items-center justify-between">
@@ -74,7 +74,7 @@ export const QualityView: React.FC<QualityViewProps> = ({
                 </div>
 
                 <div>
-                  <h3 className="font-display text-base font-bold text-[#221510]">
+                  <h3 className="font-display text-base font-bold text-[#221510] group-hover:text-[#4A2C21] transition-colors">
                     {cert.name}
                   </h3>
                   <span className="text-[11px] font-mono text-[#5D5753] block mt-0.5">
