@@ -77,6 +77,11 @@
   - **Grille de spécifications 2×2 :** Conteneur doux `rounded-xl bg-[#FAF7F2] p-3.5 border border-[#E4DDD3]/60` avec grille 2 colonnes × 2 lignes (`Matière Grasse (MG)`, `FFA / pH`, `Point de fusion / Finesse`, `Conditionnement`). Libellé en très petit au-dessus (`text-[11px] text-[#78716C]`), valeur en gras en dessous (`font-mono text-sm text-[#1C1917] font-semibold`), zéro troncature.
   - **Ligne d'action sobre en bas de carte :** Suppression des 2 gros boutons côte à côte au profit d'une ligne épurée : lien discret `"Détails techniques →"` à gauche et bouton compact `"+ Devis RFQ"` en chocolat/laiton (`px-3 py-1.5 rounded-md text-xs font-medium bg-[#221510] text-white hover:bg-[#C29958]`) à droite avec `stopPropagation`.
   - **Contrôle & Build :** `npm run lint` (`tsc --noEmit`) code 0, `npm run build` réussi.
+- **Phase 13 Correction du Mode Cloudflare Turnstile & Épuration Anti-Bot (`TurnstileWidget.tsx` & `server/turnstile.ts`) :**
+  - **Éradication de l'avertissement rouge de test :** Remplacement de la clé de test factice visible (`1x...AA`) par la clé officielle Cloudflare pour mode invisible (`1x00000000000000000000BB`).
+  - **Suppression du conteneur lourd :** Remplacement de l'imposant cadre de 65px par un conteneur adaptatif discret qui ne laisse aucun espace vide et préserve l'expérience utilisateur sans friction.
+  - **Mention de réassurance discrète :** Ligne sobre en bas de formulaire indiquant la protection anti-bot active et le respect de la vie privée.
+  - **Contrôle & Build :** `tsc --noEmit` code 0, `npm run build` réussi (2.94s).
 
 ### B. Modélisation Exhaustive des Données Métier
 - **9 Dérivés de Cacao Purs modélisés :**

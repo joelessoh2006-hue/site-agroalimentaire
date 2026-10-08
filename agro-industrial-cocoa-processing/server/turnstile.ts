@@ -5,15 +5,17 @@
 
 // Clés officielles Cloudflare pour environnement de développement / test
 // Voir documentation officielle Cloudflare Turnstile : https://developers.cloudflare.com/turnstile/troubleshooting/testing/
-export const CLOUDFLARE_TEST_SITE_KEY_PASS = '1x00000000000000000000AA'; // Always passes (visible/invisible)
-export const CLOUDFLARE_TEST_SITE_KEY_BLOCK = '2x00000000000000000000AB'; // Always blocks
+export const CLOUDFLARE_TEST_SITE_KEY_PASS_VISIBLE = '1x00000000000000000000AA'; // Always passes (visible challenge)
+export const CLOUDFLARE_TEST_SITE_KEY_PASS_INVISIBLE = '1x00000000000000000000BB'; // Always passes (invisible)
+export const CLOUDFLARE_TEST_SITE_KEY_FAIL_VISIBLE = '2x00000000000000000000AB'; // Always fails (visible)
+export const CLOUDFLARE_TEST_SITE_KEY_FAIL_INVISIBLE = '2x00000000000000000000BB'; // Always fails (invisible)
 export const CLOUDFLARE_TEST_SITE_KEY_CHALLENGE = '3x00000000000000000000FF'; // Always interactive challenge
 
 export const CLOUDFLARE_TEST_SECRET_PASS = '1x0000000000000000000000000000000AA'; // Always passes
 export const CLOUDFLARE_TEST_SECRET_FAIL = '2x0000000000000000000000000000000AA'; // Always fails (invalid-input-response)
 export const CLOUDFLARE_TEST_SECRET_EXPIRE = '3x0000000000000000000000000000000AA'; // Timeout or duplicate
 
-export const CLOUDFLARE_TEST_SITE_KEY = CLOUDFLARE_TEST_SITE_KEY_PASS;
+export const CLOUDFLARE_TEST_SITE_KEY = CLOUDFLARE_TEST_SITE_KEY_PASS_INVISIBLE;
 export const CLOUDFLARE_TEST_SECRET_KEY = CLOUDFLARE_TEST_SECRET_PASS;
 
 const TURNSTILE_VERIFY_URL = 'https://challenges.cloudflare.com/turnstile/v0/siteverify';

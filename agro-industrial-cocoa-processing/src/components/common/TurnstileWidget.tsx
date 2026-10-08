@@ -1,9 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { ShieldCheck, AlertCircle, RefreshCw } from 'lucide-react';
 
-// Clé de test publique officielle Cloudflare Turnstile (Always passes)
+// Clé de test publique officielle Cloudflare Turnstile (Always passes - Invisible)
 // https://developers.cloudflare.com/turnstile/troubleshooting/testing/
-export const DEFAULT_CLOUDFLARE_TEST_SITE_KEY = '1x00000000000000000000AA';
+export const DEFAULT_CLOUDFLARE_TEST_SITE_KEY = '1x00000000000000000000BB';
 
 declare global {
   interface Window {
@@ -178,37 +178,25 @@ export const TurnstileWidget: React.FC<TurnstileWidgetProps> = ({
 
   return (
     <div
-      className={`relative rounded-[8px] border border-[#E4DDD3] bg-[#FAF7F2] p-3 text-xs ${className}`}
+      className={`relative py-1 text-xs ${className}`}
       data-testid="cloudflare-turnstile-container"
     >
-      <div className="flex items-center justify-between mb-2">
-        <div className="flex items-center gap-1.5 text-[#221510] font-semibold">
-          <ShieldCheck className="w-4 h-4 text-[#2E5A36]" />
-          <span className="font-display uppercase tracking-wider text-[11px]">
-            Protection Anti-Bot Invisible (Cloudflare Turnstile)
-          </span>
-        </div>
-        <span className="text-[10px] font-mono text-[#5D5753]/80">
-          Sans captcha visuel · Privacy First
-        </span>
-      </div>
-
-      {/* Conteneur DOM du widget Turnstile Cloudflare */}
+      {/* Conteneur DOM requis par Cloudflare Turnstile (inclusif et non intrusif) */}
       <div
         ref={containerRef}
-        className="min-h-[65px] flex items-center justify-center overflow-hidden"
+        className="flex items-center justify-center empty:hidden"
       />
 
       {loadState === 'error' && (
-        <div className="mt-2 flex items-center justify-between text-[11px] text-[#A0522D] bg-[#F8F4EE] p-2 rounded-[4px] border border-[#E4DDD3]">
+        <div className="mt-2 flex items-center justify-between text-[11px] text-[#A0522D] bg-[#F8F4EE] p-2.5 rounded-[6px] border border-[#E4DDD3]">
           <div className="flex items-center gap-1.5">
             <AlertCircle className="w-3.5 h-3.5 shrink-0" />
-            <span>{errorMessage || 'Échec de la validation'}</span>
+            <span>{errorMessage || 'Échec de la validation de sécurité'}</span>
           </div>
           <button
             type="button"
             onClick={handleRetry}
-            className="flex items-center gap-1 font-bold text-[#C29958] hover:text-[#221510] cursor-pointer"
+            className="flex items-center gap-1 font-semibold text-[#9C7336] hover:text-[#221510] cursor-pointer"
           >
             <RefreshCw className="w-3 h-3" />
             <span>Réessayer</span>
@@ -216,11 +204,16 @@ export const TurnstileWidget: React.FC<TurnstileWidgetProps> = ({
         </div>
       )}
 
-      {loadState === 'loading' && (
-        <div className="text-center py-2 text-[11px] text-[#5D5753] font-mono animate-pulse">
-          Initialisation du certificat de sécurité Cloudflare...
+      {/* Mention de réassurance technique sobre et discrète */}
+      <div className="flex items-center justify-between text-[11px] text-[#78716C] pt-1">
+        <div className="flex items-center gap-1.5">
+          <ShieldCheck className="w-3.5 h-3.5 text-[#2E5A36]" />
+          <span>Protection anti-bot invisible active (Cloudflare Turnstile)</span>
         </div>
-      )}
+        <span className="font-mono text-[10px] text-[#78716C]/70">
+          Privacy-First · Sans friction
+        </span>
+      </div>
     </div>
   );
 };
