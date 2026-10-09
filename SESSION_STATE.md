@@ -214,6 +214,13 @@
   - [`TdsDownloadModal.tsx`](file:///d:/Bureau/Site%20Agroalimentaire/agro-industrial-cocoa-processing/src/components/modals/TdsDownloadModal.tsx) : Déclenche le téléchargement du vrai document PDF officiel tout en transmettant le lead à l'API industrielle. Écran de confirmation avec boutons de téléchargement direct et d'ouverture en ligne.
   - [`CoaModal.tsx`](file:///d:/Bureau/Site%20Agroalimentaire/agro-industrial-cocoa-processing/src/components/CoaModal.tsx) : Ajout du bouton d'export direct du PDF officiel du CoA en plus de l'impression navigateur.
 
+- **Phase 19 Intégration du Fond Visuel de la Page d'Accueil (`HomeView.tsx` & `hero-bg.jpg`) :**
+  - **Adaptation panoramique haute fidélité (16:9 - 1920×1080) :** Remplacement du fond chocolat uni `#221510` par l'image de fèves entières et pluie de poudre de cacao pure adaptée aux proportions idéales du conteneur hero ([`public/images/hero-bg.jpg`](file:///d:/Bureau/Site%20Agroalimentaire/agro-industrial-cocoa-processing/public/images/hero-bg.jpg)).
+  - **Composition & Ergonomie de lecture :** Positionnement du monticule de fèves et de la cascade de poudre sur la droite du visuel, avec extension naturelle de l'espace négatif sombre sur la gauche pour accueillir le titre d'usine, la description technique et les 3 boutons d'action.
+  - **Surcouche de contraste & Lisibilité :** Double dégradé d'ombrage progressif garantissant une lisibilité stricte du texte industriel et des 4 indicateurs de performance (85 000 t/an, 450 bars, < 75 µm, < 0.050 ppm) tout en laissant rayonner la matière première.
+  - **Validation Responsive :** Textes et contrastes vérifiés et validés sur Desktop et Mobile (375 px).
+  - **Contrôle & Build :** `npm run lint` (`tsc --noEmit`) code 0, `npm run build` réussi.
+
 ---
 
 ## 2. Fichiers Créés et Modifiés

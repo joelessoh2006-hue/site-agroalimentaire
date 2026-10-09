@@ -25,10 +25,24 @@ export const HomeView: React.FC<HomeViewProps> = ({
 }) => {
   return (
     <div className="space-y-20">
-      {/* 1. Hero Section Industrielle */}
-      <section className="bg-[#221510] text-[#F8F4EE] rounded-[8px] border border-[#4A2C21] p-8 sm:p-12 lg:p-16">
-        <div className="max-w-4xl space-y-6">
-          <div className="inline-flex items-center gap-2 px-3 py-1 bg-[#301C15] border border-[#4A2C21] rounded-[4px] text-xs font-mono text-[#C29958] uppercase tracking-wider">
+      {/* 1. Hero Section Industrielle avec fond visuel adapté */}
+      <section className="relative overflow-hidden text-[#F8F4EE] rounded-[8px] border border-[#4A2C21] p-8 sm:p-12 lg:p-16 bg-[#140C08]">
+        {/* Fond visuel : fèves de cacao et pluie de poudre de cacao pure */}
+        <div className="absolute inset-0 z-0 pointer-events-none select-none">
+          <img
+            src="/images/hero-bg.jpg"
+            alt="Fèves de cacao brut et fine poudre de cacao pure"
+            className="w-full h-full object-cover object-right"
+            loading="eager"
+            fetchPriority="high"
+          />
+          {/* Dégradés d'ombrage pour lisibilité stricte du texte industriel */}
+          <div className="absolute inset-0 bg-gradient-to-r from-[#140C08] via-[#140C08]/85 to-[#140C08]/25" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#140C08]/90 via-transparent to-[#140C08]/40" />
+        </div>
+
+        <div className="relative z-10 max-w-4xl space-y-6">
+          <div className="inline-flex items-center gap-2 px-3 py-1 bg-[#221510]/90 backdrop-blur-sm border border-[#4A2C21] rounded-[4px] text-xs font-mono text-[#C29958] uppercase tracking-wider">
             <span>Usine de San Pedro · Hub logistique Le Havre · Export mondial FCL</span>
           </div>
 
@@ -51,7 +65,7 @@ export const HomeView: React.FC<HomeViewProps> = ({
 
             <button
               onClick={() => onNavigate('contact')}
-              className="px-6 py-3.5 text-xs font-display font-semibold uppercase tracking-wider text-[#F8F4EE] bg-[#4A2C21] border border-[#C29958]/40 rounded-[6px] hover:bg-[#392118] transition-colors inline-flex items-center gap-2 cursor-pointer"
+              className="px-6 py-3.5 text-xs font-display font-semibold uppercase tracking-wider text-[#F8F4EE] bg-[#221510]/85 border border-[#C29958]/40 rounded-[6px] hover:bg-[#301C15] transition-colors inline-flex items-center gap-2 cursor-pointer"
             >
               <Send className="w-3.5 h-3.5" />
               <span>Demande de cotation ou échantillon R&D</span>
@@ -68,7 +82,7 @@ export const HomeView: React.FC<HomeViewProps> = ({
         </div>
 
         {/* Industrial KPI Metrics Strip */}
-        <div className="mt-14 pt-8 border-t border-[#4A2C21]/80 grid grid-cols-2 md:grid-cols-4 gap-6">
+        <div className="relative z-10 mt-14 pt-8 border-t border-[#4A2C21]/80 grid grid-cols-2 md:grid-cols-4 gap-6">
           <div>
             <div className="font-mono text-2xl sm:text-3xl font-bold text-[#FFFFFF] tabular-nums">
               85 000 <span className="text-sm font-sans font-normal text-[#C29958]">t/an</span>
