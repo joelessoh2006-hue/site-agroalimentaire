@@ -26,7 +26,7 @@ export const HomeView: React.FC<HomeViewProps> = ({
   return (
     <div className="space-y-20">
       {/* 1. Hero Section Industrielle avec fond visuel adapté */}
-      <section className="relative overflow-hidden text-[#F8F4EE] rounded-[8px] border border-[#4A2C21] p-8 sm:p-12 lg:p-16 bg-[#140C08]">
+      <section className="relative overflow-hidden text-[#F8F4EE] rounded-[8px] border border-[#4A2C21] p-6 sm:p-10 lg:p-14 bg-[#140C08]">
         {/* Fond visuel : fèves de cacao et pluie de poudre de cacao pure */}
         <div className="absolute inset-0 z-0 pointer-events-none select-none">
           <img
@@ -54,68 +54,41 @@ export const HomeView: React.FC<HomeViewProps> = ({
             Broyage, pressage mécanique et raffinage de fèves ivoiriennes tracées par polygone GPS. Nous approvisionnons les chocolatiers, formulateurs agroalimentaires et marques cosmétiques sous certification FSSC 22000 et conformité EUDR 2023/1115.
           </p>
 
-          <div className="pt-2 flex flex-wrap items-center gap-4">
-            <button
-              onClick={() => onNavigate('catalogue')}
-              className="px-6 py-3.5 text-xs font-display font-bold uppercase tracking-wider text-[#221510] bg-[#C29958] rounded-[6px] hover:bg-[#b08745] transition-colors inline-flex items-center gap-2 cursor-pointer border border-[#b08745]"
-            >
-              <span>Consulter le catalogue technique (9 dérivés)</span>
-              <ArrowRight className="w-4 h-4" />
-            </button>
+          <div className="pt-2 space-y-4">
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5">
+              <button
+                onClick={() => onNavigate('contact')}
+                className="min-h-[44px] px-6 py-3.5 text-xs font-display font-bold uppercase tracking-wider text-[#221510] bg-[#C29958] rounded-[6px] hover:bg-[#b08745] transition-colors inline-flex items-center justify-center gap-2 cursor-pointer border border-[#b08745] shadow-xs"
+              >
+                <Send className="w-4 h-4" />
+                <span>Demander un devis & échantillons R&D</span>
+              </button>
 
-            <button
-              onClick={() => onNavigate('contact')}
-              className="px-6 py-3.5 text-xs font-display font-semibold uppercase tracking-wider text-[#F8F4EE] bg-[#221510]/85 border border-[#C29958]/40 rounded-[6px] hover:bg-[#301C15] transition-colors inline-flex items-center gap-2 cursor-pointer"
-            >
-              <Send className="w-3.5 h-3.5" />
-              <span>Demande de cotation ou échantillon R&D</span>
-            </button>
+              <button
+                onClick={() => onNavigate('catalogue')}
+                className="min-h-[44px] px-6 py-3.5 text-xs font-display font-semibold uppercase tracking-wider text-[#F8F4EE] bg-[#221510]/85 border border-[#C29958]/40 rounded-[6px] hover:bg-[#301C15] hover:border-[#C29958] transition-colors inline-flex items-center justify-center gap-2 cursor-pointer"
+              >
+                <span>Consulter le catalogue technique (9 références)</span>
+                <ArrowRight className="w-4 h-4 text-[#C29958]" />
+              </button>
+            </div>
 
-            <button
-              onClick={() => onNavigate('savoir-faire')}
-              className="px-5 py-3.5 text-xs font-display font-semibold uppercase tracking-wider text-[#C29958] hover:text-[#FFFFFF] transition-colors inline-flex items-center gap-1.5 cursor-pointer"
-            >
-              <span>Traçabilité & Procédé usine</span>
-              <ArrowRight className="w-3.5 h-3.5" />
-            </button>
-          </div>
-        </div>
-
-        {/* Industrial KPI Metrics Strip */}
-        <div className="relative z-10 mt-14 pt-8 border-t border-[#4A2C21]/80 grid grid-cols-2 md:grid-cols-4 gap-6">
-          <div>
-            <div className="font-mono text-2xl sm:text-3xl font-bold text-[#FFFFFF] tabular-nums">
-              85 000 <span className="text-sm font-sans font-normal text-[#C29958]">t/an</span>
-            </div>
-            <div className="font-display text-[11px] uppercase tracking-wider text-[#E4DDD3]/70 mt-1">
-              Capacité de broyage à San Pedro
-            </div>
-          </div>
-
-          <div>
-            <div className="font-mono text-2xl sm:text-3xl font-bold text-[#FFFFFF] tabular-nums">
-              450 <span className="text-sm font-sans font-normal text-[#C29958]">bars</span>
-            </div>
-            <div className="font-display text-[11px] uppercase tracking-wider text-[#E4DDD3]/70 mt-1">
-              Pressage mécanique isotherme
-            </div>
-          </div>
-
-          <div>
-            <div className="font-mono text-2xl sm:text-3xl font-bold text-[#FFFFFF] tabular-nums">
-              &lt; 75 <span className="text-sm font-sans font-normal text-[#C29958]">µm</span>
-            </div>
-            <div className="font-display text-[11px] uppercase tracking-wider text-[#E4DDD3]/70 mt-1">
-              Finesse alpine 200 mesh
-            </div>
-          </div>
-
-          <div>
-            <div className="font-mono text-2xl sm:text-3xl font-bold text-[#FFFFFF] tabular-nums">
-              &lt; 0.050 <span className="text-sm font-sans font-normal text-[#C29958]">ppm</span>
-            </div>
-            <div className="font-display text-[11px] uppercase tracking-wider text-[#E4DDD3]/70 mt-1">
-              Seuil ICP-MS cadmium par lot
+            {/* Ligne de réassurance immédiate sous les CTA */}
+            <div className="pt-1 flex flex-wrap items-center gap-y-2 gap-x-4 text-xs font-mono text-[#E4DDD3]/80">
+              <span className="inline-flex items-center gap-1.5">
+                <CheckCircle2 className="w-3.5 h-3.5 text-[#C29958] shrink-0" />
+                <span>Cotation sous 24h ouvrées</span>
+              </span>
+              <span className="text-[#C29958]/40 hidden sm:inline">·</span>
+              <span className="inline-flex items-center gap-1.5">
+                <CheckCircle2 className="w-3.5 h-3.5 text-[#C29958] shrink-0" />
+                <span>Échantillons R&D 500g expédiés sous 48h</span>
+              </span>
+              <span className="text-[#C29958]/40 hidden sm:inline">·</span>
+              <span className="inline-flex items-center gap-1.5">
+                <CheckCircle2 className="w-3.5 h-3.5 text-[#C29958] shrink-0" />
+                <span>Certificats d'analyse (CoA) par lot</span>
+              </span>
             </div>
           </div>
         </div>

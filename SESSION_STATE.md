@@ -116,6 +116,12 @@
   - **Résultat d'évaluation :** **Score 100 / 100 (Grade A, Mention « Excellent »)**, **0 vulnérabilité détectée**, 0 alerte résiduelle.
   - **Périmètre vérifié :** Conformité stricte aux 26 catégories OWASP, absence de fuites de données dans les réponses et journaux, contrôle des entrées Zod côté serveur, pagination SQL avec clauses LIMIT / OFFSET strictes, étanchéité des flux HTTP Node.js, et rate limiting opérationnel.
   - **Contrôle & Build :** `npm run lint` (`tsc --noEmit`) validé code 0.
+- **Phase 19 Refonte Ergonomique du Hero selon les Bonnes Pratiques B2B (RM Webstudios) :**
+  - **Hiérarchisation stricte à 2 boutons d'action :** Élimination du 3e bouton concurrent au profit d'un CTA principal à forte valeur orienté obtention (`Demander un devis & échantillons R&D` vers le formulaire contact/RFQ) et d'un CTA secondaire d'action douce (`Consulter le catalogue technique (9 références)` vers le catalogue).
+  - **Ligne de réassurance immédiate sous les CTA :** Ajout de 3 garanties clés en typographie monospace (`Cotation sous 24h ouvrées`, `Échantillons R&D 500g expédiés sous 48h`, `Certificats d'analyse (CoA) par lot`) répondant aux freins décisionnels immédiats de l'acheteur B2B.
+  - **Optimisation de la flottaison mobile (Test 375 px) :** Réduction du padding vertical (`p-6 sm:p-10 lg:p-14`) et calibrage des zones tactiles à hauteur minimale de 44 px (Apple HIG) avec empilement fluide sur mobile (`w-full sm:w-auto`) pour garantir l'affichage complet du titre et des CTA sans défilement.
+  - **Contrôle & Build :** `npm run lint` (`tsc --noEmit`) code 0, `npm run build` validé en 11.26s.
+
 
 ### B. Modélisation Exhaustive des Données Métier
 - **9 Dérivés de Cacao Purs modélisés :**
